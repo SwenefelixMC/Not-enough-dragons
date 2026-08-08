@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -26,7 +27,6 @@ import software.bernie.geckolib.animatable.GeoEntity;
 
 public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon {
 
-
     Gson gson = new Gson();
 
     @Override
@@ -38,10 +38,10 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     }
 
     public abstract DragonFoodComponentType dragonFoodComponentType();
+
     public abstract boolean tamingConditions(LivingEntity living);
 
     private static final EntityDataAccessor<Integer> EATING_PROGRESS;
-
 
     public void SetEatingProgress(int value){
         this.entityData.set(EATING_PROGRESS,value);
@@ -115,7 +115,9 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
         setInputs(packet.forward(),packet.backward(),packet.sprint(), packet.jump());
     }
     protected abstract void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump);
+
     protected abstract boolean shouldBeMoving();
+
     static {
         EATING_PROGRESS = SynchedEntityData.defineId(Dragon.class, EntityDataSerializers.INT);
     }
