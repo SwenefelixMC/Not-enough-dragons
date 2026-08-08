@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "not_enough_dragons:block/molten_gronckle_iron"
+    },
+    "type=double": {
+      "model": "not_enough_dragons:block/molten_gronckle_iron_block"
+    },
+    "type=top": {
+      "model": "not_enough_dragons:block/molten_gronckle_iron_top"
+    }
+  }
+}

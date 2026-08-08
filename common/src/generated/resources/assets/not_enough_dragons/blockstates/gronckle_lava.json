@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "not_enough_dragons:block/gronckle_lava"
+    },
+    "type=double": {
+      "model": "not_enough_dragons:block/gronckle_lava_block"
+    },
+    "type=top": {
+      "model": "not_enough_dragons:block/gronckle_lava_top"
+    }
+  }
+}
