@@ -103,6 +103,11 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     }
 
     @Override
+    public void setIsFlying(Boolean bl) {
+        isFlying = bl;
+    }
+
+    @Override
     public int getHunger() {
         return hunger;
     }
@@ -284,7 +289,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
 
     public static AttributeSupplier.Builder createAtributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH,60)
+                .add(Attributes.MAX_HEALTH,140)
                 .add(Attributes.MOVEMENT_SPEED,0.38)
                 .add(Attributes.FLYING_SPEED,6)
                 .add(Attributes.STEP_HEIGHT,1.1)
@@ -308,6 +313,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         addHungerSaveData(output);
         output.putInt("HungryDecreaseTime", HungerDecreseTimer);
         output.putInt("BlinkTime", blinkTimer);
+        addFlyingData(output,this);
         super.addAdditionalSaveData(output);
     }
 
@@ -552,7 +558,6 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
                 }
             this.updateSwinging();
             this.updateBlinking();
-
         }
     }
 
@@ -706,6 +711,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     }
 
     public Vec3 updateMovementInput(Player rider, Vec3 movementInput){
+        NotEnoughDragons.LOGGER.info("Speed " + this.getDeltaMovement().distanceTo(new Vec3(0,0,0)));
         if (!onGround()){
             float g = 0.0F;
             float h = 0.0F;
@@ -713,8 +719,8 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
                 float i = Mth.cos(rider.getXRot() * ((float)Math.PI / 180F));
                 float j = -Mth.sin(rider.getXRot() * ((float)Math.PI / 180F));
                 if (rider.zza < 0.0F) {
-                    i *= -0.5F;
-                    j *= -0.5F;
+                    i *= -1F;
+                    j *= -1F;
                 }
 
                 h = j;
@@ -727,7 +733,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
             setRot(rider.getYHeadRot(),rider.getXRot()*0.5F);
             this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
 
-            return (new Vec3(0, (double)h, (double)g* this.getAttributeValue(Attributes.FLYING_SPEED)*5));
+            return (new Vec3(0, (double)h* this.getAttributeValue(Attributes.FLYING_SPEED)*5, (double)g* this.getAttributeValue(Attributes.FLYING_SPEED)*5));
         } else {
             setNoGravity(false);
             isFlying = false;

@@ -36,7 +36,6 @@ public class NeoForgeRegistryHelper implements RegisterHelper {
                     for (ArrayList<Supplier<? extends Item>> item : items)
                         item.forEach((item1) -> entries.accept(item1.get()));
                 })
-                .withSearchBar()
                 .build());
     }
 

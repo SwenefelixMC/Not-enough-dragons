@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import net.sweningteam.common.dragon.food.DragonFoodComponentType;
 import net.sweningteam.common.entity.dragons.base.interfaces.TrustingDragon;
 import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
@@ -117,6 +119,10 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     protected abstract void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump);
 
     protected abstract boolean shouldBeMoving();
+
+    public void handelImpacktDamage(){
+//        this.actuallyHurt(this.level(), DamageTypes.FLY_INTO_WALL,(this.getDeltaMovement().distanceTo(new Vec3(0,0,0))));
+    }
 
     static {
         EATING_PROGRESS = SynchedEntityData.defineId(Dragon.class, EntityDataSerializers.INT);
