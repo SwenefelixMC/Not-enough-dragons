@@ -2,6 +2,9 @@ package net.sweningteam.neoforge;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -12,14 +15,19 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.sweningteam.NotEnoughDragons;
 import net.sweningteam.client.NotEnoughDragonsClient;
 import net.sweningteam.client.entity.renderer.NightFuryRendrer;
 import net.sweningteam.common.registry.ModEntityTypes;
+import net.sweningteam.neoforge.datagen.data.ModDatapackProvider;
 import net.sweningteam.neoforge.platform.NeoForgeNetworkHelper;
 import net.sweningteam.neoforge.platform.NeoForgeRegistryHelper;
+import net.sweningteam.neoforge.worldgen.NeoforgeBiomeModifications;
+
+import java.util.concurrent.CompletableFuture;
 
 @Mod(NotEnoughDragons.MOD_ID)
 public final class NotEnoughDragonsNeoForge {
@@ -51,6 +59,13 @@ public final class NotEnoughDragonsNeoForge {
         public static void onClientSetup(FMLClientSetupEvent event) {
             NotEnoughDragonsClient.registerEntityRenderers(EntityRenderers::register);
         }
-    }
+        @SubscribeEvent
+        public static void gatherServerData(GatherDataEvent.Server event){
+            DataGenerator generator = event.getGenerator();
+            PackOutput packOutput = generator.getPackOutput();
+            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+            generator.addProvider(true, new ModDatapackProvider(packOutput,lookupProvider));
+        }
+    }
 }

@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:animals_spawnable_on",
+      "required": false
+    },
+    "minecraft:stone",
+    "minecraft:moss_block",
+    "minecraft:moss_carpet",
+    "minecraft:snow",
+    "minecraft:snow_block",
+    "minecraft:packed_ice",
+    "minecraft:gravel",
+    "minecraft:calcite"
+  ]
+}

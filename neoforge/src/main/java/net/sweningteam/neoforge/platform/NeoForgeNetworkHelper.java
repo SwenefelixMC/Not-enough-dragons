@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -74,7 +75,7 @@ public class NeoForgeNetworkHelper implements NetworkHelper {
     @Override
     public void sendToServer(Object message) {
         if (message instanceof CustomPacketPayload payload) {
-            //PacketDistributor.sendToServer(payload);
+            ClientPacketDistributor.sendToServer(payload);
         }
     }
 

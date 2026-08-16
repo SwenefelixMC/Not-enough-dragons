@@ -16,5 +16,6 @@ public final class NotEnoughDragonsFabric implements ModInitializer {
         // Run our common setup.
         NotEnoughDragons.init();
         ModEntityTypes.registerEntityAtributes(FabricDefaultAttributeRegistry::register);
+        FabricSpawns.register();
     }
 }

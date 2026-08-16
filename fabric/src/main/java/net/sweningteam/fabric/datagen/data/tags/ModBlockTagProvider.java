@@ -7,7 +7,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.sweningteam.common.registry.ModBlocks;
+import net.sweningteam.common.registry.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -22,6 +24,19 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL).addElement(getKey(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
+        getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL)
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
+
+        getOrCreateRawBuilder(ModTags.Blocks.DRAGONS_SPAWNS_ON)
+                .addOptionalTag(BlockTags.ANIMALS_SPAWNABLE_ON.location())
+                .addElement(getKey(Blocks.STONE))
+                .addElement(getKey(Blocks.MOSS_BLOCK))
+                .addElement(getKey(Blocks.MOSS_CARPET))
+                .addElement(getKey(Blocks.SNOW))
+                .addElement(getKey(Blocks.SNOW_BLOCK))
+                .addElement(getKey(Blocks.PACKED_ICE))
+                .addElement(getKey(Blocks.GRAVEL))
+                .addElement(getKey(Blocks.CALCITE));
+
     }
 }

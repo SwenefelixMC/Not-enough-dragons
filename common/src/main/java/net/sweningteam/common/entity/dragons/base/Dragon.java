@@ -1,16 +1,16 @@
 package net.sweningteam.common.entity.dragons.base;
 
-import com.google.gson.Gson;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -18,18 +18,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
 import net.sweningteam.common.dragon.food.DragonFoodComponentType;
 import net.sweningteam.common.entity.dragons.base.interfaces.TrustingDragon;
 import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
+import net.sweningteam.common.registry.ModTags;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 
 public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon {
-
-    Gson gson = new Gson();
 
     @Override
     public LivingEntity getControllingPassenger() {
@@ -80,7 +79,6 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
         return false;
     }
 
-
     public boolean entityIsDanger(LivingEntity entity){
         ItemStack MainStack = entity.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack OffStack = entity.getItemInHand(InteractionHand.OFF_HAND);
@@ -93,8 +91,8 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
             if (this.entityData.get(EATING_PROGRESS) > 0) {
                 this.entityData.set(EATING_PROGRESS,this.entityData.get(EATING_PROGRESS)- 1);
             }
-
         }
+        updateTrackedData();
         super.tick();
     }
 
@@ -118,10 +116,14 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     }
     protected abstract void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump);
 
-    protected abstract boolean shouldBeMoving();
-
     public void handelImpacktDamage(){
-//        this.actuallyHurt(this.level(), DamageTypes.FLY_INTO_WALL,(this.getDeltaMovement().distanceTo(new Vec3(0,0,0))));
+    }
+    public void updateTrackedData(){
+
+    }
+
+    public static boolean checkDragonSpawnRules(EntityType<? extends Dragon> entityType, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+        return level.getBlockState(pos.below()).is(ModTags.Blocks.DRAGONS_SPAWNS_ON) && isBrightEnoughToSpawn(level, pos);
     }
 
     static {

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public interface TrustingDragon {
-    public DragonTrust trust = new DragonTrust();
+    DragonTrust trust = new DragonTrust();
 
     Gson gson = new Gson();
 
@@ -27,13 +27,11 @@ public interface TrustingDragon {
 
     }
 
-    default void getNotifiedTrust(Dragon sender, UUID entity, double trust){
-        if(this instanceof Dragon){
+    default void getNotifiedTrust(Dragon sender, Dragon resaver, UUID entity, double trustAdder){
+        if(resaver instanceof Dragon){
             if(this != sender){
-                
+                trust.setTrust(entity,trust.getTrust(entity)+trustAdder);
             }
         }
-
     }
-
 }

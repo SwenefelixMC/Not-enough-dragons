@@ -44,7 +44,7 @@ public class NeoForgeRegistryHelper implements RegisterHelper {
     @Override
     @SuppressWarnings("unchecked")
     public <T> Supplier<T> register(Registry<? super T> registry, String name, Supplier<T> value) {
-        //return ((DeferredRegister<T>) CACHED.computeIfAbsent(registry.key(), key -> DeferredRegister.create(key.location(), NotEnoughDragons.MOD_ID))).register(name, value);
+        //return ((DeferredRegister<T>) CACHED.computeIfAbsent(registry.key(), key -> DeferredRegister.create(key.name(), NotEnoughDragons.MOD_ID))).register(name, value);
         DeferredRegister deferredRegister = DeferredRegister.create(registry.key(), NotEnoughDragons.MOD_ID);
         if (!defaultedRegistries.contains(deferredRegister)){
             defaultedRegistries.add(deferredRegister);
