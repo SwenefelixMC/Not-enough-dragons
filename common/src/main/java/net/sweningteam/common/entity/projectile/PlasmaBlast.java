@@ -25,13 +25,14 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.sweningteam.NotEnoughDragons;
+import net.sweningteam.common.entity.projectile.base.BlastProjectile;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.animatable.manager.AnimatableManager;
 
-public class PlasmaBlast extends AbstractHurtingProjectile implements GeoEntity {
+public class PlasmaBlast extends BlastProjectile implements GeoEntity {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public PlasmaBlast(EntityType<? extends PlasmaBlast> entityType, Level level) {
@@ -40,11 +41,6 @@ public class PlasmaBlast extends AbstractHurtingProjectile implements GeoEntity 
 
     public PlasmaBlast(EntityType<? extends PlasmaBlast> entityType, LivingEntity owner, Vec3 movement, Level level){
         super(entityType,owner,movement,level);
-    }
-
-    @Override
-    protected boolean shouldBurn() {
-        return false;
     }
 
     int Time = 400;
