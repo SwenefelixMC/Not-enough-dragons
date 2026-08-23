@@ -29,7 +29,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import net.sweningteam.NotEnoughDragons;
@@ -44,6 +43,7 @@ import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
 import net.sweningteam.common.registry.ModBlocks;
 import net.sweningteam.common.registry.ModDragonFoodComponentTypes;
 import net.sweningteam.common.registry.ModEntityTypes;
+import net.sweningteam.common.registry.ModTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -191,6 +191,8 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
 
     int attackChargeTimer = 0;
 
+    int dangerTimer = 0;
+
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(AGGRO, false);
@@ -291,14 +293,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
 
         this.targetSelector.addGoal(0,new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10,true, false, this::isAngryAt));
 
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Skeleton.class, true, false));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Zombie.class, true, false));
-
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Pillager.class, true, false));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Evoker.class, true, false));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Vindicator.class, true, false));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Witch.class, true, false));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Ravager.class, true, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false,(livingEntity, serverLevel) -> livingEntity.getType().is(ModTags.EntityTypes.NIGHT_FURY_GETS_ANGRY_AT)));
     }
 
     public static AttributeSupplier.Builder createAtributes() {
@@ -360,13 +355,14 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         addTrustSaveData(output);
-        output.putBoolean("tamed", isTamed());
+        output.putBoolean("Tamed", isTamed());
         addPersistentAngerSaveData(output);
         EntityReference.store(this.owner, output, "Owner");
         addHungerSaveData(output);
         output.putInt("HungryDecreaseTime", HungerDecreseTimer);
         output.putInt("BlinkTime", blinkTimer);
         addFlyingData(output,this);
+        output.putInt("DangerTimer", dangerTimer);
         super.addAdditionalSaveData(output);
     }
 
@@ -380,6 +376,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         HungerDecreseTimer = input.getIntOr("HungryDecreaseTime",200);
         blinkTimer = input.getIntOr("BlinkTime",200);
         readFlyingData(input,this);
+        dangerTimer = input.getIntOr("DangerTimer",0);
         super.readAdditionalSaveData(input);
     }
 
@@ -508,30 +505,56 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         boolean Should_be_sneaking = false;
         boolean Should_be_aggressive = false;
         boolean Should_be_aggro = false;
-
-        List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(15)).stream().toList();
+        String msg = "";
+        List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(20)).stream().toList();
         for ( int i = 1; i < list.size(); i++){
-            boolean canBeAgroAtEntity = true;
+
             LivingEntity entity = list.get(i);
-            if(entity instanceof Player) {
-                canBeAgroAtEntity = false;
+            boolean canBeAgroAtEntity = canGetAngryAt(entity);
+
+            if(entity instanceof Player player) {
+                canBeAgroAtEntity = !player.isCreative() && !player.isSpectator();
             }
             if(canBeAgroAtEntity){
-                if(this.distanceToSqr(entity) <= 15 ){
+                if(this.distanceTo(entity) <= 18 ){
                     Should_be_sneaking = true;
+                    msg = "Sneaking";
+                }
+                if (trust.getTrust(entity.getUUID()) < 50D){
+                    if(this.distanceTo(entity) <= 12 ){
+                        Should_be_aggro = true;
+                        msg = "Aggro";
+                        if(entityIsDanger(entity)){
+                            if(dangerTimer <= 100 && getTarget() != null){
+                                dangerTimer += 1;
+                            }else {
+                                dangerTimer = 0;
+                                setTarget(entity);
+                                Should_be_aggressive = true;
+                                msg = "Aggresive Far";
+                            }
+                        }
+                    }
+                    if(this.distanceTo(entity) <= 6 ){
+                        setTarget(entity);
+                        Should_be_aggressive = true;
+                        msg = "Aggresive Near";
+                    }
+                }else {
+                    if(this.distanceTo(entity) <= 6 ){
+                        Should_be_aggro = true;
+                        msg = "Aggro";
+                        if(entityIsDanger(entity)){
+                            setTarget(entity);
+                            Should_be_aggressive = true;
+                            msg = "Aggresive";
+                        }
+                    }
                 }
             }
-
-//                if (TrustingDragon.trust.getTrust(entity.getUUID()) < 100 || trust.getTrust(entity.getUUID()) == null) {
-//                    Should_be_sneaking = true;
-//                }
-//                if (entity.getUUID().equals(getPersistentAngerTarget()) || (trust.getTrust(entity.getUUID()) < 50)) {
-//                    if (!entity.isShiftKeyDown()) {
-//                        setTarget(entity);
-//                        Should_be_aggressive = true;
-//                    }
-//                }
-
+            if (!msg.isEmpty()){
+                NotEnoughDragons.LOGGER.info(msg);
+            }
         }
         if(Should_be_sneaking){
             this.setShiftKeyDown(true);
@@ -539,36 +562,11 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         if(Should_be_aggressive){
             setRemainingPersistentAngerTime(200);
         }
+        entityData.set(AGGRO, Should_be_aggro);
     }
-
-//    public void SmallBox(){
-//        boolean Should_be_aggro = false;
-//        List<LivingEntity> list1 = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(9)).stream().toList();
-//        for(int i = 1; i<list1.size(); i++){
-//            LivingEntity entity = list1.get(i);
-//            if(entity instanceof Player && !((Player) entity).isCreative()) {
-//                if (trust.getTrust(entity.getUUID()) <= 50) {
-//                    Should_be_aggro = true;
-//                }
-//                if(trust.getTrust(entity.getUUID())< 50) {
-//                    setTarget(entity);
-//                }else if(trust.getTrust(entity.getUUID()) < 100){
-//                    if(!entity.isShiftKeyDown()) {
-//                        setTarget(entity);
-//                    }
-//                }
-//            }
-//        }
-//        if(Should_be_aggro){
-//            entityData.set(AGGRO, true);
-//        }else {
-//            entityData.set(AGGRO, false);
-//        }
-//    }
 
     public void AngerManager(){
     this.BigBox();
-//    this.SmallBox();
     }
 
     @Override
@@ -681,7 +679,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         }
         Entity entity= damageSource.getEntity();
         if (entity instanceof Mob || entity instanceof Player){
-            boolean canAttack = true;
+            boolean canAttack = !(entity == this);
             if (entity instanceof Player player){
                 if (player.isCreative() || player.isSpectator()){
                     canAttack = false;

@@ -9,18 +9,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.sweningteam.NotEnoughDragons;
 import net.sweningteam.common.dragon.food.DragonFoodComponentType;
 import net.sweningteam.common.entity.dragons.base.interfaces.TrustingDragon;
 import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
@@ -65,11 +65,6 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
-        super.addAdditionalSaveData(output);
-    }
-
-    @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
     }
@@ -82,7 +77,20 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     public boolean entityIsDanger(LivingEntity entity){
         ItemStack MainStack = entity.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack OffStack = entity.getItemInHand(InteractionHand.OFF_HAND);
-        return !entity.isShiftKeyDown() || !MainStack.is(ItemTags.SWORDS) || !MainStack.is(ItemTags.AXES) || !MainStack.is(Items.BOW) || !MainStack.is(Items.SHIELD) || !OffStack.is(ItemTags.SWORDS) || !OffStack.is(ItemTags.AXES) || !OffStack.is(Items.BOW) || !OffStack.is(Items.SHIELD);
+        return  entity.isShiftKeyDown() ||
+                this.dangerousItemInStack(MainStack) ||
+                this.dangerousItemInStack(OffStack) ||
+                entity.hasItemInSlot(EquipmentSlot.BODY) ||
+                entity.hasItemInSlot(EquipmentSlot.FEET) ||
+                entity.hasItemInSlot(EquipmentSlot.LEGS) ||
+                entity.hasItemInSlot(EquipmentSlot.HEAD);
+    }
+    public boolean dangerousItemInStack(ItemStack stack) {
+        return stack.is(ModTags.Items.DRAGON_PROVOCATIVE);
+    }
+
+    public boolean canGetAngryAt(LivingEntity entity){
+        return !(entity == this) && (entity.getType().is(ModTags.EntityTypes.NIGHT_FURY_GETS_ANGRY_AT) || entity instanceof Player);
     }
 
     @Override
@@ -125,6 +133,7 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     public static boolean checkDragonSpawnRules(EntityType<? extends Dragon> entityType, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(ModTags.Blocks.DRAGONS_SPAWNS_ON) && isBrightEnoughToSpawn(level, pos);
     }
+
 
     static {
         EATING_PROGRESS = SynchedEntityData.defineId(Dragon.class, EntityDataSerializers.INT);

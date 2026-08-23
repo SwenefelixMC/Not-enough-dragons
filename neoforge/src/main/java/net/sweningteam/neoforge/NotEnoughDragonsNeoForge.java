@@ -59,6 +59,10 @@ public final class NotEnoughDragonsNeoForge {
         public static void onClientSetup(FMLClientSetupEvent event) {
             NotEnoughDragonsClient.registerEntityRenderers(EntityRenderers::register);
         }
+    }
+
+    @EventBusSubscriber(modid = NotEnoughDragons.MOD_ID, value = Dist.DEDICATED_SERVER)
+    public static class ServerModEvents {
         @SubscribeEvent
         public static void gatherServerData(GatherDataEvent.Server event){
             DataGenerator generator = event.getGenerator();

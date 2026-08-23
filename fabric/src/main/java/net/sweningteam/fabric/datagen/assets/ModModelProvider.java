@@ -4,9 +4,17 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.sweningteam.common.registry.ModBlocks;
 import net.sweningteam.common.registry.ModItems;
+
+import static net.minecraft.client.data.models.BlockModelGenerators.createSlab;
+import static net.minecraft.client.data.models.BlockModelGenerators.plainVariant;
 
 public class ModModelProvider extends FabricModelProvider {
 
@@ -33,6 +41,8 @@ public class ModModelProvider extends FabricModelProvider {
                 .stairs(ModBlocks.RAW_GRONCKLE_IRON_STAIRS.get())
                 .slab(ModBlocks.RAW_GRONCKLE_IRON_SLAB.get());
 
+//        createCustomSlab(ModBlocks.GRONCKLE_LAVA.get(),blockModelGenerators);
+//        createCustomSlab(ModBlocks.MOLTEN_GRONCKLE_IRON.get(),blockModelGenerators);
         blockModelGenerators.family(ModBlocks.GRONCKLE_LAVA_BLOCK.get())
                 .slab(ModBlocks.GRONCKLE_LAVA.get());
         blockModelGenerators.family(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get())
@@ -43,8 +53,8 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerators itemModelGenerators) {
         itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.createFlatItemModel(ModItems.GOLD_COIN.get(), ModelTemplates.FLAT_ITEM);
-//        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_BARS.get().asItem(), ModelTemplates.FLAT_ITEM);
-//        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_CHAIN.get().asItem(), ModelTemplates.FLAT_ITEM);
-//        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_DOOR.get().asItem(), ModelTemplates.FLAT_ITEM);
+//        itemModelGenerators.createFlatItemModel(ModItems.GRONCKLE_IRON_BARS.get(), ModelTemplates.FLAT_ITEM);
+//        itemModelGenerators.createFlatItemModel(ModItems.GRONCKLE_IRON_TRAP_DOOR.get(), ModelTemplates.FLAT_ITEM);
+//        itemModelGenerators.createFlatItemModel(ModItems.GRONCKLE_IRON_DOOR.get(), ModelTemplates.FLAT_ITEM);
     }
 }
