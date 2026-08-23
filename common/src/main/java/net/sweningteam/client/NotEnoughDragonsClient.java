@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
+import net.sweningteam.client.entity.renderer.NightFuryEggRenderer;
 import net.sweningteam.client.entity.renderer.NightFuryRendrer;
 import net.sweningteam.client.entity.renderer.PlasmaBlastRenderer;
 import net.sweningteam.common.registry.ModBlocks;
@@ -24,5 +25,6 @@ public class NotEnoughDragonsClient {
     public static void registerEntityRenderers(BiConsumer<EntityType< ?extends Entity>, EntityRendererProvider> consumer){
         consumer.accept(ModEntityTypes.NIGHT_FURY.get() , NightFuryRendrer::new);
         consumer.accept(ModEntityTypes.PLASMA_BLAST.get(), PlasmaBlastRenderer::new);
+        consumer.accept(ModEntityTypes.NIGHT_FURY_EGG.get(), NightFuryEggRenderer::new);
     }
 }

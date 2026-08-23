@@ -37,6 +37,7 @@ import net.sweningteam.common.dragon.food.DragonFoodComponentType;
 import net.sweningteam.common.entity.ai.ShootProjectileGoal;
 import net.sweningteam.common.entity.dragons.base.Dragon;
 import net.sweningteam.common.entity.dragons.base.interfaces.*;
+import net.sweningteam.common.entity.egg.NightFuryEgg;
 import net.sweningteam.common.entity.projectile.PlasmaBlast;
 import net.sweningteam.common.entity.projectile.base.BlastProjectile;
 import net.sweningteam.common.network.ModNetworkHandler;
@@ -280,16 +281,18 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
 
-        this.goalSelector.addGoal(1, new ShootProjectileGoal(this));
+        this.goalSelector.addGoal(2, new ShootProjectileGoal(this));
 
-        this.goalSelector.addGoal(2,new AvoidEntityGoal<>(this,Ravager.class,15F,1F,2F));
-        this.goalSelector.addGoal(3,new MeleeAttackGoal(this,1D,false));
+        this.goalSelector.addGoal(3,new AvoidEntityGoal<>(this,Ravager.class,15F,1F,2F));
+        this.goalSelector.addGoal(4,new MeleeAttackGoal(this,1D,false));
 
-        this.goalSelector.addGoal(4,new WaterAvoidingRandomStrollGoal(this,1.0));
+        this.goalSelector.addGoal(5,new WaterAvoidingRandomStrollGoal(this,1.0));
 
-        this.goalSelector.addGoal(5,new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6,new RandomLookAroundGoal(this));
 
-        this.targetSelector.addGoal(0,new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10,true, false, this::isAngryAt));
+        this.targetSelector.addGoal(1,new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10,true, false, this::isAngryAt));
+
+        this.targetSelector.addGoal(5,new BreedGoal(this,1.0D));
 
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Skeleton.class, true, false));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Zombie.class, true, false));
@@ -569,6 +572,24 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     public void AngerManager(){
     this.BigBox();
 //    this.SmallBox();
+    }
+
+    @Override
+    public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+        return new NightFury(ModEntityTypes.NIGHT_FURY.get(),level);
+    }
+
+    @Override
+    public void spawnChildFromBreeding(ServerLevel level, Animal mate) {
+        NightFuryEgg egg = new NightFuryEgg(ModEntityTypes.NIGHT_FURY_EGG.get(), level);
+        egg.setPos(this.position());
+        this.finalizeSpawnChildFromBreeding(level, mate, (AgeableMob)null);
+        level.addFreshEntity(egg);
+    }
+
+    @Override
+    public boolean isFood(ItemStack stack) {
+        return stack.is(Items.RABBIT_STEW);
     }
 
     @Override

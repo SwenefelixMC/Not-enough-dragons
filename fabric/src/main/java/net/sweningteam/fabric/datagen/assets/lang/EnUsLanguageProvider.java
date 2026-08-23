@@ -19,6 +19,7 @@ public class EnUsLanguageProvider extends FabricLanguageProvider {
     //Items
     translationBuilder.add(ModItems.NIGHT_FURY.get(),"Night Fury");
     translationBuilder.add(ModItems.GOLD_COIN.get(), "Gold Coin");
+        translationBuilder.add(ModItems.NIGHT_FURY_EGG.get(), "Night Fury Egg");
     //Blocks
     translationBuilder.add(ModBlocks.NIGHT_FURY_SCALES.get().asItem(), "Night Fury scales");
     translationBuilder.add(ModBlocks.GRONCKLE_IRON_BLOCK.get().asItem(), "Block of Gronckel Iron");

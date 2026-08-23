@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[10,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "All Right Reserved"
 
 [[mods]]
 modId = "not_enough_dragons"
@@ -32,6 +32,7 @@ type = "required"
 versionRange = "5.3-alpha-3"
 ordering = "NONE"
 side = "BOTH"
+
 
 
 [[mixins]]

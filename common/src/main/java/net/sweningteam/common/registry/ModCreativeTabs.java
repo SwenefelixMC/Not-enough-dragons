@@ -17,6 +17,7 @@ public class ModCreativeTabs {
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsDragonsContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsDragonsContent = new ArrayList<>();
         NotEnoughDragonsDragonsContent.add(ModItems.NIGHT_FURY);
+        NotEnoughDragonsDragonsContent.add(ModItems.NIGHT_FURY_EGG);
         NotEnoughDragonsDragonsContent.add(()-> ModBlocks.NIGHT_FURY_SCALES.get().asItem());
         return NotEnoughDragonsDragonsContent;
     }

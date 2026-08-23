@@ -43,6 +43,7 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerators itemModelGenerators) {
         itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.createFlatItemModel(ModItems.GOLD_COIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY_EGG.get(), ModelTemplates.FLAT_ITEM);
 //        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_BARS.get().asItem(), ModelTemplates.FLAT_ITEM);
 //        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_CHAIN.get().asItem(), ModelTemplates.FLAT_ITEM);
 //        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_DOOR.get().asItem(), ModelTemplates.FLAT_ITEM);

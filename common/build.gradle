@@ -18,4 +18,5 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
     modImplementation"software.bernie.geckolib:geckolib-common-${minecraft_version}:${geckolib_version}"
+
 }

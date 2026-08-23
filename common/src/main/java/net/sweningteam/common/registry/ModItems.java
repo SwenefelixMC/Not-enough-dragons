@@ -18,6 +18,7 @@ public class ModItems {
 
     public static final Supplier<Item> NIGHT_FURY = registerItem("night_fury", ()->new SpawnEggItem(baseProperties("night_fury").spawnEgg(ModEntityTypes.NIGHT_FURY.get())));
     public static final Supplier<Item> GOLD_COIN = registerItem("gold_coin",()-> new Item(baseProperties("gold_coin")));
+    public static final Supplier<Item> NIGHT_FURY_EGG = registerItem("night_fury_egg", ()->new SpawnEggItem(baseProperties("night_fury_egg").spawnEgg(ModEntityTypes.NIGHT_FURY_EGG.get())));
 
     public static <I extends Item> Supplier<I> registerItem(String id, Supplier<I> item){
         Supplier<I> itemSupplier = register(id, item);
