@@ -46,7 +46,7 @@ public class ShootProjectileGoal extends Goal {
     @Override
     public void tick() {
         LivingEntity target = dragon.getTarget();
-        if( target != null){
+        if( target != null && target.isAlive()){
             if(target.distanceToSqr(this.dragon) <  4096.0D && this.dragon.hasLineOfSight(target)){
                 shootingDragon.setChargeTimer(shootingDragon.chargeTimer()+1);
                 if (shootingDragon.chargeTimer() >= shootingDragon.maxChargeTimer()){

@@ -6,6 +6,7 @@
   "client": [
   ],
   "mixins": [
+    "RaiderMixins"
   ],
   "injectors": {
     "defaultRequire": 1

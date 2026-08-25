@@ -2,6 +2,7 @@ package net.sweningteam.common.entity.dragons.strike_class.night_furry;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,7 +30,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import net.sweningteam.NotEnoughDragons;
@@ -41,10 +41,9 @@ import net.sweningteam.common.entity.egg.NightFuryEgg;
 import net.sweningteam.common.entity.projectile.PlasmaBlast;
 import net.sweningteam.common.entity.projectile.base.BlastProjectile;
 import net.sweningteam.common.network.ModNetworkHandler;
+import net.sweningteam.common.network.packages.c2s.DragonFlyingUpdatePackage;
 import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
-import net.sweningteam.common.registry.ModBlocks;
-import net.sweningteam.common.registry.ModDragonFoodComponentTypes;
-import net.sweningteam.common.registry.ModEntityTypes;
+import net.sweningteam.common.registry.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -98,6 +97,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     @Override
     public void setFlying(Boolean bl) {
         entityData.set(IS_FLYING,bl);
+        setNoGravity(bl);
         if(isFlying() != bl){
             NotEnoughDragons.LOGGER.info("Flying Broke!");
         }
@@ -191,6 +191,22 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     protected boolean allowStandSliding;
 
     int attackChargeTimer = 0;
+
+    int dangerTimer = 0;
+
+    @Override
+    public void setFlyingSpeed(double speed) {
+        flyingSpeed = speed;
+    }
+
+    @Override
+    public double flyingSpeed() {
+        return flyingSpeed;
+    }
+
+    double flyingSpeed = 0;
+
+    double horizontalSpeed;
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
@@ -294,27 +310,24 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
 
         this.targetSelector.addGoal(5,new BreedGoal(this,1.0D));
 
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Skeleton.class, true, false));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Zombie.class, true, false));
-
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Pillager.class, true, false));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Evoker.class, true, false));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Vindicator.class, true, false));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Witch.class, true, false));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Ravager.class, true, false));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, false,(livingEntity, serverLevel) -> livingEntity.getType().is(ModTags.EntityTypes.NIGHT_FURY_GETS_ANGRY_AT)));
     }
 
     public static AttributeSupplier.Builder createAtributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH,140)
                 .add(Attributes.MOVEMENT_SPEED,0.38)
-                .add(Attributes.FLYING_SPEED,6)
+                .add(Attributes.FLYING_SPEED,1.1)
                 .add(Attributes.STEP_HEIGHT,1.1)
                 .add(Attributes.ARMOR,1)
                 .add(Attributes.ATTACK_DAMAGE,6.5)
                 .add(Attributes.ATTACK_KNOCKBACK,1.25)
                 .add(Attributes.FOLLOW_RANGE,20)
-                .add(Attributes.JUMP_STRENGTH,0.8);
+                .add(Attributes.JUMP_STRENGTH,0.8)
+                .add(Attributes.SNEAKING_SPEED,0.1D)
+                .add(Holder.direct(ModAttributes.DRAGON_SPRINTING_SPEED.get()),0.7D)
+                .add(Holder.direct(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED.get()),0.25)
+                .add(Holder.direct(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED.get()),2.2);
     }
 
     public NightFury(EntityType<? extends Animal> entityType, Level level) {
@@ -363,13 +376,14 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         addTrustSaveData(output);
-        output.putBoolean("tamed", isTamed());
+        output.putBoolean("Tamed", isTamed());
         addPersistentAngerSaveData(output);
         EntityReference.store(this.owner, output, "Owner");
         addHungerSaveData(output);
         output.putInt("HungryDecreaseTime", HungerDecreseTimer);
         output.putInt("BlinkTime", blinkTimer);
         addFlyingData(output,this);
+        output.putInt("DangerTimer", dangerTimer);
         super.addAdditionalSaveData(output);
     }
 
@@ -383,6 +397,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         HungerDecreseTimer = input.getIntOr("HungryDecreaseTime",200);
         blinkTimer = input.getIntOr("BlinkTime",200);
         readFlyingData(input,this);
+        dangerTimer = input.getIntOr("DangerTimer",0);
         super.readAdditionalSaveData(input);
     }
 
@@ -426,7 +441,10 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     protected void executeRidersJump(float playerJumpPendingScale, Vec3 travelVector) {
         double jumpingPower = this.getJumpPower(playerJumpPendingScale);
         Vec3 deltaMovement = this.getDeltaMovement();
-        this.addDeltaMovement(this.getLookAngle().multiply((double)1.0F, (double)0.0F, (double)1.0F).normalize().scale((double)(15 * playerJumpPendingScale * deltaMovement.horizontalDistance()) * this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (double)this.getBlockSpeedFactor()).add((double)0.0F, (double)(0.1 + 1.1 * playerJumpPendingScale) * jumpingPower, (double)0.0F));
+        this.addDeltaMovement(this.getLookAngle().multiply((double)1.0F, (double)0.0F, (double)1.0F).normalize().scale((double)(16 * playerJumpPendingScale * deltaMovement.horizontalDistance()) * this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (double)this.getBlockSpeedFactor()).add((double)0.0F, (double)(0.1 + 1.1 * playerJumpPendingScale)*1.1 * jumpingPower, (double)0.0F));
+        if(playerJumpPendingScale >= 0.8){
+            ModNetworkHandler.sendC2SPacket(new DragonFlyingUpdatePackage(true));
+        }
     }
 
     private boolean isTamed(){
@@ -511,30 +529,47 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         boolean Should_be_sneaking = false;
         boolean Should_be_aggressive = false;
         boolean Should_be_aggro = false;
-
-        List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(15)).stream().toList();
+        String msg = "";
+        List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(20)).stream().toList();
         for ( int i = 1; i < list.size(); i++){
-            boolean canBeAgroAtEntity = true;
+
             LivingEntity entity = list.get(i);
-            if(entity instanceof Player) {
-                canBeAgroAtEntity = false;
+            boolean canBeAgroAtEntity = canGetAngryAt(entity);
+
+            if(entity instanceof Player player) {
+                canBeAgroAtEntity = !player.isCreative() && !player.isSpectator();
             }
             if(canBeAgroAtEntity){
-                if(this.distanceToSqr(entity) <= 15 ){
+                if(this.distanceTo(entity) <= 18 ){
                     Should_be_sneaking = true;
                 }
+                if (trust.getTrust(entity.getUUID()) < 50D){
+                    if(this.distanceTo(entity) <= 12 ){
+                        Should_be_aggro = true;
+                        if(entityIsDanger(entity)){
+                            if(dangerTimer <= 100 && getTarget() != null){
+                                dangerTimer += 1;
+                            }else {
+                                dangerTimer = 0;
+                                setTarget(entity);
+                                Should_be_aggressive = true;
+                            }
+                        }
+                    }
+                    if(this.distanceTo(entity) <= 6 ){
+                        setTarget(entity);
+                        Should_be_aggressive = true;
+                    }
+                }else {
+                    if(this.distanceTo(entity) <= 6 ){
+                        Should_be_aggro = true;
+                        if(entityIsDanger(entity)){
+                            setTarget(entity);
+                            Should_be_aggressive = true;
+                        }
+                    }
+                }
             }
-
-//                if (TrustingDragon.trust.getTrust(entity.getUUID()) < 100 || trust.getTrust(entity.getUUID()) == null) {
-//                    Should_be_sneaking = true;
-//                }
-//                if (entity.getUUID().equals(getPersistentAngerTarget()) || (trust.getTrust(entity.getUUID()) < 50)) {
-//                    if (!entity.isShiftKeyDown()) {
-//                        setTarget(entity);
-//                        Should_be_aggressive = true;
-//                    }
-//                }
-
         }
         if(Should_be_sneaking){
             this.setShiftKeyDown(true);
@@ -542,36 +577,11 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         if(Should_be_aggressive){
             setRemainingPersistentAngerTime(200);
         }
+        entityData.set(AGGRO, Should_be_aggro);
     }
-
-//    public void SmallBox(){
-//        boolean Should_be_aggro = false;
-//        List<LivingEntity> list1 = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(9)).stream().toList();
-//        for(int i = 1; i<list1.size(); i++){
-//            LivingEntity entity = list1.get(i);
-//            if(entity instanceof Player && !((Player) entity).isCreative()) {
-//                if (trust.getTrust(entity.getUUID()) <= 50) {
-//                    Should_be_aggro = true;
-//                }
-//                if(trust.getTrust(entity.getUUID())< 50) {
-//                    setTarget(entity);
-//                }else if(trust.getTrust(entity.getUUID()) < 100){
-//                    if(!entity.isShiftKeyDown()) {
-//                        setTarget(entity);
-//                    }
-//                }
-//            }
-//        }
-//        if(Should_be_aggro){
-//            entityData.set(AGGRO, true);
-//        }else {
-//            entityData.set(AGGRO, false);
-//        }
-//    }
 
     public void AngerManager(){
     this.BigBox();
-//    this.SmallBox();
     }
 
     @Override
@@ -601,6 +611,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         }
         super.tick();
         if(!this.level().isClientSide()){
+            this.setDeltaMovement(this.getDeltaMovement().x,this.getDeltaMovement().y-0.01,this.getDeltaMovement().z);
             updtateFlying(this);
             if (isFlying()){
                 this.setDeltaMovement(this.getDeltaMovement().add(0,-0.1,0));
@@ -610,12 +621,14 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
             }
             if(this.HungerDecreseTimer <= 30){
                 if(isFlapping()){
+                    this.HungerDecreseTimer = this.HungerDecreseTimer +4;
+                } else if (isFlying()) {
                     this.HungerDecreseTimer = this.HungerDecreseTimer +3;
-                } else if (isFallFlying()) {
-                    this.HungerDecreseTimer = this.HungerDecreseTimer +2;
                 } else if (isSprinting()) {
-                    this.HungerDecreseTimer = this.HungerDecreseTimer +2;
+                    this.HungerDecreseTimer = this.HungerDecreseTimer +3;
                 } else if (isMoving() && !isShiftKeyDown()) {
+                    this.HungerDecreseTimer = this.HungerDecreseTimer +2;
+                } else if (isMoving() && isShiftKeyDown() || isAlive()) {
                     this.HungerDecreseTimer = this.HungerDecreseTimer +1;
                 }
             }else {
@@ -663,7 +676,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
             boolean isSprintPressed = localPlayer.input.keyPresses.sprint();
             boolean isBackwardPressed = localPlayer.input.keyPresses.backward();
             boolean isJumpPressed = localPlayer.input.keyPresses.jump();
-            if(this.onGround()){
+            if(this.onGround() || isInLiquid()){
                 if(this.playerJumpPendingScale > 0.0F && !this.isJumping()){
                     executeRidersJump(playerJumpPendingScale, travelVector);
                 }
@@ -702,7 +715,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         }
         Entity entity= damageSource.getEntity();
         if (entity instanceof Mob || entity instanceof Player){
-            boolean canAttack = true;
+            boolean canAttack = !(entity == this);
             if (entity instanceof Player player){
                 if (player.isCreative() || player.isSpectator()){
                     canAttack = false;
@@ -793,10 +806,6 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         this.entityData.set(MOVE_BACKWARD_PRESSED, backward);
         this.entityData.set(SPRINT_PRESSED, sprint);
         this.entityData.set(JUMP_PRESSED, jump);
-         if (!this.onGround()&&entityData.get(JUMP_PRESSED)){
-            setNoGravity(true);
-            setFlying(true);
-        }
     }
 
     public double getMovementSpeed(){
@@ -810,51 +819,84 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     }
 
     public Vec3 updateMovementInput(Player rider, Vec3 movementInput){
+        zza = 0;
+        if(inputForward()) zza = 1;
+        entityData.set(SNEAKING,false);
+        entityData.set(SPRINTING, false);
+        if(inputSprint()) setSprinting(true);
+        if(inputSlow()) setShiftKeyDown(true);
+        setYRot(rider.getYHeadRot());
+        setRot(rider.getYHeadRot(),rider.getXRot()*0.5F);
+        Vec3 deltamovement = new Vec3(0,0,0);
+        double HorizontalVelocity = getDeltaMovement().horizontalDistance();
+        if(Math.abs(HorizontalVelocity) != HorizontalVelocity){
+            HorizontalVelocity = HorizontalVelocity * -1;
+        }
+        deltamovement = new Vec3(0,getDeltaMovement().y, HorizontalVelocity);
         if (!onGround()){
-            float g = 0.0F;
-            float h = 0.0F;
-            if (rider.zza != 0.0F) {
-                float i = Mth.cos(rider.getXRot() * ((float)Math.PI / 180F));
-                float j = -Mth.sin(rider.getXRot() * ((float)Math.PI / 180F));
-                if (rider.zza < 0.0F) {
-                    i *= -1F;
-                    j *= -1F;
+            if(isFlying()){
+                setXRot(rider.getXRot());
+
+                double flyUpSpeed;
+
+                setSpeed((float) getAttributeValue(Holder.direct(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED.get())));
+                if (inputForward()){
+                    setSpeed((float) getAttributeValue(Attributes.FLYING_SPEED));
+                    if(isSprinting()){
+                        setSpeed((float) getAttributeValue(Holder.direct(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED.get())));
+                    }
+                }
+                if(isShiftKeyDown()){
+                    setSpeed((float) getAttributeValue(Holder.direct(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED.get())));
+                }
+                if (rider.isJumping()){
+                    flyUpSpeed = 1;
+                }else{
+                    flyUpSpeed = -0.1;
+                }
+                float g = 0.0F;
+                float h = 0.0F;
+                if (zza != 0.0F) {
+                    float i = Mth.cos(rider.getXRot() * ((float)Math.PI / 180F));
+                    float j = -Mth.sin(rider.getXRot() * ((float)Math.PI / 180F));
+                    if (zza < 0.0F) {
+                        i *= -1F;
+                        j *= -1F;
+                    }
+
+                    h = j;
+                    g = i;
                 }
 
-                h = j;
-                g = i;
+                if (rider.isJumping()) {
+                    h += 0.5F;
+                }
+                this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
+                return (new Vec3(0, (double)h* getSpeed()/2+flyUpSpeed, (double)g* getSpeed()*5));
+            } else if (isInLiquid()) {
+                setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
+                double h = 0;
+                if (rider.isJumping()) {
+                    h += 1F;
+                }
+                return new Vec3(0,h,getSpeed()*zza);
+            } else{
+                return new Vec3(0,movementInput.y, 1);
             }
-
-            if (rider.isJumping()) {
-                h += 0.5F;
-            }
-            setRot(rider.getYHeadRot(),rider.getXRot()*0.5F);
-            this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
-
-            return (new Vec3(0, (double)h* this.getAttributeValue(Attributes.FLYING_SPEED)*5, (double)g* this.getAttributeValue(Attributes.FLYING_SPEED)*5));
-        } else {
-            setFlying(false);
-            setNoGravity(false);
-            entityData.set(SNEAKING,false);
-            entityData.set(SPRINTING, false);
-            zza = 0;
-            float y = 0.0F;
-            if(inputForward()) zza = 1;
-            if(inputSprint()) setSprinting(true);
-            if(inputSlow()) setShiftKeyDown(true);
+        }
+        else {
             double landSpeed = zza * getAttributeValue(Attributes.MOVEMENT_SPEED);
             if(isSprinting()){
                 entityData.set(SPRINTING, true);
-                setSpeed(0.7F);
+                setSpeed((float) getAttributeValue(Holder.direct(ModAttributes.DRAGON_SPRINTING_SPEED.get())));
             }else if(isShiftKeyDown()){
                 entityData.set(SNEAKING,true);
-                setSpeed(0.1F);
+                setSpeed((float) getAttributeValue(Attributes.SNEAKING_SPEED));
             }
-            setRot(rider.getYHeadRot(),rider.getXRot()*0.5F);
-            this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
-            return new Vec3(0,movementInput.y - 0.001, landSpeed);
+            return new Vec3(0,movementInput.y, landSpeed);
         }
     }
+
 
     @Override
     protected int calculateFallDamage(double fallDistance, float damageMultiplier) {
@@ -872,13 +914,15 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
 
     }
 
-
     @Override
     public boolean isPushedByFluid() {
         return false;
     }
 
-
+    @Override
+    protected boolean isFlapping() {
+        return isFlying() && inputForward();
+    }
 
     static {
         TRUST_FILTER = (entity, level) -> {

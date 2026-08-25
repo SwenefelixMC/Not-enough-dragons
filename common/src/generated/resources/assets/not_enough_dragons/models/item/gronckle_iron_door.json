@@ -1,3 +1,6 @@
 {
-  "parent": "not_enough_dragons:block/gronckle_iron_door"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "not_enough_dragons:item/gronckle_iron_door"
+  }
 }

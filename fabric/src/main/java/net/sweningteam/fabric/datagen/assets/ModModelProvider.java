@@ -5,6 +5,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.world.level.block.Blocks;
 import net.sweningteam.common.registry.ModBlocks;
 import net.sweningteam.common.registry.ModItems;
 
@@ -26,7 +29,8 @@ public class ModModelProvider extends FabricModelProvider {
         blockModelGenerators.createDoor(ModBlocks.GRONCKLE_IRON_DOOR.get());
         blockModelGenerators.createTrapdoor(ModBlocks.GRONCKLE_IRON_TRAPDOOR.get());
 
-        blockModelGenerators.createCopperChain(ModBlocks.GRONCKLE_IRON_CHAIN.get(),ModBlocks.GRONCKLE_IRON_CHAIN_2.get());
+        blockModelGenerators.createAxisAlignedPillarBlockCustomModel(ModBlocks.GRONCKLE_IRON_CHAIN.get(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(ModBlocks.GRONCKLE_IRON_CHAIN.get(), blockModelGenerators.modelOutput)));
+
         blockModelGenerators.createBarsAndItem(ModBlocks.GRONCKLE_IRON_BARS.get());
 
         blockModelGenerators.family(ModBlocks.RAW_GRONCKLE_IRON_BLOCK.get())
@@ -44,8 +48,5 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.createFlatItemModel(ModItems.GOLD_COIN.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY_EGG.get(), ModelTemplates.FLAT_ITEM);
-//        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_BARS.get().asItem(), ModelTemplates.FLAT_ITEM);
-//        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_CHAIN.get().asItem(), ModelTemplates.FLAT_ITEM);
-//        itemModelGenerators.createFlatItemModel(ModBlocks.GRONCKLE_IRON_DOOR.get().asItem(), ModelTemplates.FLAT_ITEM);
     }
 }

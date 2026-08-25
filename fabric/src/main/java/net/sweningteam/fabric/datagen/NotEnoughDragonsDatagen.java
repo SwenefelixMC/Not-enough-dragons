@@ -9,9 +9,7 @@ import net.sweningteam.fabric.datagen.assets.ModModelProvider;
 import net.sweningteam.fabric.datagen.assets.lang.DeDeLanguageProvider;
 import net.sweningteam.fabric.datagen.assets.lang.EnUsLanguageProvider;
 import net.sweningteam.fabric.datagen.data.Loot.ModBlockLootTableProvider;
-import net.sweningteam.fabric.datagen.data.tags.ModBiomeTagProvider;
-import net.sweningteam.fabric.datagen.data.tags.ModBlockTagProvider;
-import net.sweningteam.fabric.datagen.data.tags.ModItemTagProvider;
+import net.sweningteam.fabric.datagen.data.tags.*;
 
 public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
     @Override
@@ -30,5 +28,7 @@ public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(ModBlockLootTableProvider::new);
 
         pack.addProvider(ModBiomeTagProvider::new);
+        pack.addProvider(ModEntityTagProvider::new);
+        pack.addProvider(ModPoiTypeTags::new);
     }
 }

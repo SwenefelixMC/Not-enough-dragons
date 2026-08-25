@@ -10,15 +10,25 @@ public interface FlyingDragon {
 
     void setFlying(Boolean bl);
 
+    double flyingSpeed();
+
+    void setFlyingSpeed(double speed);
+
     default void addFlyingData(ValueOutput output, Dragon dragon){
         output.putBoolean("Flying",isFlying());
+        output.putDouble("FlyingSpeed", flyingSpeed());
     }
 
     default void readFlyingData(ValueInput input, Dragon dragon){
         setFlying(input.getBooleanOr("Flying",false));
+        setFlyingSpeed(input.getDoubleOr("Flying",0));
     }
 
     default void updtateFlying(Dragon dragon){
+        if(dragon.isInLiquid() && !dragon.hasControllingPassenger()){
+            NotEnoughDragons.LOGGER.info("Stoped Flying");
+            setFlying(false);
+        }
         if(dragon.onGround() && isFlying()){
             NotEnoughDragons.LOGGER.info("Stoped Flying");
             setFlying(false);

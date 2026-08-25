@@ -1,10 +1,7 @@
 package net.sweningteam;
 
 import net.sweningteam.common.network.NetworkHandler;
-import net.sweningteam.common.registry.ModBlocks;
-import net.sweningteam.common.registry.ModCreativeTabs;
-import net.sweningteam.common.registry.ModEntityTypes;
-import net.sweningteam.common.registry.ModItems;
+import net.sweningteam.common.registry.*;
 import net.sweningteam.platform.Services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +17,10 @@ public final class NotEnoughDragons {
         ModItems.init();
         ModBlocks.init();
         ModCreativeTabs.init();
+        ModAttributes.init();
         ModEntityTypes.init();
+        ModPoiTypes.init();
+        ModVillagers.init();
 
         NetworkHandler.init();
     }

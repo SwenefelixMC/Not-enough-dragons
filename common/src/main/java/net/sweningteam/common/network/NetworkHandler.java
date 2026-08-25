@@ -1,11 +1,9 @@
 package net.sweningteam.common.network;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
 import net.sweningteam.NotEnoughDragons;
+import net.sweningteam.common.network.packages.c2s.DragonFlyingUpdatePackage;
 import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
 import net.sweningteam.platform.NetworkHelper;
 import net.sweningteam.platform.Services;
@@ -34,9 +32,19 @@ public class NetworkHandler {
                 DragonRiderInputPackage::decode,
                 DragonRiderInputPackage::handle
         );
+        NETWORK.registerServerbound(
+                DragonFlyingUpdatePackage.class,
+                id("dragon_flying_update"),
+                DragonFlyingUpdatePackage::encode,
+                DragonFlyingUpdatePackage::decode,
+                DragonFlyingUpdatePackage::handle
+        );
     }
 
     public static void sendC2SPacket(Object packet){
         NETWORK.sendToServer(packet);
+    }
+    public static void sendC2TPacket(Entity entity, Object packet){
+        NETWORK.sendToTracking(entity,packet);
     }
 }

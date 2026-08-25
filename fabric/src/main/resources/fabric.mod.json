@@ -26,7 +26,8 @@
     ]
   },
   "mixins": [
-    "not_enough_dragons.mixins.json"
+    "not_enough_dragons.mixins.json",
+    "not_enough_dragons_fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.18.4",

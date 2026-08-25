@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.PoiTypeTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.sweningteam.common.registry.ModBlocks;
@@ -37,6 +38,7 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .addElement(getKey(Blocks.PACKED_ICE))
                 .addElement(getKey(Blocks.GRAVEL))
                 .addElement(getKey(Blocks.CALCITE));
+
 
     }
 }

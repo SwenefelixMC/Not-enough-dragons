@@ -35,7 +35,7 @@ dependencies {
     modImplementation("com.terraformersmc:modmenu:${modmenu_version}")
 
 
-    //modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_fabric_version}"
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
 
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }

@@ -23,6 +23,7 @@ public class ModCreativeTabs {
     }
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent = new ArrayList<>();
+        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.BOOK_OF_DRAGONS.get().asItem());
         NotEnoughDragonsMiscItemsContent.add(ModItems.GOLD_COIN);
         return NotEnoughDragonsMiscItemsContent;
     }
@@ -30,20 +31,22 @@ public class ModCreativeTabs {
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent = new ArrayList<>();
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA_BLOCK.get().asItem());
+
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get().asItem());
 
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_BLOCK.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_STAIRS.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_SLAB.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_BARS.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_DOOR.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_TRAPDOOR.get().asItem());
+        NotEnoughDragonsBlocksContent.add(ModItems.GRONCKLE_IRON_BARS);
+        NotEnoughDragonsBlocksContent.add(ModItems.GRONCKLE_IRON_DOOR);
+        NotEnoughDragonsBlocksContent.add(ModItems.GRONCKLE_IRON_TRAP_DOOR);
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_CHAIN.get().asItem());
 
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.RAW_GRONCKLE_IRON_BLOCK.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.RAW_GRONCKLE_IRON_STAIRS.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.RAW_GRONCKLE_IRON_SLAB.get().asItem());
-
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON.get().asItem());
         return NotEnoughDragonsBlocksContent;
     }
 
