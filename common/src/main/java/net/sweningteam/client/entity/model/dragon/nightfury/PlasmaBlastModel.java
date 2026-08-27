@@ -1,8 +1,7 @@
-package net.sweningteam.client.entity.model;
+package net.sweningteam.client.entity.model.dragon.nightfury;
 
 import net.minecraft.resources.ResourceLocation;
 import net.sweningteam.NotEnoughDragons;
-import net.sweningteam.common.entity.dragons.base.Dragon;
 import net.sweningteam.common.entity.projectile.PlasmaBlast;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.base.GeoRenderState;

@@ -21,4 +21,5 @@ dependencies {
 
     modImplementation"software.bernie.geckolib:geckolib-common-${minecraft_version}:${geckolib_version}"
 
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
 }

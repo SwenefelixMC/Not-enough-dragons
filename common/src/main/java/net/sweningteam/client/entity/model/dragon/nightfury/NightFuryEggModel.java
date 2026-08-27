@@ -1,4 +1,4 @@
-package net.sweningteam.client.entity.model;
+package net.sweningteam.client.entity.model.dragon.nightfury;
 
 
 import net.minecraft.resources.ResourceLocation;

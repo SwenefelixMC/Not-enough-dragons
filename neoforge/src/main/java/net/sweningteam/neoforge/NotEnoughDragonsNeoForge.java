@@ -1,11 +1,7 @@
 package net.sweningteam.neoforge;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,7 +13,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.world.BiomeModifier;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -25,15 +20,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.sweningteam.NotEnoughDragons;
 import net.sweningteam.client.NotEnoughDragonsClient;
-import net.sweningteam.client.entity.renderer.NightFuryRendrer;
 import net.sweningteam.common.registry.ModEntityTypes;
-import net.sweningteam.neoforge.datagen.data.ModDatapackProvider;
 import net.sweningteam.neoforge.platform.NeoForgeNetworkHelper;
 import net.sweningteam.neoforge.platform.NeoForgeRegistryHelper;
 import net.sweningteam.neoforge.worldgen.ModSpawns;
-import net.sweningteam.neoforge.worldgen.NeoforgeBiomeModifications;
-
-import java.util.concurrent.CompletableFuture;
 
 @Mod(NotEnoughDragons.MOD_ID)
 public final class NotEnoughDragonsNeoForge {
@@ -69,6 +59,7 @@ public final class NotEnoughDragonsNeoForge {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            NotEnoughDragonsClient.init();
             NotEnoughDragonsClient.registerEntityRenderers(EntityRenderers::register);
         }
     }

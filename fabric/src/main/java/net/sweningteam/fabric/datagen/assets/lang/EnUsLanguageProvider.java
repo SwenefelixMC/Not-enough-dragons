@@ -67,5 +67,7 @@ public class EnUsLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("text.not_enough_dragons.dragon.dragon.not_eat", "This Dragon doesn't want to eat right now");
         translationBuilder.add("text.not_enough_dragons.dragon.dragon.not_tame","You can't tamed this Dragon because it is already tamed by {}!");
         translationBuilder.add("text.not_enough_dragons.dragon.dragon.not_tame_no_name", "You can't tame this Dragon because it is already tamed!");
+
+        translationBuilder.add("config.not_enough_dragons.titel", "Not enough Dragons Config");
     }
 }

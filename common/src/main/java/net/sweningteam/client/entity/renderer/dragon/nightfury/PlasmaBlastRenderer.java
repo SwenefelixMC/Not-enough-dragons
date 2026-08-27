@@ -1,10 +1,8 @@
-package net.sweningteam.client.entity.renderer;
+package net.sweningteam.client.entity.renderer.dragon.nightfury;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.world.entity.EntityType;
-import net.sweningteam.client.entity.model.PlasmaBlastModel;
-import net.sweningteam.common.entity.dragons.strike_class.night_furry.NightFury;
+import net.sweningteam.client.entity.model.dragon.nightfury.PlasmaBlastModel;
 import net.sweningteam.common.entity.projectile.PlasmaBlast;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.base.GeoRenderState;

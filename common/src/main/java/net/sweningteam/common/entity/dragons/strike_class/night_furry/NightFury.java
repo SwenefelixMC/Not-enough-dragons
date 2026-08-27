@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class NightFury extends Dragon implements NeutralMob, OwnableEntity, EatingDragon, PlayerRideableJumping , DragonWithScales, FlyingDragon, ShootingDragon {
+public class NightFury extends Dragon implements NeutralMob, OwnableEntity, EatingDragon, PlayerRideableJumping , DragonWithScales, FlyingDragon, ShootingDragon, SaddleAbblDragon {
     Random random = new Random();
 
     private static final EntityDataAccessor<Boolean> AGGRO;
@@ -207,6 +207,14 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
     double flyingSpeed = 0;
 
     double horizontalSpeed;
+    @Override
+    public boolean hasSaddle(){
+        return entityData.get(SADDEL);
+    }
+    @Override
+    public void setSaddel(boolean bl){
+        this.entityData.set(SADDEL, bl);
+    }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
@@ -384,6 +392,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         output.putInt("BlinkTime", blinkTimer);
         addFlyingData(output,this);
         output.putInt("DangerTimer", dangerTimer);
+        writeSaddleData(output);
         super.addAdditionalSaveData(output);
     }
 
@@ -398,6 +407,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         blinkTimer = input.getIntOr("BlinkTime",200);
         readFlyingData(input,this);
         dangerTimer = input.getIntOr("DangerTimer",0);
+        readSaddleData(input);
         super.readAdditionalSaveData(input);
     }
 
@@ -741,16 +751,18 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
         ItemStack stack = player.getMainHandItem();
         Item item = stack.getItem();
         if(!this.level().isClientSide()){
-                if (canEat(item)){
-                    if(canIncreseSaturation(this.getHealth() < this.getMaxHealth())){
+            if (canEat(item)){
+                if(canIncreseSaturation(this.getHealth() < this.getMaxHealth())){
                     if( handleFood(player, item)) {
                         stack.consume(1, player);
                         return InteractionResult.SUCCESS;
-                    }}else {
-                        player.displayClientMessage(Component.translatable("text.not_enough_dragons.dragon.dragon.not_eat"), true);
-                        return InteractionResult.PASS;
-                    }}
-            if(player.isShiftKeyDown() && ( stack.isEmpty()) && TrustingDragon.trust.getTrust(player.getUUID()) >= 100){
+                    }
+                }else {
+                    player.displayClientMessage(Component.translatable("text.not_enough_dragons.dragon.dragon.not_eat"), true);
+                    return InteractionResult.PASS;
+                }
+            }
+            if(player.isShiftKeyDown() &&  stack.isEmpty() && (TrustingDragon.trust.getTrust(player.getUUID()) >= 100||player.isCreative())){
                 if(!this.isTamed()){
                     this.Tame(player);
                     return InteractionResult.SUCCESS;
@@ -761,8 +773,12 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
             } else if (stack.is(Items.STICK)) {
                 player.displayClientMessage((Component.translatable("text.not_enough_dragons.dragon.get_trust").append(Component.literal(String.valueOf(trust.getTrust(player.getUUID()))))), true);
                 return InteractionResult.SUCCESS;
-            }else {
-                if((stack.isEmpty() && !stack.is(Items.STICK))){
+            } else if (stack.is(Items.SADDLE) && !this.hasSaddle()) {
+                setSaddel(true);
+                stack.consume(1,player);
+                return InteractionResult.SUCCESS;
+            } else {
+                if((stack.isEmpty() && !stack.is(Items.STICK) && !isBaby())){
                     player.startRiding(this,true,true);
                 }
             }
@@ -839,7 +855,7 @@ public class NightFury extends Dragon implements NeutralMob, OwnableEntity, Eati
 
                 double flyUpSpeed;
 
-                setSpeed((float) getAttributeValue(Holder.direct(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED.get())));
+                setSpeed(0.5F);
                 if (inputForward()){
                     setSpeed((float) getAttributeValue(Attributes.FLYING_SPEED));
                     if(isSprinting()){

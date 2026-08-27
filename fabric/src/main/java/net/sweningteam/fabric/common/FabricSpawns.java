@@ -1,4 +1,4 @@
-package net.sweningteam.fabric;
+package net.sweningteam.fabric.common;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
