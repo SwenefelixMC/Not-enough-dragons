@@ -21,8 +21,25 @@ public abstract class DragonRenderer <T extends Dragon & GeoAnimatable,R extends
     }
 
     @Override
+    public void submit(R renderState, PoseStack poseStack, SubmitNodeCollector renderTasks, CameraRenderState cameraState) {
+        if(renderState.isBaby) {
+            poseStack.scale(0.5f, 0.5f, 0.5f);
+            shadowRadius = BabyShadowradius();
+        } else {
+            poseStack.scale(1f, 1f, 1f);
+            shadowRadius = GrownUpShadowRadius();
+        }
+        super.submit(renderState, poseStack, renderTasks, cameraState);
+    }
+
+    public abstract float BabyShadowradius();
+
+    public abstract float GrownUpShadowRadius();
+
+    @Override
     @SuppressWarnings("unchecked")
     public R createRenderState(T animatable, Void relatedObject) {
         return (R) new DragonRenderState();
     }
+
 }

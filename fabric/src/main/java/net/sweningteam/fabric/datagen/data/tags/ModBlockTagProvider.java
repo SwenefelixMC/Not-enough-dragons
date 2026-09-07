@@ -26,7 +26,14 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL)
-                .addElement(getKey(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_BLOCK.get()))
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_STAIRS.get()))
+                .addElement(getKey(ModBlocks.BOOK_OF_DRAGONS.get()))
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_TRAPDOOR.get()))
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_CHAIN.get()))
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_SLAB.get()))
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_BARS.get()))
+                .addElement(getKey(ModBlocks.GRONCKLE_IRON_DOOR.get()));
 
         getOrCreateRawBuilder(ModTags.Blocks.DRAGONS_SPAWNS_ON)
                 .addOptionalTag(BlockTags.ANIMALS_SPAWNABLE_ON.location())

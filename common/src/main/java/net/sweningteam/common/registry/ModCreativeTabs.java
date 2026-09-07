@@ -19,29 +19,39 @@ public class ModCreativeTabs {
         NotEnoughDragonsDragonsContent.add(ModItems.NIGHT_FURY);
         NotEnoughDragonsDragonsContent.add(ModItems.NIGHT_FURY_EGG);
         NotEnoughDragonsDragonsContent.add(()-> ModBlocks.NIGHT_FURY_SCALES.get().asItem());
+        NotEnoughDragonsDragonsContent.add(ModItems.GRONCKLE);
+        NotEnoughDragonsDragonsContent.add(ModItems.GRONCKLE_EGG);
         return NotEnoughDragonsDragonsContent;
     }
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent = new ArrayList<>();
         NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.BOOK_OF_DRAGONS.get().asItem());
         NotEnoughDragonsMiscItemsContent.add(ModItems.GOLD_COIN);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_GROCKLE_IRON);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_RAW_GROCKLE_IRON);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.RAW_GROCKLE_IRON);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.GROCKLE_IRON_INGOT);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.GROCKLE_IRON_NUGGET);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_DRAGON_PROVED_STEAL);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_PROVED_STEAL_SCRAPS);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_PROVED_STEAL_INGOT);
         return NotEnoughDragonsMiscItemsContent;
     }
 
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent = new ArrayList<>();
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA_BLOCK.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get().asItem());
 
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get().asItem());
 
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_BLOCK.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_STAIRS.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_SLAB.get().asItem());
-        NotEnoughDragonsBlocksContent.add(ModItems.GRONCKLE_IRON_BARS);
-        NotEnoughDragonsBlocksContent.add(ModItems.GRONCKLE_IRON_DOOR);
-        NotEnoughDragonsBlocksContent.add(ModItems.GRONCKLE_IRON_TRAP_DOOR);
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_BARS.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_DOOR.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_TRAPDOOR.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_IRON_CHAIN.get().asItem());
 
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.RAW_GRONCKLE_IRON_BLOCK.get().asItem());

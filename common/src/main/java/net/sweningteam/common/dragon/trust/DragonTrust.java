@@ -2,6 +2,9 @@ package net.sweningteam.common.dragon.trust;
 
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.sweningteam.NotEnoughDragons;
 
 import java.lang.annotation.Native;
@@ -10,64 +13,57 @@ import java.util.*;
 public class DragonTrust {
 
     Map<String, Double> Trust = Maps.newHashMap();
+    Double newTrust = 0.0D;
+    UUID playerUUid;
     Gson gson = new Gson();
 
     public void setTrust(UUID key, Double value){
-        if(Trust.containsKey(key.toString())){
-            Trust.replace(key.toString(), value);
-        }else {
-            Trust.put(key.toString(), value);
+        if (playerUUid != key){
+            newTrust = value;
+            playerUUid = key;
+        }else{
+            newTrust = newTrust+value;
         }
     }
 
     public void increaseTrust(UUID key, Double amount){
-        if(Trust.containsKey(key.toString())){
-            Double oldTrust =Trust.get(key.toString());
-            Trust.replace(key.toString(), oldTrust+amount);
-        }else {
-            Trust.put(key.toString(), amount);
+        if (playerUUid != key){
+            newTrust = amount;
+            playerUUid = key;
+        }else{
+            newTrust = newTrust+amount;
         }
     }
 
     public boolean hasTrust(UUID key){
-        return Trust.containsKey(key);
+        return playerUUid == key;
 
     }
 
     public Double getTrust(UUID key){
-        return Trust.getOrDefault(key, 0D);
+        if(key == playerUUid){
+            return newTrust;
+        }else{
+            return 0.0D;
+        }
     }
 
 
 
     public void clear(){
-        Trust.clear();
+        newTrust = 0.0D;
     }
 
-    @Override
-    public String toString() {
-        return gson.toJson(Trust);
-    }
-
-    public void getTrustFromString(String trust){
-        this.Trust = gson.fromJson(trust,Trust.getClass());
-    }
-
-    public Map<String, Double> getTrustMap(){
-        return Trust;
-    }
-
-    public void resortMap(){
-        Map<String,Double> newMap = Maps.newHashMap();
-        for(String key : Trust.keySet()){
-            if(newMap.containsKey(key)){
-                newMap.replace(key, Trust.get(key));
-            } else {
-                newMap.put(key,Trust.get(key));
-            }
+    public void writeTrustData(ValueOutput output){
+        output.putDouble("Trust",newTrust);
+        if(playerUUid!=null){
+            output.store("TamingPlayer", UUIDUtil.CODEC,playerUUid);
         }
-        Trust.clear();
-        Trust.putAll(newMap);
     }
-
+    public void readTrustData(ValueInput input){
+        newTrust = input.getDoubleOr("Trust",0.0D);
+        if (input.read("TamingPlayer",UUIDUtil.CODEC).isPresent()){
+            playerUUid = input.read("TamingPlayer",UUIDUtil.CODEC).get();
+        }
+    }
 }

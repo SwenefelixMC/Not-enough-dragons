@@ -14,6 +14,7 @@ public final class NotEnoughDragons {
     public static void init() {
         NotEnoughDragons.LOGGER.info("Hello from Common init on {}! we are currently in a {} environment!", Services.PLATFORM.getPlatformName(), Services.PLATFORM.getEnvironmentName());
         // Write common init code here.
+        ModDataComponentTypes.init();
         ModItems.init();
         ModBlocks.init();
         ModCreativeTabs.init();
@@ -21,6 +22,7 @@ public final class NotEnoughDragons {
         ModEntityTypes.init();
         ModPoiTypes.init();
         ModVillagers.init();
+//        ModVillagerTrades.init();
 
         NetworkHandler.init();
     }

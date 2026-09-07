@@ -6,11 +6,13 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.sweningteam.common.entity.dragons.base.Dragon;
 import net.sweningteam.common.entity.dragons.strike_class.night_furry.NightFury;
 import net.sweningteam.common.entity.egg.base.DragonEgg;
 import net.sweningteam.common.registry.ModEntityTypes;
+import net.sweningteam.common.registry.ModItems;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -52,6 +54,11 @@ public class NightFuryEgg extends DragonEgg implements GeoEntity {
     private <A extends GeoAnimatable> PlayState mainController(AnimationTest<A> event){
         event.setAndContinue(RawAnimation.begin().thenPlay("animations.egg.Idel"));
         return PlayState.CONTINUE;
+    }
+
+    @Override
+    public Item EggItem() {
+        return ModItems.NIGHT_FURY_EGG.get();
     }
 
     public static AttributeSupplier.Builder createAtributes() {

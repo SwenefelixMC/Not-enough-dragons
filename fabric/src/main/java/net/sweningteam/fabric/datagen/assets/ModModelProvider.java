@@ -5,9 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.world.level.block.Blocks;
 import net.sweningteam.common.registry.ModBlocks;
 import net.sweningteam.common.registry.ModItems;
 
@@ -37,10 +35,10 @@ public class ModModelProvider extends FabricModelProvider {
                 .stairs(ModBlocks.RAW_GRONCKLE_IRON_STAIRS.get())
                 .slab(ModBlocks.RAW_GRONCKLE_IRON_SLAB.get());
 
-        blockModelGenerators.family(ModBlocks.GRONCKLE_LAVA_BLOCK.get())
+        blockModelGenerators.family(ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get())
                 .slab(ModBlocks.GRONCKLE_LAVA.get());
         blockModelGenerators.family(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get())
-                .slab(ModBlocks.MOLTEN_GRONCKLE_IRON.get());
+                .slab(ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get());
     }
 
     @Override
@@ -48,5 +46,18 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.createFlatItemModel(ModItems.GOLD_COIN.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.createFlatItemModel(ModItems.NIGHT_FURY_EGG.get(), ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.createFlatItemModel(ModItems.GRONCKLE.get(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.GRONCKLE_EGG.get(), ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.createFlatItemModel(ModItems.MOLTEN_GROCKLE_IRON.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.MOLTEN_RAW_GROCKLE_IRON.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.RAW_GROCKLE_IRON.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.GROCKLE_IRON_INGOT.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.GROCKLE_IRON_NUGGET.get(),ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.createFlatItemModel(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.createFlatItemModel(ModItems.DRAGON_PROVED_STEAL_INGOT.get(),ModelTemplates.FLAT_ITEM);
     }
 }

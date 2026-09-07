@@ -24,12 +24,10 @@ public class SaddleLayer <T extends GeoAnimatable, R extends DragonRenderState &
 
     @Override
     public void submitRenderTask(R renderState, PoseStack poseStack, BakedGeoModel bakedModel, SubmitNodeCollector renderTasks, CameraRenderState cameraState, int packedLight, int packedOverlay, int renderColor, boolean didRenderModel) {
-        super.submitRenderTask(renderState, poseStack, bakedModel, renderTasks, cameraState, packedLight, packedOverlay, renderColor, didRenderModel);
         if(!renderState.hasSaddle){
             return;
         }
-        RenderType saddleRenderType = RenderType.entityCutoutNoCull(ResourceLocation.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"textures/entity/equipment/dragon/"+id+".png"));
-        this.renderer.buildRenderTask(renderState,poseStack,bakedModel,getGeoModel(),renderTasks,cameraState,saddleRenderType,packedLight,packedOverlay,renderColor,null);
+        super.submitRenderTask(renderState, poseStack, bakedModel, renderTasks, cameraState, packedLight, packedOverlay, renderColor, didRenderModel);
     }
 
     public SaddleLayer(GeoRenderer<T,O, R> renderer, String id) {

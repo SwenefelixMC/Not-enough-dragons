@@ -29,7 +29,7 @@ public interface EatingDragon {
 
     DragonFoodComponentType dragonFoodComponentType();
 
-    boolean handleFood(Player player, Item item);
+    boolean handleFood(Player player, Item item,Boolean onGround);
 
     default void addHungerSaveData(ValueOutput output){
         output.putInt("Hunger",getHunger());

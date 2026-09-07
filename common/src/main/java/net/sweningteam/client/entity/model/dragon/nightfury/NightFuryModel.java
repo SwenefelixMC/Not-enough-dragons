@@ -1,10 +1,8 @@
 package net.sweningteam.client.entity.model.dragon.nightfury;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExceptionCollector;
 import net.minecraft.util.Mth;
 import net.sweningteam.NotEnoughDragons;
-import net.sweningteam.client.entity.model.dragon.base.DragonModel;
 import net.sweningteam.common.entity.dragons.base.Dragon;
 import software.bernie.geckolib.animatable.processing.AnimationState;
 import software.bernie.geckolib.cache.object.GeoBone;
@@ -12,7 +10,7 @@ import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.base.GeoRenderState;
 
-public class NightfuryModel <E extends Dragon> extends GeoModel<E> {
+public class NightFuryModel<E extends Dragon> extends GeoModel<E> {
     @Override
     public ResourceLocation getModelResource(GeoRenderState renderState) {
         return ResourceLocation.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"entity/dragon/night_fury.geo.json");

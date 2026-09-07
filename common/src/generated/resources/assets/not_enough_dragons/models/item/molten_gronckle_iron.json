@@ -1,3 +1,6 @@
 {
-  "parent": "not_enough_dragons:block/molten_gronckle_iron"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "not_enough_dragons:item/molten_gronckle_iron"
+  }
 }

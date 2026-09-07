@@ -4,7 +4,7 @@
       "model": "not_enough_dragons:block/gronckle_lava"
     },
     "type=double": {
-      "model": "not_enough_dragons:block/gronckle_lava_block"
+      "model": "not_enough_dragons:block/gronckle_lava_block_lava"
     },
     "type=top": {
       "model": "not_enough_dragons:block/gronckle_lava_top"

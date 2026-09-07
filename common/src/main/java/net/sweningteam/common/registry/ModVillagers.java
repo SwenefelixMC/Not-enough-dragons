@@ -1,6 +1,7 @@
 package net.sweningteam.common.registry;
 
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;

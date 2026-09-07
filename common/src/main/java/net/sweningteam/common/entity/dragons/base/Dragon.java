@@ -1,29 +1,34 @@
 package net.sweningteam.common.entity.dragons.base;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.sweningteam.common.dragon.food.DragonFoodComponentType;
-import net.sweningteam.common.entity.dragons.base.interfaces.TrustingDragon;
 import net.sweningteam.common.network.packages.c2s.DragonRiderInputPackage;
 import net.sweningteam.common.registry.ModTags;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 
-public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon {
+public abstract class Dragon extends Animal implements GeoEntity {
 
     @Override
     public LivingEntity getControllingPassenger() {
@@ -32,8 +37,6 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
         }
         return super.getControllingPassenger();
     }
-
-    public abstract DragonFoodComponentType dragonFoodComponentType();
 
     public abstract boolean tamingConditions(LivingEntity living);
 
@@ -62,23 +65,56 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
         super.defineSynchedData(builder);
     }
 
+    public abstract void setOffspringAttributes(Dragon parent, Dragon child);
 
+    public void setOffspringAttribute(Dragon parent, Dragon child, Holder<Attribute> attribute, double min, double max){
+        double d = createOffspringAttribute(this.getAttributeBaseValue(attribute), parent.getAttributeBaseValue(attribute), min, max, this.random);
+        child.getAttribute(attribute).setBaseValue(d);
+    }
+
+    public static double createOffspringAttribute(double value1, double value2, double min, double max, RandomSource random){
+        if (max <= min) {
+            throw new IllegalArgumentException("Incorrect range for an attribute");
+        }else {
+            value1 = Mth.clamp(value1, min, max);
+            value2 = Mth.clamp(value2, min, max);
+            double d = 0.15 * (max - min);
+            double e = Math.abs(value1 - value2) + d * (double)2.0F;
+            double f = (value1 + value2) / (double)2.0F;
+            double g = (random.nextDouble() + random.nextDouble() + random.nextDouble()) / (double)3.0F - (double)0.5F;
+            double h = f + e * g;
+            if (h > max) {
+                double i = h - max;
+                return max - i;
+            } else if (h < min) {
+                double i = min - h;
+                return min + i;
+            } else {
+                return h;
+            }
+        }
+    }
 
     @Override
     public boolean isFood(ItemStack stack) {
         return false;
     }
 
-    public boolean entityIsDanger(LivingEntity entity){
-        ItemStack MainStack = entity.getItemInHand(InteractionHand.MAIN_HAND);
-        ItemStack OffStack = entity.getItemInHand(InteractionHand.OFF_HAND);
-        return  !entity.isShiftKeyDown() ||
-                this.dangerousItemInStack(MainStack) ||
-                this.dangerousItemInStack(OffStack) ||
-                entity.hasItemInSlot(EquipmentSlot.BODY) ||
-                entity.hasItemInSlot(EquipmentSlot.FEET) ||
-                entity.hasItemInSlot(EquipmentSlot.LEGS) ||
-                entity.hasItemInSlot(EquipmentSlot.HEAD);
+    public<T extends LivingEntity> boolean entityIsDanger(T entity){
+        if (entity instanceof Player || entity instanceof Raider || entity instanceof Dragon){
+            ItemStack MainStack = entity.getItemInHand(InteractionHand.MAIN_HAND);
+            ItemStack OffStack = entity.getItemInHand(InteractionHand.OFF_HAND);
+            return  !entity.isShiftKeyDown() ||
+                    this.dangerousItemInStack(MainStack) ||
+                    this.dangerousItemInStack(OffStack) ||
+                    entity.hasItemInSlot(EquipmentSlot.BODY) ||
+                    entity.hasItemInSlot(EquipmentSlot.FEET) ||
+                    entity.hasItemInSlot(EquipmentSlot.LEGS) ||
+                    entity.hasItemInSlot(EquipmentSlot.HEAD);
+        }else{
+            return false;
+        }
+
     }
 
 
@@ -121,16 +157,6 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
         return null;
     }
 
-    public boolean canBeControledBy(Player player){
-        if(player == null){
-            return false;
-        }
-        if(trust.getTrust(player.getUUID()) > 150) {
-            return true;
-        }
-        return player.isCreative() || player.isSpectator();
-    }
-
     public void handlePlayerInputPackage(ServerPlayer player, DragonRiderInputPackage packet){
         setInputs(packet.forward(),packet.backward(),packet.sprint(), packet.jump());
     }
@@ -158,7 +184,13 @@ public abstract class Dragon extends Animal implements GeoEntity, TrustingDragon
     public static boolean checkDragonSpawnRules(EntityType<? extends Dragon> entityType, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(ModTags.Blocks.DRAGONS_SPAWNS_ON) && isBrightEnoughToSpawn(level, pos);
     }
+    public boolean canPickupItem(ItemEntity itemEntity){
+        return false;
+    }
 
+    public boolean canBeControledBy(Player player) {
+    return false;
+    }
 
     static {
         EATING_PROGRESS = SynchedEntityData.defineId(Dragon.class, EntityDataSerializers.INT);

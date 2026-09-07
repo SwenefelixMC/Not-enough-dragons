@@ -25,6 +25,9 @@ public class ModTags {
         public static final TagKey<Biome> NIGHT_FURY_SPAWNS_IN = TagKey.create(
                 Registries.BIOME,
                 ResourceLocation.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"night_fury_spawns_in"));
+        public static final TagKey<Biome> GRONCKLE_SPAWN_IN = TagKey.create(
+                Registries.BIOME,
+                ResourceLocation.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"gronckle_spawn_in"));
     }
 
     public class EntityTypes {
@@ -32,5 +35,4 @@ public class ModTags {
                 Registries.ENTITY_TYPE,
                 ResourceLocation.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"night_fury_gets_angry_at"));
     }
-
 }

@@ -25,7 +25,9 @@ public class ShootProjectileGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return shootingDragon != null && dragon.getTarget() != null;
+        return  shootingDragon != null &&
+                dragon.getTarget() != null &&
+                dragon.distanceTo(dragon.getTarget())>6;
     }
 
     @Override

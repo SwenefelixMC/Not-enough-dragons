@@ -6,7 +6,8 @@
   "client": [
   ],
   "mixins": [
-    "RaiderMixins"
+    "RaiderMixins",
+    "client.CameraMixins"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -11,8 +11,11 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.sweningteam.NotEnoughDragons;
 
+import net.sweningteam.common.entity.dragons.bolder_class.gronckle.Gronckle;
 import net.sweningteam.common.entity.dragons.strike_class.night_furry.NightFury;
+import net.sweningteam.common.entity.egg.GronckleEgg;
 import net.sweningteam.common.entity.egg.NightFuryEgg;
+import net.sweningteam.common.entity.misc.VikingTrader;
 import net.sweningteam.common.entity.projectile.PlasmaBlast;
 import net.sweningteam.platform.Services;
 
@@ -25,6 +28,11 @@ public class ModEntityTypes {
 
     public static final Supplier<EntityType<NightFuryEgg>> NIGHT_FURY_EGG = registerEntity("night_fury_egg", NightFuryEgg::new, MobCategory.CREATURE, 0.5F,0.55F,0.1F);
 
+    public static final Supplier<EntityType<Gronckle>> GRONCKLE = registerEntity("gronckle", Gronckle::new , MobCategory.CREATURE, 2, 2,1.6F);
+    public static final Supplier<EntityType<GronckleEgg>> GRONCKLE_EGG = registerEntity("gronckle_egg", GronckleEgg::new , MobCategory.CREATURE, 0.5F,0.55F,1.6F);
+
+    public static final Supplier<EntityType<VikingTrader>> VIKING_TRADER = registerEntity("viking_trader", VikingTrader::new , MobCategory.CREATURE, 0.8F,2,1.6F);
+
     private static <T extends Entity> Supplier<EntityType<T>> registerEntity(String id, EntityType.EntityFactory<T> factory, MobCategory category, float with, float hight, float eyeHeight ){
         return Services.PLATFORM.getRegisterHelper().register(BuiltInRegistries.ENTITY_TYPE, id, ()-> EntityType.Builder.of(factory, category).sized(with, hight).eyeHeight(eyeHeight).build(ResourceKey.create(Registries.ENTITY_TYPE,ResourceLocation.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,id))));
     }
@@ -32,6 +40,9 @@ public class ModEntityTypes {
     public static void registerEntityAtributes(BiConsumer<EntityType<?extends LivingEntity>, AttributeSupplier> consumer){
         consumer.accept(NIGHT_FURY.get(), NightFury.createAtributes().build());
         consumer.accept(NIGHT_FURY_EGG.get(), NightFuryEgg.createAtributes().build());
+        consumer.accept(GRONCKLE.get(), Gronckle.createAtributes().build());
+        consumer.accept(GRONCKLE_EGG.get(), GronckleEgg.createAtributes().build());
+        consumer.accept(VIKING_TRADER.get(), VikingTrader.createAtributes().build());
     }
 
 

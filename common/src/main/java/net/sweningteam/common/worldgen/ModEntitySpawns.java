@@ -24,6 +24,15 @@ public class ModEntitySpawns {
                 1,
                 3,
                 "night_fury"));
+        spawnEntries.add(new DragonSpawnEntry(
+                ModTags.Biomes.GRONCKLE_SPAWN_IN,
+                MobCategory.CREATURE,
+                ModEntityTypes.GRONCKLE,
+                12,
+                2,
+                4,
+                "gronckle"
+        ));
         return spawnEntries;
     }
     public static List<DragonSpawnRestrictionEntry> spawnRestrictionEntries(){
