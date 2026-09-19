@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "not_enough_dragons:block/raw_gronckle_iron_block",
-    "side": "not_enough_dragons:block/raw_gronckle_iron_block",
-    "top": "not_enough_dragons:block/raw_gronckle_iron_block"
-  }
-}

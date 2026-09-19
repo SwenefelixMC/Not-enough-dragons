@@ -1,0 +1,18 @@
+package net.sweningteam.not_enough_dragons.common.dragon.food.custom;
+
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent;
+import net.sweningteam.not_enough_dragons.common.entity.dragons.base.Dragon;
+
+public class PoisonousFoodComponent extends DragonFoodComponent {
+    public PoisonousFoodComponent(int food_gained, double trust_gained) {
+        super(food_gained, trust_gained);
+    }
+
+    @Override
+    public void onEat(Dragon dragon) {
+        dragon.addEffect(new MobEffectInstance(MobEffects.POISON,400));
+        super.onEat(dragon);
+    }
+}

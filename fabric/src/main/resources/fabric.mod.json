@@ -16,13 +16,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.sweningteam.fabric.NotEnoughDragonsFabric"
+      "net.sweningteam.not_enough_dragons.fabric.NotEnoughDragonsFabric"
     ],
     "client": [
-      "net.sweningteam.fabric.client.NotEnoughDragonsFabricClient"
+      "net.sweningteam.not_enough_dragons.fabric.client.NotEnoughDragonsFabricClient"
     ],
     "fabric-datagen": [
-      "net.sweningteam.fabric.datagen.NotEnoughDragonsDatagen"
+      "net.sweningteam.not_enough_dragons.fabric.datagen.NotEnoughDragonsDatagen"
+    ],
+    "modmenu": [
+      "net.sweningteam.not_enough_dragons.fabric.intigration.ModMenuIntigration"
     ]
   },
   "mixins": [
@@ -31,10 +34,10 @@
   ],
   "depends": {
     "fabricloader": ">=0.18.4",
-    "minecraft": "~1.21.10",
-    "java": ">=21",
+    "minecraft": "~26.2",
+    "java": ">=25",
     "fabric-api": "*",
-    "geckolib": ">=5.3-alpha-3"
+    "geckolib": ">=5.5.3"
   },
   "suggests": {
     "another-mod": "*"

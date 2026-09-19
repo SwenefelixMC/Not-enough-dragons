@@ -16,20 +16,21 @@ Not enough Dragons is a fan made mod Based around the How to train your Dragon f
 [[dependencies.not_enough_dragons]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.10,)"
+versionRange = "[26.2.0.88]"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.not_enough_dragons]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.10,)"
+versionRange = "[26.2]"
 ordering = "NONE"
 side = "BOTH"
+
 [[dependencies.not_enough_dragons]]
 modId = "geckolib"
 type = "required"
-versionRange = "5.3-alpha-3"
+versionRange = "[5.5.3]"
 ordering = "NONE"
 side = "BOTH"
 

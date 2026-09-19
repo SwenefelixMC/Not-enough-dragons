@@ -1,13 +1,14 @@
 {
   "required": true,
-  "package": "net.sweningteam.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "package": "net.sweningteam.not_enough_dragons.mixin",
+  "compatibilityLevel": "JAVA_25",
   "minVersion": "0.8",
   "client": [
   ],
   "mixins": [
     "RaiderMixins",
     "client.CameraMixins"
+
   ],
   "injectors": {
     "defaultRequire": 1

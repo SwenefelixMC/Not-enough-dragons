@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_right",
-  "textures": {
-    "bottom": "not_enough_dragons:block/gronckle_iron_door_bottom",
-    "top": "not_enough_dragons:block/gronckle_iron_door_top"
-  }
-}
