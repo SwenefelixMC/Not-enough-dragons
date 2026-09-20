@@ -104,9 +104,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     public void setFlying(Boolean bl) {
         entityData.set(IS_FLYING,bl);
         setNoGravity(bl);
-        if(isFlying() != bl){
-            NotEnoughDragons.LOGGER.info("Flying Broke!");
-        }
     }
 
     @Override

@@ -12,9 +12,6 @@ import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
 import net.sweningteam.not_enough_dragons.common.registry.ModItems;
 
-import java.util.List;
-import java.util.Optional;
-
 public class ModTrades {
     public static final ResourceKey<VillagerTrade> WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_AXE = createKey("weaponsmith/3/emerald_gronckle_iron_axe");
     public static final ResourceKey<VillagerTrade> WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_SWORD = createKey("weaponsmith/3/emerald_gronckle_iron_sword");
@@ -134,7 +131,7 @@ public class ModTrades {
         context.register(
                 VIKING_1_DRAGON_PROVED_STEAL_INGOT_GOLD_COIN,
                 VillagerTrade.builder(
-                        new TradeCost(ModItems.DRAGON_PROVED_STEAL_INGOT.get(), 2),
+                        new TradeCost(ModItems.DRAGON_PROVED_STEEL_INGOT.get(), 2),
                         new ItemStackTemplate(ModItems.GOLD_COIN.get(),4),
                         6,
                         3,
@@ -228,7 +225,7 @@ public class ModTrades {
                 VIKING_3_GOLD_COIN_DRAGON_PROVED_STEAL_BLOCK,
                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 19),
-                        new ItemStackTemplate(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get().asItem(),1),
+                        new ItemStackTemplate(ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get().asItem(),1),
                         2,
                         20,
                         0.2F).build()

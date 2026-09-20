@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.item.Items;
@@ -14,7 +13,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
 import net.sweningteam.not_enough_dragons.common.registry.ModItems;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -55,11 +53,11 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 nineBlockStorageRecipes(RecipeCategory.MISC,ModItems.GRONCKLE_IRON_NUGGET.get(),RecipeCategory.MISC,ModItems.GRONCKLE_IRON_INGOT.get());
                 nineBlockStorageRecipes(RecipeCategory.MISC,ModItems.GRONCKLE_IRON_INGOT.get(),RecipeCategory.BUILDING_BLOCKS,ModBlocks.GRONCKLE_IRON_BLOCK.get(),"gronckle_iron_block_from_gronckle_iron","gronckle_iron","gronckle_iron","gronckle_iron_from_gronckle_iron_block");
                 oreBlasting(
-                        List.of(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get()),
+                        List.of(ModItems.MOLTEN_DRAGON_PROVED_STEEL.get()),
                         RecipeCategory.MISC,
                         CookingBookCategory.MISC,
 
-                        ModItems.DRAGON_PROVED_STEAL_SCRAPS.get(),
+                        ModItems.DRAGON_PROVED_STEEL_SCRAPS.get(),
                         1,
                         400,
                         "dragon_proved_steal"
@@ -71,13 +69,13 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 trapdoorBuilder(ModBlocks.GRONCKLE_IRON_BARS.get(),Ingredient.of(ModItems.GRONCKLE_IRON_INGOT.get()));
                 stairBuilder(ModBlocks.GRONCKLE_IRON_STAIRS.get(), Ingredient.of(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
                 stairBuilder(ModBlocks.GRONCKLE_IRON_STAIRS.get(), Ingredient.of(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
-                shaped(RecipeCategory.MISC, ModItems.DRAGON_PROVED_STEAL_INGOT.get())
+                shaped(RecipeCategory.MISC, ModItems.DRAGON_PROVED_STEEL_INGOT.get())
                         .pattern("SSS")
                         .pattern("S I")
                         .pattern("III")
-                        .define('S',ModItems.DRAGON_PROVED_STEAL_SCRAPS.get())
+                        .define('S',ModItems.DRAGON_PROVED_STEEL_SCRAPS.get())
                         .define('I',Items.IRON_INGOT)
-                        .unlockedBy(getHasName(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get()), has(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get()))
+                        .unlockedBy(getHasName(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get()), has(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get()))
                         .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.GRONCKLE_IRON_CHAIN.get())
@@ -89,8 +87,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
                         .save(output);
 
-                stairBuilder(ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get(), Ingredient.of(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get()));
-                slab(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DRAGON_PROVED_STEAL_SLAB.get(),ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get());
+                stairBuilder(ModBlocks.DRAGON_PROVED_STEEL_STAIRS.get(), Ingredient.of(ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get()));
+                slab(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DRAGON_PROVED_STEEL_SLAB.get(),ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get());
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_SWORD.get())
                         .pattern("G")

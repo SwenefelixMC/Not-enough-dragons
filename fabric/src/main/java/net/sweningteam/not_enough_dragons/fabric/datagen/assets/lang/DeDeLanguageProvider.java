@@ -3,8 +3,12 @@ package net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EntityType;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
+import net.sweningteam.not_enough_dragons.common.registry.ModEntityTypes;
 import net.sweningteam.not_enough_dragons.common.registry.ModItems;
 
 import java.util.concurrent.CompletableFuture;
@@ -12,6 +16,10 @@ import java.util.concurrent.CompletableFuture;
 public class DeDeLanguageProvider extends FabricLanguageProvider {
     public DeDeLanguageProvider(FabricPackOutput packOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(packOutput, "de_de", registryLookup);
+    }
+
+    private Identifier getEntityTypeKey(EntityType entity){
+        return BuiltInRegistries.ENTITY_TYPE.getKey(entity);
     }
 //    public DeDeLanguageProvider(PackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
 //        super(dataOutput, "de_de", registryLookup);
@@ -33,9 +41,9 @@ public class DeDeLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModItems.GRONCKLE.get(),"Gronckel");
         translationBuilder.add(ModItems.GRONCKLE_EGG.get(),"Gronckel-Ei");
 
-        translationBuilder.add(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get(),"Geschmolzener drachensicherer Stahl");
-        translationBuilder.add(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get(),"Drachensichere Stahlplatten");
-        translationBuilder.add(ModItems.DRAGON_PROVED_STEAL_INGOT.get(),"Drachensicherer Stahlbarren");
+        translationBuilder.add(ModItems.MOLTEN_DRAGON_PROVED_STEEL.get(),"Geschmolzener drachensicherer Stahl");
+        translationBuilder.add(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get(),"Drachensichere Stahlplatten");
+        translationBuilder.add(ModItems.DRAGON_PROVED_STEEL_INGOT.get(),"Drachensicherer Stahlbarren");
 
         translationBuilder.add(ModBlocks.DRAGON_NIP.get().asItem(),"Drachenminze");
 
@@ -64,9 +72,9 @@ public class DeDeLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get().asItem(), "Geschmolzenes Gronckel-Eisen");
         translationBuilder.add(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get().asItem(), "Block aus geschmolzenem Gronckel-Eisen");
 
-        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get().asItem(), "Drachensicherer Stahlblock");
-        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get().asItem(), "Drachensichere Stahltreppe");
-        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEAL_SLAB.get().asItem(), "Drachensichere Stahlstufe");
+        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get().asItem(), "Drachensicherer Stahlblock");
+        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEEL_STAIRS.get().asItem(), "Drachensichere Stahltreppe");
+        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEEL_SLAB.get().asItem(), "Drachensichere Stahlstufe");
 
         translationBuilder.add(ModBlocks.GRONCKLE_SCALES.get().asItem(), "Gronckel-Schuppen");
 

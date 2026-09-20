@@ -94,7 +94,7 @@ public class Gronckle extends Dragon implements DragonWithScales {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return new Gronckle(ModEntityTypes.NIGHT_FURY.get(),level);
+        return new Gronckle(ModEntityTypes.GRONCKLE.get(),level);
     }
 
     @Override

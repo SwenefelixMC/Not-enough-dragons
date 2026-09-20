@@ -24,6 +24,6 @@ public class GronckleRecipies {
                     new ItemStack(Blocks.IRON_BLOCK,2),
                     new ItemStack(Blocks.ANCIENT_DEBRIS)
             ),
-            new ItemStack(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get(),6)
+            new ItemStack(ModItems.MOLTEN_DRAGON_PROVED_STEEL.get(),6)
     );
 }

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "not_enough_dragons:block/dragon_proved_steal_block",
-    "side": "not_enough_dragons:block/dragon_proved_steal_block",
-    "top": "not_enough_dragons:block/dragon_proved_steal_block"
-  }
-}

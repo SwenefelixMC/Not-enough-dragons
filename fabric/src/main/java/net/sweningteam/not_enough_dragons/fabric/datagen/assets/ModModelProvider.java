@@ -40,9 +40,9 @@ public class ModModelProvider extends FabricModelProvider {
         blockModelGenerators.family(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get())
                 .slab(ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get());
 
-        blockModelGenerators.family(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get())
-                .stairs(ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get())
-                .slab(ModBlocks.DRAGON_PROVED_STEAL_SLAB.get());
+        blockModelGenerators.family(ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get())
+                .stairs(ModBlocks.DRAGON_PROVED_STEEL_STAIRS.get())
+                .slab(ModBlocks.DRAGON_PROVED_STEEL_SLAB.get());
 
         blockModelGenerators.createCrossBlock(ModBlocks.DRAGON_NIP.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModelGenerators.registerSimpleFlatItemModel(ModBlocks.DRAGON_NIP.get().asItem());
@@ -65,9 +65,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_INGOT.get(),ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_NUGGET.get(),ModelTemplates.FLAT_ITEM);
 
-        itemModelGenerators.generateFlatItem(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get(),ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get(),ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(ModItems.DRAGON_PROVED_STEAL_INGOT.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.MOLTEN_DRAGON_PROVED_STEEL.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get(),ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.DRAGON_PROVED_STEEL_INGOT.get(),ModelTemplates.FLAT_ITEM);
 
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_SWORD.get(),ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_SHOVEL.get(),ModelTemplates.FLAT_HANDHELD_ITEM);

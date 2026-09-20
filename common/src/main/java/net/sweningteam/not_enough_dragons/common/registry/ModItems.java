@@ -27,9 +27,9 @@ public class ModItems {
     public static final Supplier<Item> GRONCKLE_IRON_INGOT = registerItem("gronckle_iron_ingot", ()-> new Item(baseProperties("gronckle_iron_ingot").fireResistant()));
     public static final Supplier<Item> GRONCKLE_IRON_NUGGET = registerItem("gronckle_iron_nugget", ()-> new Item(baseProperties("gronckle_iron_nugget").fireResistant()));
 
-    public static final Supplier<Item> MOLTEN_DRAGON_PROVED_STEAL = registerItem("molten_dragon_proved_steal", ()-> new Item(baseProperties("molten_dragon_proved_steal").fireResistant()));
-    public static final Supplier<Item> DRAGON_PROVED_STEAL_SCRAPS = registerItem("dragon_proved_steal_scraps", ()-> new Item(baseProperties("dragon_proved_steal_scraps").fireResistant()));
-    public static final Supplier<Item> DRAGON_PROVED_STEAL_INGOT = registerItem("dragon_proved_steal_ingot", ()-> new Item(baseProperties("dragon_proved_steal_ingot").fireResistant()));
+    public static final Supplier<Item> MOLTEN_DRAGON_PROVED_STEEL = registerItem("molten_dragon_proved_steel", ()-> new Item(baseProperties("molten_dragon_proved_steel").fireResistant()));
+    public static final Supplier<Item> DRAGON_PROVED_STEEL_SCRAPS = registerItem("dragon_proved_steel_scraps", ()-> new Item(baseProperties("dragon_proved_steel_scraps").fireResistant()));
+    public static final Supplier<Item> DRAGON_PROVED_STEEL_INGOT = registerItem("dragon_proved_steel_ingot", ()-> new Item(baseProperties("dragon_proved_steel_ingot").fireResistant()));
 
     public static final Supplier<Item> GRONCKLE_IRON_AXE = registerItem("gronckle_iron_axe", ()-> new Item(baseProperties("gronckle_iron_axe").axe(ModToolMaterials.GRONCKLE_IRON,5.0F, -3.0F).fireResistant()));
     public static final Supplier<Item> GRONCKLE_IRON_PICKAXE = registerItem("gronckle_iron_pickaxe", ()-> new Item(baseProperties("gronckle_iron_pickaxe").pickaxe(ModToolMaterials.GRONCKLE_IRON,1.0F, -2.8F).fireResistant()));

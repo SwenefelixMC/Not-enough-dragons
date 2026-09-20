@@ -37,11 +37,11 @@ public class EnUsLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModItems.GRONCKLE_IRON_NUGGET.get(),"Gronckle Iron Nugget");
 
         translationBuilder.add(ModItems.GRONCKLE.get(),"Gronckle");
-        translationBuilder.add(ModItems.GRONCKLE_EGG.get(),"Gronckle_egg");
+        translationBuilder.add(ModItems.GRONCKLE_EGG.get(),"Gronckle Egg");
 
-        translationBuilder.add(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get(),"Molten Dragon Proved Steal");
-        translationBuilder.add(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get(),"Dragon Proved Steal Scraps");
-        translationBuilder.add(ModItems.DRAGON_PROVED_STEAL_INGOT.get(),"Dragon Proved Steal Ingot");
+        translationBuilder.add(ModItems.MOLTEN_DRAGON_PROVED_STEEL.get(),"Molten Dragon Proved Steel");
+        translationBuilder.add(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get(),"Dragon Proved Steel Scraps");
+        translationBuilder.add(ModItems.DRAGON_PROVED_STEEL_INGOT.get(),"Dragon Proved Steel Ingot");
 
         translationBuilder.add(ModBlocks.DRAGON_NIP.get().asItem(),"Dragon Nip");
 
@@ -70,15 +70,17 @@ public class EnUsLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get().asItem(), "Molten Gronckle Iron");
         translationBuilder.add(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get().asItem(), "Block of Molten Gronckle Iron");
 
-        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get().asItem(), "Raw Gronckle Iron Slab");
-        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get().asItem(), "Molten Gronckle Iron");
-        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEAL_SLAB.get().asItem(), "Block of Molten Gronckle Iron");
+        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get().asItem(), "Dragon Proved Steel Block");
+        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEEL_STAIRS.get().asItem(), "Dragon Proved Steel Stairs");
+        translationBuilder.add(ModBlocks.DRAGON_PROVED_STEEL_SLAB.get().asItem(), "Dragon Proved Steel Slab");
 
         translationBuilder.add(ModBlocks.GRONCKLE_SCALES.get().asItem(), "Gronckle scales");
 
+        translationBuilder.add(ModBlocks.DRAGON_MANUAL.get().asItem(), "Dragon Manual");
+
         //Entity Types
         translationBuilder.add(getEntityTypeKey(ModEntityTypes.NIGHT_FURY.get()).toLanguageKey("entity"),"Night Fury");
-        translationBuilder.add(getEntityTypeKey(ModEntityTypes.PLASMA_BLAST.get()).toLanguageKey("entity"),"Pasma Blast");
+        translationBuilder.add(getEntityTypeKey(ModEntityTypes.PLASMA_BLAST.get()).toLanguageKey("entity"),"Plasma Blast");
 
         //CreativeModeTaps
         translationBuilder.add("itemGroup." + NotEnoughDragons.MOD_ID + "."+"ned_dragons","NED Dragons");

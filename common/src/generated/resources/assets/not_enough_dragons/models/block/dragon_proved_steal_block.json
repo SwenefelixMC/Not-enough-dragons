@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "not_enough_dragons:block/dragon_proved_steal_block"
-  }
-}
