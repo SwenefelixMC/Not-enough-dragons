@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "not_enough_dragons:molten_raw_gronckle_iron_from_blasting_molten_gronckle_iron"
+        "recipes": "not_enough_dragons:molten_raw_gronckle_iron_from_blasting_molten_gronckle_iron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

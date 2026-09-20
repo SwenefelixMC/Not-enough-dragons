@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "not_enough_dragons:dragon_proved_steal_slab"
+        "recipes": "not_enough_dragons:dragon_proved_steal_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

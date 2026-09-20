@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "not_enough_dragons:raw_gronckle_iron"
+        "recipes": "not_enough_dragons:raw_gronckle_iron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

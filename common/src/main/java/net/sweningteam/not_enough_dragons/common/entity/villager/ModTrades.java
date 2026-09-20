@@ -58,295 +58,245 @@ public class ModTrades {
     public static void bootstrap(BootstrapContext<VillagerTrade> context){
         context.register(
                 WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_AXE,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(Items.EMERALD,4),
                         new ItemStackTemplate(ModItems.GRONCKLE_IRON_AXE.get()),
                         6,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F
+                ).build()
         );
         context.register(
                 WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_SWORD,
-                new VillagerTrade(
+                 VillagerTrade.builder(
                         new TradeCost(Items.EMERALD,4),
                         new ItemStackTemplate(ModItems.GRONCKLE_IRON_SWORD.get()),
                         6,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F
+                 ).build()
         );
         context.register(
                 WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_SHOVEL,
-                new VillagerTrade(
+                 VillagerTrade.builder(
                         new TradeCost(Items.EMERALD,4),
                         new ItemStackTemplate(ModItems.GRONCKLE_IRON_SHOVEL.get()),
                         6,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_PICKAXE,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(Items.EMERALD,4),
                         new ItemStackTemplate(ModItems.GRONCKLE_IRON_PICKAXE.get()),
                         6,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 WEAPONSMITH_3_EMERALD_GRONCKLE_IRON_HOE,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(Items.EMERALD,4),
                         new ItemStackTemplate(ModItems.GRONCKLE_IRON_HOE.get()),
                         6,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
 
         context.register(
                 VIKING_1_DIAMOND_GOLD_COIN,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(Items.DIAMOND,1),
                         new ItemStackTemplate(ModItems.GOLD_COIN.get(),2),
                         6,
                         3,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_1_IRON_INGOT_GOLD_COIN,
-                new VillagerTrade(
+                 VillagerTrade.builder(
                         new TradeCost(Items.IRON_INGOT,1),
                         new ItemStackTemplate(ModItems.GOLD_COIN.get(),1),
                         6,
                         3,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_1_GRONCKLE_IRON_INGOT_GOLD_COIN,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GRONCKLE_IRON_INGOT.get(), 2),
                         new ItemStackTemplate(ModItems.GOLD_COIN.get(),3),
                         6,
                         3,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_1_DRAGON_PROVED_STEAL_INGOT_GOLD_COIN,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.DRAGON_PROVED_STEAL_INGOT.get(), 2),
                         new ItemStackTemplate(ModItems.GOLD_COIN.get(),4),
                         6,
                         3,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_1_GOLD_COIN_SADDLE,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 3),
                         new ItemStackTemplate(Items.SADDLE,1),
                         2,
                         5,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_1_GOLD_COIN_NAME_TAG,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 2),
                         new ItemStackTemplate(Items.NAME_TAG,4),
                         10,
                         3,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
 
 
         context.register(
                 VIKING_2_GOLD_COIN_MAP,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 3),
                         new ItemStackTemplate(Items.MAP,1),
                         6,
                         10,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_2_GOLD_COIN_PAPER,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),2),
                         new ItemStackTemplate(Items.PAPER,1),
                         6,
                         10,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_2_GOLD_COIN_COMPASS,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 3),
                         new ItemStackTemplate(Items.COMPASS,1),
                         6,
                         10,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_2_GOLD_COIN_GRONCKLE_SCALES,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 1),
                         new ItemStackTemplate(ModBlocks.GRONCKLE_SCALES.get().asItem(),4),
                         10,
                         10,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_2_GOLD_COIN_NIGHT_FURY_SCALES,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 1),
                         new ItemStackTemplate(ModBlocks.NIGHT_FURY_SCALES.get().asItem(),4),
                         10,
                         10,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
 
         context.register(
                 VIKING_3_GOLD_COIN_DRAGON_MANUAL,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),20),
                         new ItemStackTemplate(ModBlocks.DRAGON_MANUAL.get().asItem(),1),
                         1,
                         40,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_3_GOLD_COIN_DRAGON_NIP,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 1),
                         new ItemStackTemplate(ModBlocks.DRAGON_NIP.get().asItem(),2),
                         6,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_3_GOLD_COIN_DRAGON_PROVED_STEAL_BLOCK,
-                new VillagerTrade(
+               VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 19),
                         new ItemStackTemplate(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get().asItem(),1),
                         2,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_3_GOLD_COIN_GRONCKLE_IRON_BLOCK,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(), 15),
                         new ItemStackTemplate(ModBlocks.GRONCKLE_IRON_BLOCK.get().asItem(),1),
                         4,
                         20,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
 
         context.register(
                 VIKING_4_GOLD_COIN_COD,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),1),
                         new ItemStackTemplate(Items.COD,2),
                         10,
                         30,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_4_GOLD_COIN_SALMON,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),1),
                         new ItemStackTemplate(Items.SALMON,2),
                         10,
                         30,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_4_GOLD_COIN_RABBIT_STEW,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),2),
                         new ItemStackTemplate(Items.RABBIT_STEW,1),
                         10,
                         30,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_4_GOLD_COIN_GRANITE,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),2),
                         new ItemStackTemplate(Items.GRANITE,1),
                         10,
                         30,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
 
         context.register(
                 VIKING_5_GOLD_COIN_GRONCKLE_EGG,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),20),
                         new ItemStackTemplate(ModItems.GRONCKLE_EGG.get(),1),
                         1,
                         40,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
         context.register(
                 VIKING_5_GOLD_COIN_NIGHT_FURY_EGG,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(ModItems.GOLD_COIN.get(),20),
                         new ItemStackTemplate(ModItems.NIGHT_FURY_EGG.get(),1),
                         1,
                         40,
-                        0.2F,
-                        Optional.empty(),
-                        List.of())
+                        0.2F).build()
         );
     }
 

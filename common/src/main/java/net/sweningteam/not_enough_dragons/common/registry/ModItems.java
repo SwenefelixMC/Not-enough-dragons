@@ -31,10 +31,10 @@ public class ModItems {
     public static final Supplier<Item> DRAGON_PROVED_STEAL_SCRAPS = registerItem("dragon_proved_steal_scraps", ()-> new Item(baseProperties("dragon_proved_steal_scraps").fireResistant()));
     public static final Supplier<Item> DRAGON_PROVED_STEAL_INGOT = registerItem("dragon_proved_steal_ingot", ()-> new Item(baseProperties("dragon_proved_steal_ingot").fireResistant()));
 
-    public static final Supplier<Item> GRONCKLE_IRON_AXE = registerItem("gronckle_iron_axe", ()-> new AxeItem(ModToolMaterials.GRONCKLE_IRON,5.0F, -3.0F,baseProperties("gronckle_iron_axe").fireResistant()));
+    public static final Supplier<Item> GRONCKLE_IRON_AXE = registerItem("gronckle_iron_axe", ()-> new Item(baseProperties("gronckle_iron_axe").axe(ModToolMaterials.GRONCKLE_IRON,5.0F, -3.0F).fireResistant()));
     public static final Supplier<Item> GRONCKLE_IRON_PICKAXE = registerItem("gronckle_iron_pickaxe", ()-> new Item(baseProperties("gronckle_iron_pickaxe").pickaxe(ModToolMaterials.GRONCKLE_IRON,1.0F, -2.8F).fireResistant()));
-    public static final Supplier<Item> GRONCKLE_IRON_HOE = registerItem("gronckle_iron_hoe", ()-> new HoeItem(ModToolMaterials.GRONCKLE_IRON,-3.0F, 0.0F,baseProperties("gronckle_iron_hoe").fireResistant()));
-    public static final Supplier<Item> GRONCKLE_IRON_SHOVEL = registerItem("gronckle_iron_shovel", ()-> new ShovelItem(ModToolMaterials.GRONCKLE_IRON,1.5F, -3.0F,baseProperties("gronckle_iron_shovel").fireResistant()));
+    public static final Supplier<Item> GRONCKLE_IRON_HOE = registerItem("gronckle_iron_hoe", ()-> new Item(baseProperties("gronckle_iron_hoe").axe(ModToolMaterials.GRONCKLE_IRON,-3.0F, 0.0F).fireResistant()));
+    public static final Supplier<Item> GRONCKLE_IRON_SHOVEL = registerItem("gronckle_iron_shovel", ()-> new Item(baseProperties("gronckle_iron_shovel").shovel(ModToolMaterials.GRONCKLE_IRON,1.5F, -3.0F).fireResistant()));
     public static final Supplier<Item> GRONCKLE_IRON_SWORD = registerItem("gronckle_iron_sword", ()-> new Item(baseProperties("gronckle_iron_sword").sword(ModToolMaterials.GRONCKLE_IRON,3.0F, -2.4F).fireResistant()));
 
     public static final Supplier<Item> DRAGON_NIP = registerItem("dragon_nip", ()-> new BlockItem(ModBlocks.DRAGON_NIP.get(), baseProperties("dragon_nip")));

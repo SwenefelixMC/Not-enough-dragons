@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "not_enough_dragons:dragon_proved_steal_scraps_from_blasting_molten_dragon_proved_steal"
+        "recipes": "not_enough_dragons:dragon_proved_steal_scraps_from_blasting_molten_dragon_proved_steal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

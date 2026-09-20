@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.item.trading.VillagerTrade;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.common.registry.ModTags;
 
@@ -34,16 +34,16 @@ public class ModTradeSets {
     public static Holder.Reference<TradeSet> register(
             final BootstrapContext<TradeSet> context, final ResourceKey<TradeSet> resourceKey, final TagKey<VillagerTrade> tradeTag
     ) {
-        return register(context, resourceKey, tradeTag, ConstantValue.exactly(2.0F));
+        return register(context, resourceKey, tradeTag, ContextIntProviders.exactly(2));
     }
 
     public static Holder.Reference<TradeSet> register(
-            final BootstrapContext<TradeSet> context, final ResourceKey<TradeSet> resourceKey, final TagKey<VillagerTrade> tradeTag, final NumberProvider numberProvider
+            final BootstrapContext<TradeSet> context, final ResourceKey<TradeSet> resourceKey, final TagKey<VillagerTrade> tradeTag, final Holder<ContextIntProvider> amount
     ) {
         return context.register(
                 resourceKey,
                 new TradeSet(
-                        context.lookup(Registries.VILLAGER_TRADE).getOrThrow(tradeTag), numberProvider, false, Optional.of(resourceKey.identifier().withPrefix("trade_set/"))
+                        context.lookup(Registries.VILLAGER_TRADE).getOrThrow(tradeTag), amount, false, Optional.of(resourceKey.identifier().withPrefix("trade_set/"))
                 )
         );
     }

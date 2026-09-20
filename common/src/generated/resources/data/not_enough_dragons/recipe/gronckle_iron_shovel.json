@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "/": "minecraft:stick",
-    "G": "not_enough_dragons:gronckle_iron_nugget"
+    "G": "not_enough_dragons:gronckle_iron_ingot"
   },
   "pattern": [
     "G",

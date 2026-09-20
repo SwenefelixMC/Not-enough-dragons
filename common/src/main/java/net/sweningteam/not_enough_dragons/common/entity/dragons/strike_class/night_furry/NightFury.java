@@ -555,7 +555,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     @Override
     public void aiStep() {
         super.aiStep();
-        updateSwingTime();
         if(!this.level().isClientSide()) {
             this.updatePersistentAnger((ServerLevel) this.level(),true);
         }
@@ -568,10 +567,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         }else {
             this.entityData.set(BITING, false);
         }
-        if(this.swinging && !this.oldSwinging){
+        if(this.isSwimming() && !this.oldSwinging){
             this.swingTime = 12;
         }
-        this.oldSwinging = this.swinging;
+        this.oldSwinging = this.isSwinging();
     }
 
     public void updateBlinking(){

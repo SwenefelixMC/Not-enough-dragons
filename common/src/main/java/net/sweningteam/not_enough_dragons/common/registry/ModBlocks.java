@@ -26,7 +26,7 @@ public class ModBlocks {
 
     public static final ArrayList<Supplier<? extends Block>> BLOCKS = new ArrayList<>();
 
-    public static final Supplier<Block> NIGHT_FURY_SCALES = registerBlockWithFireResistantItem("night_fury_scales", ()->new LeafLitterBlock(baseProperties("night_fury_scales").sound(SoundType.DEEPSLATE).mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.DESTROY).noCollision()));
+    public static final Supplier<Block> NIGHT_FURY_SCALES = registerBlockWithFireResistantItem("night_fury_scales", ()->new LeafLitterBlock(baseProperties("night_fury_scales").sound(SoundType.DEEPSLATE).mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.POPPED).noCollision()));
     public static final Supplier<Block> GRONCKLE_IRON_BLOCK = registerBlockWithFireResistantItem("gronckle_iron_block", ()-> new Block(baseProperties("gronckle_iron_block").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
     public static final Supplier<Block> GRONCKLE_IRON_STAIRS = registerBlockWithFireResistantItem("gronckle_iron_stairs", ()-> new AccesableStairsBlock(GRONCKLE_IRON_BLOCK.get().defaultBlockState(), baseProperties("gronckle_iron_stairs").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
     public static final Supplier<Block> GRONCKLE_IRON_SLAB = registerBlockWithFireResistantItem("gronckle_iron_slab", ()-> new SlabBlock(baseProperties("gronckle_iron_slab").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
@@ -50,7 +50,7 @@ public class ModBlocks {
 
     public static final Supplier<Block> DRAGON_MANUAL = registerBlockWithItem("book_of_dragons",()-> new Block(baseProperties("book_of_dragons").sound(SoundType.WOOL).mapColor(MapColor.COLOR_BROWN)));
 
-    public static final Supplier<Block> GRONCKLE_SCALES = registerBlockWithFireResistantItem("gronckle_scales", ()->new LeafLitterBlock(baseProperties("gronckle_scales").sound(SoundType.DEEPSLATE).mapColor(MapColor.COLOR_BROWN).pushReaction(PushReaction.DESTROY).noCollision()));
+    public static final Supplier<Block> GRONCKLE_SCALES = registerBlockWithFireResistantItem("gronckle_scales", ()->new LeafLitterBlock(baseProperties("gronckle_scales").sound(SoundType.DEEPSLATE).mapColor(MapColor.COLOR_BROWN).pushReaction(PushReaction.POPPED).noCollision()));
 
     public static final Supplier<Block> DRAGON_NIP = registerBlockWithItem("dragon_nip_block",()->new DragonNipBlock(baseProperties("dragon_nip_block").noCollision().noOcclusion().sound(SoundType.GRASS)));
 

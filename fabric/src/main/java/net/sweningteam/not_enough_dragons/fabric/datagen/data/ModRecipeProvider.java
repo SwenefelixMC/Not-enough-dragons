@@ -2,13 +2,16 @@ package net.sweningteam.not_enough_dragons.fabric.datagen.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
 import net.sweningteam.not_enough_dragons.common.registry.ModItems;
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +25,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
-        return new RecipeProvider(registryLookup,exporter) {
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, BootstrapContext<Recipe<?>> bootstrapContext, BootstrapContext<Advancement> bootstrapContext1) {
+        return new RecipeProvider(bootstrapContext,bootstrapContext1) {
             @Override
             public void buildRecipes() {
                 oreBlasting(
@@ -39,7 +42,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(ModItems.MOLTEN_RAW_GROCKLE_IRON.get())
                         .requires(Items.WATER_BUCKET)
                         .unlockedBy(getHasName(ModItems.MOLTEN_RAW_GROCKLE_IRON.get()), has(ModItems.MOLTEN_RAW_GROCKLE_IRON.get()))
-                        .save(exporter);
+                        .save(output);
                 oreBlasting(
                         List.of(ModItems.RAW_GROCKLE_IRON.get()),
                         RecipeCategory.MISC,
@@ -75,7 +78,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('S',ModItems.DRAGON_PROVED_STEAL_SCRAPS.get())
                         .define('I',Items.IRON_INGOT)
                         .unlockedBy(getHasName(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get()), has(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.GRONCKLE_IRON_CHAIN.get())
                         .pattern("N")
@@ -84,7 +87,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('N',ModItems.GRONCKLE_IRON_NUGGET.get())
                         .define('I',ModItems.GRONCKLE_IRON_INGOT.get())
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 stairBuilder(ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get(), Ingredient.of(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get()));
                 slab(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DRAGON_PROVED_STEAL_SLAB.get(),ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get());
@@ -93,46 +96,46 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("G")
                         .pattern("G")
                         .pattern("/")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_SHOVEL.get())
                         .pattern("G")
                         .pattern("/")
                         .pattern("/")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_PICKAXE.get())
                         .pattern("GGG")
                         .pattern(" / ")
                         .pattern(" / ")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_AXE.get())
                         .pattern("GG")
                         .pattern("G/")
                         .pattern(" /")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_HOE.get())
                         .pattern("GG")
                         .pattern(" /")
                         .pattern(" /")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
             }
         };
     }

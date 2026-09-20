@@ -33,11 +33,11 @@
     "not_enough_dragons_fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.4",
-    "minecraft": "~26.2",
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
     "java": ">=25",
     "fabric-api": "*",
-    "geckolib": ">=5.5.3",
+    "geckolib": ">=5.5.6",
     "yet_another_config_lib_v3": "*"
   },
   "suggests": {
