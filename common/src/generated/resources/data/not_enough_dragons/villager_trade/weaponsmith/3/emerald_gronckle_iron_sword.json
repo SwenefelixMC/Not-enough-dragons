@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "not_enough_dragons:gronckle_iron_sword"
+  },
+  "max_uses": 6.0,
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 4.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 20.0
+}

@@ -48,7 +48,7 @@ public class ModBlocks {
     public static final Supplier<Block> DRAGON_PROVED_STEAL_STAIRS = registerBlockWithFireResistantItem("dragon_proved_steal_stairs", ()-> new AccesableStairsBlock(GRONCKLE_IRON_BLOCK.get().defaultBlockState(), baseProperties("dragon_proved_steal_stairs").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
     public static final Supplier<Block> DRAGON_PROVED_STEAL_SLAB = registerBlockWithFireResistantItem("dragon_proved_steal_slab", ()-> new SlabBlock(baseProperties("dragon_proved_steal_slab").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
 
-    public static final Supplier<Block> BOOK_OF_DRAGONS = registerBlockWithItem("book_of_dragons",()-> new Block(baseProperties("book_of_dragons").sound(SoundType.WOOL).mapColor(MapColor.COLOR_BROWN)));
+    public static final Supplier<Block> DRAGON_MANUAL = registerBlockWithItem("book_of_dragons",()-> new Block(baseProperties("book_of_dragons").sound(SoundType.WOOL).mapColor(MapColor.COLOR_BROWN)));
 
     public static final Supplier<Block> GRONCKLE_SCALES = registerBlockWithFireResistantItem("gronckle_scales", ()->new LeafLitterBlock(baseProperties("gronckle_scales").sound(SoundType.DEEPSLATE).mapColor(MapColor.COLOR_BROWN).pushReaction(PushReaction.DESTROY).noCollision()));
 

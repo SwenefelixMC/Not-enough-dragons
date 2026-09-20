@@ -26,7 +26,7 @@ public class ModCreativeTabs {
     }
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent = new ArrayList<>();
-        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.BOOK_OF_DRAGONS.get().asItem());
+        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.DRAGON_MANUAL.get().asItem());
         NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_NIP);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GOLD_COIN);
         NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_GROCKLE_IRON);

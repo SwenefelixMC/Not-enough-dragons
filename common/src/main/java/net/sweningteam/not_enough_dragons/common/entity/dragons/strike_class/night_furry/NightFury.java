@@ -330,20 +330,19 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
 
+        this.goalSelector.addGoal(1,new AvoidEntityGoal<>(this,Ravager.class,15F,1F,2F));
+
         this.goalSelector.addGoal(2, new ShootProjectileGoal(this));
 
-        this.goalSelector.addGoal(3,new AvoidEntityGoal<>(this,Ravager.class,15F,1F,2F));
-        this.goalSelector.addGoal(4,new MeleeAttackGoal(this,1D,false));
+        this.goalSelector.addGoal(3,new MeleeAttackGoal(this,1D,false));
 
+        this.goalSelector.addGoal(4, new BreedGoal(this,1));
         this.goalSelector.addGoal(5, new DragonFolowOwnerGoal(this,1.0D, 16.0F, 4.0F));
         this.goalSelector.addGoal(6,new WaterAvoidingRandomStrollGoal(this,1.0));
 
         this.goalSelector.addGoal(7,new RandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(1,new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10,true, false, this::isAngryAt));
-
-        this.goalSelector.addGoal(5,new BreedGoal(this,1.0D));
-
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, 5, true, false,this::canAttackPillager));
     }
 
@@ -621,7 +620,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                                     Should_be_aggro = true;
                                     if(dangerTimer <= 100 && getTarget() == null){
                                         dangerTimer += 1;
-                                        NotEnoughDragons.LOGGER.info("Dragon Timer 1");
                                     }else {
                                         dangerTimer = 0;
                                         setTarget(livingEntity);
@@ -633,7 +631,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                         if(this.distanceTo(livingEntity) <= 6 && entityDoesNotHaveFoodItem(livingEntity)){
                             if(!livingEntity.isShiftKeyDown()){
                                 if(dangerTimer <= 100 && getTarget() == null){
-                                    NotEnoughDragons.LOGGER.info("Dragon Timer 2");
                                     dangerTimer += 1;
                                 }else {
                                     dangerTimer = 0;
@@ -648,7 +645,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                                 Should_be_aggro = true;
                                 if(entityDoesNotHaveFoodItem(livingEntity)){
                                     if(dangerTimer <= 100 && getTarget() == null){
-                                        NotEnoughDragons.LOGGER.info("Dragon Timer 3");
                                         dangerTimer += 1;
                                     }else {
                                         dangerTimer = 0;
@@ -694,17 +690,17 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         egg.setPos(this.position());
         setOffspringAttributes((Dragon) mate,nightFury);
         if(nightFury != null){
-            egg.setDragonEgg(true,0,0,new DragonEggData(
-                    Objects.requireNonNull(nightFury.getAttribute(Attributes.ATTACK_DAMAGE)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(Attributes.ATTACK_KNOCKBACK)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(Attributes.JUMP_STRENGTH)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(Attributes.SNEAKING_SPEED)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(Attributes.MOVEMENT_SPEED)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(Attributes.FLYING_SPEED)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(ModAttributes.DRAGON_SPRINTING_SPEED)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(ModAttributes.DRAGON_SPRINTING_SPEED)).getBaseValue(),
-                    Objects.requireNonNull(nightFury.getAttribute(ModAttributes.DRAGON_TAMING_TRUST)).getBaseValue()
+            egg.setDragonEgg(false,0,0,new DragonEggData(
+                    nightFury.getAttributeValue(Attributes.ATTACK_DAMAGE),
+                    nightFury.getAttributeValue(Attributes.ATTACK_KNOCKBACK),
+                    nightFury.getAttributeValue(Attributes.JUMP_STRENGTH),
+                    nightFury.getAttributeValue(Attributes.SNEAKING_SPEED),
+                    nightFury.getAttributeValue(Attributes.MOVEMENT_SPEED),
+                    nightFury.getAttributeValue(Attributes.FLYING_SPEED),
+                    nightFury.getAttributeValue(ModAttributes.DRAGON_SPRINTING_SPEED),
+                    nightFury.getAttributeValue(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED),
+                    nightFury.getAttributeValue(ModAttributes.DRAGON_SPRINTING_SPEED),
+                    nightFury.getAttributeValue(ModAttributes.DRAGON_TAMING_TRUST)
             ));
         }
         this.finalizeSpawnChildFromBreeding(level, mate, nightFury);
@@ -726,6 +722,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         }
         super.tick();
         if(!this.level().isClientSide()){
+            if(this.getPassengers().isEmpty()){
+                setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+            }
+
             scalesTick(this);
             updateBlastRestoreTimer(this);
             this.setDeltaMovement(this.getDeltaMovement().x,this.getDeltaMovement().y-0.01,this.getDeltaMovement().z);
@@ -818,8 +818,11 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
             boolean isSprintPressed = localPlayer.input.keyPresses.sprint();
             boolean isBackwardPressed = localPlayer.input.keyPresses.backward();
             boolean isJumpPressed = localPlayer.input.keyPresses.jump();
+            this.setYHeadRot(player.getYHeadRot());
+            if(isForwardPressed){
+                this.setYRot(player.getYHeadRot());
+            }
 
-            this.setYRot(player.getYHeadRot());
 
             if(this.playerJumpPendingScale > 0.0F && !this.isJumping()){
                 executeRidersJump(playerJumpPendingScale, travelVector, this.onGround() || isInLiquid());
@@ -978,9 +981,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         entityData.set(SPRINTING, false);
         if(inputSprint()) setSprinting(true);
         if(inputSlow()) setShiftKeyDown(true);
+        setXRot(rider.getXRot());
         if (!onGround()){
             if(isFlying()){
-                setXRot(rider.getXRot());
+
 
                 double flyUpSpeed;
 
@@ -1016,7 +1020,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 if (rider.isJumping()) {
                     h += 0.5F;
                 }
-                this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
+                if(inputForward()){
+                    this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
+                }
+
                 return (new Vec3(0, (double)h* getSpeed()/2+flyUpSpeed, (double)g* getSpeed()*5));
             } else if (isInLiquid()) {
                 setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
@@ -1107,7 +1114,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         setOwnAttributes(Attributes.ATTACK_KNOCKBACK,0.9,1.3);
         setOwnAttributes(Attributes.JUMP_STRENGTH,0.85,1);
         setOwnAttributes(Attributes.SNEAKING_SPEED,0.08,0.13);
-        setOwnAttributes(Attributes.MOVEMENT_SPEED,0.3,0.8);
+        setOwnAttributes(Attributes.MOVEMENT_SPEED,0.3,0.4);
         setOwnAttributes(Attributes.FLYING_SPEED,0.9,1.25);
         setOwnAttributes(ModAttributes.DRAGON_SPRINTING_SPEED,0.7,0.8);
         setOwnAttributes(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED,0.23,0.27);

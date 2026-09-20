@@ -21,7 +21,7 @@ public class ModBlockLootTableProvider extends FabricBlockLootSubProvider {
         dropOther(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get(), ModItems.MOLTEN_GROCKLE_IRON.get());
         //createOtherDroppingSlabDrop(ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get(),ModItems.MOLTEN_GROCKLE_IRON.get() );
         dropSelf(ModBlocks.GRONCKLE_IRON_STAIRS.get());
-        dropSelf(ModBlocks.BOOK_OF_DRAGONS.get());
+        dropSelf(ModBlocks.DRAGON_MANUAL.get());
         dropSelf(ModBlocks.GRONCKLE_IRON_TRAPDOOR.get());
         dropSelf(ModBlocks.GRONCKLE_IRON_CHAIN.get());
         createSlabItemTable(ModBlocks.GRONCKLE_IRON_SLAB.get());

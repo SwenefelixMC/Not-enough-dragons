@@ -23,7 +23,7 @@ public interface ShootingDragon {
     void setChargingShot(boolean bl);
 
     default boolean canShoot(){
-        return this.BlastsLeft() < 0;
+        return this.BlastsLeft() > 0;
     }
 
     int BlastsLeft();

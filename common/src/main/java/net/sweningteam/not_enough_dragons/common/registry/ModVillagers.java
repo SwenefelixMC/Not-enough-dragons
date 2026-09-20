@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.item.trading.TradeSets;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.entity.villager.ModTradeSets;
 import net.sweningteam.not_enough_dragons.platform.Services;
 
 import java.util.function.Supplier;
@@ -29,7 +30,7 @@ public class ModVillagers {
                         ImmutableSet.of(),
                         ImmutableSet.of(),
                         SoundEvents.VILLAGER_WORK_LIBRARIAN,
-                        Int2ObjectMap.ofEntries(new Int2ObjectMap.Entry[]{Int2ObjectMap.entry(1, TradeSets.LEATHERWORKER_LEVEL_1), Int2ObjectMap.entry(2, TradeSets.LEATHERWORKER_LEVEL_2), Int2ObjectMap.entry(3, TradeSets.LEATHERWORKER_LEVEL_3), Int2ObjectMap.entry(4, TradeSets.LEATHERWORKER_LEVEL_4), Int2ObjectMap.entry(5, TradeSets.LEATHERWORKER_LEVEL_5)})
+                        Int2ObjectMap.ofEntries(new Int2ObjectMap.Entry[]{Int2ObjectMap.entry(1, ModTradeSets.VIKING_LEVEL_1), Int2ObjectMap.entry(2, ModTradeSets.VIKING_LEVEL_2), Int2ObjectMap.entry(3, ModTradeSets.VIKING_LEVEL_3), Int2ObjectMap.entry(4, ModTradeSets.VIKING_LEVEL_4), Int2ObjectMap.entry(5, ModTradeSets.VIKING_LEVEL_5)})
                 ));
 
     }

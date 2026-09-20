@@ -1,0 +1,22 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:swords",
+      "required": false
+    },
+    {
+      "id": "#minecraft:axes",
+      "required": false
+    },
+    {
+      "id": "#minecraft:arrows",
+      "required": false
+    },
+    "minecraft:bow",
+    "minecraft:crossbow",
+    "minecraft:lava_bucket",
+    "minecraft:totem_of_undying",
+    "minecraft:flint_and_steel",
+    "minecraft:tnt"
+  ]
+}

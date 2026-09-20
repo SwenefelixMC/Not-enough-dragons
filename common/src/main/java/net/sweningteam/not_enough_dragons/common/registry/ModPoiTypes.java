@@ -11,7 +11,7 @@ import net.sweningteam.not_enough_dragons.platform.Services;
 import java.util.function.Supplier;
 
 public class ModPoiTypes {
-    public static final ResourceKey<PoiType> VIKING_POI = register("viking_poi",ModBlocks.BOOK_OF_DRAGONS,1,1);
+    public static final ResourceKey<PoiType> VIKING_POI = register("viking_poi",ModBlocks.DRAGON_MANUAL,1,1);
 
     public static ResourceKey<PoiType> register(String name, Supplier<Block> block, int tickets, int range){
         Services.PLATFORM.getRegisterHelper().registerPOIType(name, block, tickets, range);

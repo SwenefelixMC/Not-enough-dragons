@@ -27,7 +27,7 @@ public class ModBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL)
                 .addElement(getKey(ModBlocks.GRONCKLE_IRON_BLOCK.get()))
                 .addElement(getKey(ModBlocks.GRONCKLE_IRON_STAIRS.get()))
-                .addElement(getKey(ModBlocks.BOOK_OF_DRAGONS.get()))
+                .addElement(getKey(ModBlocks.DRAGON_MANUAL.get()))
                 .addElement(getKey(ModBlocks.GRONCKLE_IRON_TRAPDOOR.get()))
                 .addElement(getKey(ModBlocks.GRONCKLE_IRON_CHAIN.get()))
                 .addElement(getKey(ModBlocks.GRONCKLE_IRON_SLAB.get()))

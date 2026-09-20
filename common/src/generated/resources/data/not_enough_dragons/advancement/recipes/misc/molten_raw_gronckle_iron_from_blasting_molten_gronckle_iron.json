@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_molten_gronckle_iron": {
+      "conditions": {
+        "items": [
+          {
+            "items": "not_enough_dragons:molten_gronckle_iron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "not_enough_dragons:molten_raw_gronckle_iron_from_blasting_molten_gronckle_iron"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_molten_gronckle_iron"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "not_enough_dragons:molten_raw_gronckle_iron_from_blasting_molten_gronckle_iron"
+    ]
+  }
+}

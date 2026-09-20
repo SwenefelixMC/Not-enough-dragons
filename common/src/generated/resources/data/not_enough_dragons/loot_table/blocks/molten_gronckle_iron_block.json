@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "not_enough_dragons:molten_gronckle_iron"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

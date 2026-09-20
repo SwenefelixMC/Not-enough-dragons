@@ -1,0 +1,13 @@
+{
+  "gives": {
+    "count": 4,
+    "id": "minecraft:name_tag"
+  },
+  "max_uses": 10.0,
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 2.0,
+    "id": "not_enough_dragons:gold_coin"
+  },
+  "xp": 3.0
+}

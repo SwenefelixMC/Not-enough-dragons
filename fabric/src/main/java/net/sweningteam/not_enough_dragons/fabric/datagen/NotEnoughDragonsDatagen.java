@@ -2,7 +2,11 @@ package net.sweningteam.not_enough_dragons.fabric.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.entity.villager.ModTradeSets;
+import net.sweningteam.not_enough_dragons.common.entity.villager.ModTrades;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.ModModelProvider;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang.DeDeLanguageProvider;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang.EnUsLanguageProvider;
@@ -31,5 +35,14 @@ public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(ModPoiTypeTags::new);
 
         pack.addProvider(ModRecipeProvider::new);
+        pack.addProvider(ModRegistryDataProvider::new);
+
+        pack.addProvider(ModVillagerTradeTagProvider::new);
+    }
+
+    @Override
+    public void buildRegistry(RegistrySetBuilder registryBuilder) {
+        registryBuilder.add(Registries.VILLAGER_TRADE, ModTrades::bootstrap);
+        registryBuilder.add(Registries.TRADE_SET, ModTradeSets::bootstrap);
     }
 }
