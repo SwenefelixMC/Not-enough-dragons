@@ -1,4 +1,4 @@
-package net.sweningteam.not_enough_dragons.common.worldgen;
+package net.sweningteam.not_enough_dragons.common.worldgen.entity;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.*;

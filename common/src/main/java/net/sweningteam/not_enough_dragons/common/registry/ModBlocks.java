@@ -54,6 +54,8 @@ public class ModBlocks {
 
     public static final Supplier<Block> DRAGON_NIP = registerBlockWithItem("dragon_nip_block",()->new DragonNipBlock(baseProperties("dragon_nip_block").noCollision().noOcclusion().sound(SoundType.GRASS)));
 
+    public static final Supplier<Block> VIKING_TRADER_TABLE = registerBlockWithItem("viking_trader_table", ()-> new Block(baseProperties("viking_trader_table").sound(SoundType.WOOD)));
+
     public static BlockBehaviour.Properties baseProperties(String id){
         return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID, id)));
     }

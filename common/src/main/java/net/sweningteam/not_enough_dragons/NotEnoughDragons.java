@@ -23,6 +23,12 @@ public final class NotEnoughDragons {
         ModPoiTypes.init();
         ModVillagers.init();
         ModEffects.init();
+        ModFeatures.init();
+        ModPlacedFeatures.init();
+
+        ModStructurs.init();
+        ModStructureTypes.init();
+        ModStructurPieceTypes.init();
 
         NetworkHandler.init();
     }

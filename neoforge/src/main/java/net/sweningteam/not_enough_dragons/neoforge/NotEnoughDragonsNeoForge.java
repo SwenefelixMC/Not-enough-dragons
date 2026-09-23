@@ -22,7 +22,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.client.NotEnoughDragonsClient;
 import net.sweningteam.not_enough_dragons.common.registry.ModEntityTypes;
-import net.sweningteam.not_enough_dragons.common.worldgen.ModEntitySpawns;
+import net.sweningteam.not_enough_dragons.common.worldgen.entity.ModEntitySpawns;
 import net.sweningteam.not_enough_dragons.neoforge.platform.NeoForgeNetworkHelper;
 import net.sweningteam.not_enough_dragons.neoforge.platform.NeoForgeRegistryHelper;
 import net.sweningteam.not_enough_dragons.neoforge.worldgen.ModSpawns;
@@ -55,18 +55,6 @@ public final class NotEnoughDragonsNeoForge {
     public void onServerStarting(ServerStartingEvent event) {
 
     }
-
-//    @SubscribeEvent
-//    public void addCustomTrades(VillagerTradesEvent event) {
-//        if(event.getType() == BuiltInRegistries.VILLAGER_PROFESSION.getResourceKey(ModVillagers.VIKING.get()).orElseThrow()){
-//            Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
-//            trades.get(1).addAll(Arrays.stream(ModVillagerTrades.VIKING_TRADER_TRADES.get(1)).toList());
-//            trades.get(2).addAll(Arrays.stream(ModVillagerTrades.VIKING_TRADER_TRADES.get(2)).toList());
-//            trades.get(3).addAll(Arrays.stream(ModVillagerTrades.VIKING_TRADER_TRADES.get(3)).toList());
-//            trades.get(4).addAll(Arrays.stream(ModVillagerTrades.VIKING_TRADER_TRADES.get(4)).toList());
-//            trades.get(5).addAll(Arrays.stream(ModVillagerTrades.VIKING_TRADER_TRADES.get(5)).toList());
-//        }
-//    }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = NotEnoughDragons.MOD_ID,value = Dist.CLIENT)

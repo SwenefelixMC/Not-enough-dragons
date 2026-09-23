@@ -7,6 +7,12 @@ import net.minecraft.core.registries.Registries;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.common.entity.villager.ModTradeSets;
 import net.sweningteam.not_enough_dragons.common.entity.villager.ModTrades;
+import net.sweningteam.not_enough_dragons.common.registry.ModFeatures;
+import net.sweningteam.not_enough_dragons.common.structure.placements.ModStrucutreSetsConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.features.ModFeatureConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.features.ModPlacedFeatureConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.structures.ModStructuresConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.structures.ModTemplatePoolsConfiguration;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.ModModelProvider;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang.DeDeLanguageProvider;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang.EnUsLanguageProvider;
@@ -44,5 +50,10 @@ public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
     public void buildRegistry(RegistrySetBuilder registryBuilder) {
         registryBuilder.add(Registries.VILLAGER_TRADE, ModTrades::bootstrap);
         registryBuilder.add(Registries.TRADE_SET, ModTradeSets::bootstrap);
+        registryBuilder.add(Registries.FEATURE, ModFeatureConfiguration::boostrap);
+        registryBuilder.add(Registries.PLACED_FEATURE, ModPlacedFeatureConfiguration::boostrap);
+        registryBuilder.add(Registries.STRUCTURE, ModStructuresConfiguration::boostrap);
+        registryBuilder.add(Registries.TEMPLATE_POOL, ModTemplatePoolsConfiguration::bootstrap);
+        registryBuilder.add(Registries.STRUCTURE_SET, ModStrucutreSetsConfiguration::bootstrap);
     }
 }

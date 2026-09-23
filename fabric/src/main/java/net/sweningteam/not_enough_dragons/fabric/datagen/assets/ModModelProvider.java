@@ -1,5 +1,6 @@
 package net.sweningteam.not_enough_dragons.fabric.datagen.assets;
 
+import com.terraformersmc.modmenu.util.mod.Mod;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -48,6 +49,8 @@ public class ModModelProvider extends FabricModelProvider {
         blockModelGenerators.registerSimpleFlatItemModel(ModBlocks.DRAGON_NIP.get().asItem());
 
         blockModelGenerators.createLeafLitter(ModBlocks.GRONCKLE_SCALES.get());
+
+        blockModelGenerators.createTrivialBlock(ModBlocks.VIKING_TRADER_TABLE.get(), TexturedModel.CUBE_TOP);
     }
 
     @Override
@@ -74,5 +77,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_PICKAXE.get(),ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_AXE.get(),ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.GRONCKLE_IRON_HOE.get(),ModelTemplates.FLAT_HANDHELD_ITEM);
+
+        itemModelGenerators.generateFlatItem(ModBlocks.DRAGON_MANUAL.get().asItem(), ModelTemplates.FLAT_ITEM);
     }
 }

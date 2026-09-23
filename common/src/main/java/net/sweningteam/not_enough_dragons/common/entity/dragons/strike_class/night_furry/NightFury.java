@@ -919,7 +919,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 stack.consume(1,player);
                 return InteractionResult.SUCCESS;
             }else {
-                if((stack.isEmpty() && !stack.is(Items.STICK) && !isBaby())){
+                if((stack.isEmpty() && !stack.is(Items.STICK) && !isBaby()) && getPassengers().isEmpty()){
                     player.startRiding(this,true,true);
                 }
             }
@@ -980,10 +980,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         setXRot(rider.getXRot());
         if (!onGround()){
             if(isFlying()){
-
-
                 double flyUpSpeed;
-
                 setSpeed(0.5F);
                 if (inputForward()){
                     setSpeed((float) getAttributeValue(Attributes.FLYING_SPEED));
@@ -993,6 +990,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 }
                 if(isShiftKeyDown()){
                     setSpeed((float) getAttributeValue(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED));
+                    flyUpSpeed = -0.4;
                 }
                 if (rider.isJumping()){
                     flyUpSpeed = 1;

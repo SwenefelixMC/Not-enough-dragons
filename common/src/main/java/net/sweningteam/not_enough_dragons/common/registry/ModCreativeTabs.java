@@ -26,6 +26,7 @@ public class ModCreativeTabs {
     }
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent = new ArrayList<>();
+        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.VIKING_TRADER_TABLE.get().asItem());
         NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.DRAGON_MANUAL.get().asItem());
         NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_NIP);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GOLD_COIN);

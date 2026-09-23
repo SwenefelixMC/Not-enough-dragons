@@ -32,6 +32,10 @@ public class ModTags {
         public static final TagKey<Biome> GRONCKLE_SPAWN_IN = TagKey.create(
                 Registries.BIOME,
                 Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"gronckle_spawn_in"));
+        public static final TagKey<Biome> DRAGON_NIP_SPANS_IN = TagKey.create(
+                Registries.BIOME,
+                Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"dragon_nip_spawns_in")
+        );
     }
 
     public class EntityTypes {

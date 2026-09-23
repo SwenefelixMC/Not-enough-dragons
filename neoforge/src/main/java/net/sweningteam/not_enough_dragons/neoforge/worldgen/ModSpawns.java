@@ -6,7 +6,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.sweningteam.not_enough_dragons.common.worldgen.ModEntitySpawns;
+import net.sweningteam.not_enough_dragons.common.worldgen.entity.ModEntitySpawns;
 
 public class ModSpawns {
 
