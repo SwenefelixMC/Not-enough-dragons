@@ -1,0 +1,9 @@
+{
+  "type": "not_enough_dragons:viking_trader_ship",
+  "biomes": "#minecraft:is_ocean",
+  "config": {
+    "weight": 0.5
+  },
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

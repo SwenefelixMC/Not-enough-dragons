@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dragon_proved_steel_scraps": {
+      "conditions": {
+        "items": [
+          {
+            "items": "not_enough_dragons:dragon_proved_steel_scraps"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "not_enough_dragons:dragon_proved_steel_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_dragon_proved_steel_scraps"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "not_enough_dragons:dragon_proved_steel_ingot"
+    ]
+  }
+}
