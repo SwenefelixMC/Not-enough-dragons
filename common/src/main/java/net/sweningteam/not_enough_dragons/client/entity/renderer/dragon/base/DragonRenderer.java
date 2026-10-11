@@ -4,6 +4,7 @@ import com.geckolib.animatable.GeoAnimatable;
 import com.geckolib.model.GeoModel;
 import com.geckolib.renderer.GeoEntityRenderer;
 import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.renderer.base.RenderPassInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -18,15 +19,15 @@ public abstract class DragonRenderer <T extends Dragon & GeoAnimatable,R extends
     }
 
     @Override
-    public void submit(R renderState, PoseStack poseStack, SubmitNodeCollector renderTasks, CameraRenderState cameraState) {
-        if(renderState.isBaby) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+    public void scaleModelForRender(RenderPassInfo<R> renderPassInfo, float widthScale, float heightScale) {
+        if(renderPassInfo.renderState().isBaby) {
+            renderPassInfo.poseStack().scale(0.5f, 0.5f, 0.5f);
             shadowRadius = BabyShadowradius();
         } else {
-            poseStack.scale(1f, 1f, 1f);
+            renderPassInfo.poseStack().scale(1f, 1f, 1f);
             shadowRadius = GrownUpShadowRadius();
         }
-        super.submit(renderState, poseStack, renderTasks, cameraState);
+        super.scaleModelForRender(renderPassInfo, widthScale, heightScale);
     }
 
     public abstract float BabyShadowradius();

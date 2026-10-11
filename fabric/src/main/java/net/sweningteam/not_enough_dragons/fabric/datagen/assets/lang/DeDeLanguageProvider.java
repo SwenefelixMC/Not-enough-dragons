@@ -56,9 +56,6 @@ public class DeDeLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.NIGHT_FURY_SCALES.get().asItem(), "Nachtschatten-Schuppen");
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_BLOCK.get().asItem(), "Gronckel-Eisenblock");
 
-        translationBuilder.add(ModBlocks.GRONCKLE_LAVA.get().asItem(), "Gronckel-Lava");
-        translationBuilder.add(ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get().asItem(), "Gronckel-Lavablock");
-
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_STAIRS.get().asItem(), "Gronckel-Eisentreppe");
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_SLAB.get().asItem(), "Gronckel-Eisenstufe");
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_BARS.get().asItem(), "Gronckel-Eisengitter");

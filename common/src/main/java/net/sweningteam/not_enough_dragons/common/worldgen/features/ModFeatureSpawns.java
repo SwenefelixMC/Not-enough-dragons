@@ -1,5 +1,6 @@
 package net.sweningteam.not_enough_dragons.common.worldgen.features;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -18,6 +19,7 @@ public class ModFeatureSpawns {
                 ModTags.Biomes.DRAGON_NIP_SPANS_IN,
                 GenerationStep.Decoration.VEGETAL_DECORATION,
                 ModPlacedFeatures.PATCH_DRAGON_NIP
+
         ));
         return spawnEntries;
     }

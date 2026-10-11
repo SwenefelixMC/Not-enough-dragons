@@ -1,7 +1,10 @@
 package net.sweningteam.not_enough_dragons.fabric.platform;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PoiHelper;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,4 +60,9 @@ public class FabricRegistryHelper implements RegisterHelper {
         return ()-> poitype;
     }
 
+    @Override
+    public KeyMapping registerKeyMapping(String name, InputConstants.Type type, int key, KeyMapping.Category category) {
+        KeyMapping mapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(name,type,key,category));
+        return mapping;
+    }
 }

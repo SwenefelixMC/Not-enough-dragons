@@ -36,8 +36,6 @@ public class ModModelProvider extends FabricModelProvider {
                 .stairs(ModBlocks.RAW_GRONCKLE_IRON_STAIRS.get())
                 .slab(ModBlocks.RAW_GRONCKLE_IRON_SLAB.get());
 
-        blockModelGenerators.family(ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get())
-                .slab(ModBlocks.GRONCKLE_LAVA.get());
         blockModelGenerators.family(ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get())
                 .slab(ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get());
 

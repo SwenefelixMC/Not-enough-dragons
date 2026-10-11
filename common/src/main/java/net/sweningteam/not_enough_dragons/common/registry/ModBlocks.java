@@ -39,10 +39,8 @@ public class ModBlocks {
     public static final Supplier<Block> RAW_GRONCKLE_IRON_SLAB = registerBlockWithFireResistantItem("raw_gronckle_iron_slab", ()-> new SlabBlock(baseProperties("raw_gronckle_iron_slab").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
 
     public static final Supplier<Block> MOLTEN_GRONCKLE_IRON_BLOCK = registerBlockWithFireResistantItem("molten_gronckle_iron_block",()->new Block(baseProperties("molten_gronckle_iron_block")));
-    public static final Supplier<Block> GRONCKLE_LAVA_BLOCK_LAVA = registerBlockWithFireResistantItem("gronckle_lava_block_lava",()->new Block(baseProperties("gronckle_lava_block_lava")));
 
     public static final Supplier<Block> MOLTEN_GRONCKLE_IRON_LAVA = registerBlockWithFireResistantItem("molten_gronckle_iron_lava", ()-> new SlabBlock(baseProperties("molten_gronckle_iron_lava").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
-    public static final Supplier<Block> GRONCKLE_LAVA = registerBlockWithFireResistantItem("gronckle_lava",()-> new SlabBlock(baseProperties("gronckle_lava").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
 
     public static final Supplier<Block> DRAGON_PROVED_STEEL_BLOCK = registerBlockWithFireResistantItem("dragon_proved_steel_block", ()-> new Block(baseProperties("dragon_proved_steel_block").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));
     public static final Supplier<Block> DRAGON_PROVED_STEEL_STAIRS = registerBlockWithFireResistantItem("dragon_proved_steel_stairs", ()-> new AccesableStairsBlock(GRONCKLE_IRON_BLOCK.get().defaultBlockState(), baseProperties("dragon_proved_steel_stairs").sound(SoundType.COPPER).requiresCorrectToolForDrops().mapColor(MapColor.METAL).strength(50.0F, 1200.0F)));

@@ -21,11 +21,14 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
+import net.sweningteam.not_enough_dragons.common.config.ModGamePlayConfig;
 import net.sweningteam.not_enough_dragons.common.config.ModMainConfig;
 import net.sweningteam.not_enough_dragons.common.network.packages.c2s.DragonRiderInputPackage;
 import net.sweningteam.not_enough_dragons.common.registry.ModAttributes;
@@ -174,9 +177,11 @@ public abstract class Dragon extends Animal implements GeoEntity {
     }
 
     public void handlePlayerInputPackage(ServerPlayer player, DragonRiderInputPackage packet){
-        setInputs(packet.forward(),packet.backward(),packet.sprint(), packet.jump());
+        setInputs(packet.forward(),packet.backward(),packet.sprint(), packet.jump(), packet.charge());
     }
-    protected abstract void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump);
+    public void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump, boolean charge){
+
+    };
 
     public void handelImpacktDamage(){
 
@@ -212,27 +217,8 @@ public abstract class Dragon extends Animal implements GeoEntity {
     return false;
     }
 
-    public boolean ShouldSneak(){
-        return Math.abs(getAttribute(Attributes.SNEAKING_SPEED).getBaseValue() - this.getSpeed()) < Math.abs(getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() - this.getSpeed()) &&
-                Math.abs(getAttribute(Attributes.SNEAKING_SPEED).getBaseValue() - this.getSpeed()) < Math.abs(getAttribute(ModAttributes.DRAGON_SPRINTING_SPEED).getBaseValue() - this.getSpeed());
-    }
-
-    public boolean ShouldSprint(){
-        return getAttribute(ModAttributes.DRAGON_SPRINTING_SPEED).getBaseValue() - this.getSpeed() < getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() - this.getSpeed() &&
-                getAttribute(ModAttributes.DRAGON_SPRINTING_SPEED).getBaseValue() - this.getSpeed() < getAttribute(Attributes.SNEAKING_SPEED).getBaseValue() - this.getSpeed();
-    }
-    public boolean ShouldSneakFLY(){
-        return Math.abs(getAttribute(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED).getBaseValue() - this.getSpeed()) < Math.abs(getAttribute(Attributes.FLYING_SPEED).getBaseValue() - this.getSpeed()) &&
-                Math.abs(getAttribute(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED).getBaseValue() - this.getSpeed()) < Math.abs(getAttribute(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED).getBaseValue() - this.getSpeed());
-    }
-
-    public boolean ShouldSprintFLY(){
-        return getAttribute(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED).getBaseValue() - this.getSpeed() < getAttribute(Attributes.FLYING_SPEED).getBaseValue() - this.getSpeed() &&
-                getAttribute(ModAttributes.DRAGON_FLYING_SPRINTING_SPEED).getBaseValue() - this.getSpeed() < getAttribute(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED).getBaseValue() - this.getSpeed();
-    }
-
     public boolean canAttackPillager(LivingEntity entity, ServerLevel level){
-        return ModMainConfig.DragonsFightRaiders;
+        return ModGamePlayConfig.dragonsFightRaiders;
     }
 
     static {

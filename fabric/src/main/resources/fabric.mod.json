@@ -8,8 +8,8 @@
     "Sweningteam Studios: SwenefelixMC, TheRealGenie, S1NN3RR; MegaCLS Studios: Crazylazystef"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://discord.gg/GTnRYQadFf",
+    "sources": "https://github.com/SwenefelixMC/Not-enough-Dragons"
   },
   "license": "All Rights Reserved",
   "icon": "assets/not_enough_dragons/icon.png",
@@ -20,6 +20,9 @@
     ],
     "client": [
       "net.sweningteam.not_enough_dragons.fabric.client.NotEnoughDragonsFabricClient"
+    ],
+    "preLaunch": [
+      "net.sweningteam.not_enough_dragons.fabric.NotEnoughDragonsFabric"
     ],
     "fabric-datagen": [
       "net.sweningteam.not_enough_dragons.fabric.datagen.NotEnoughDragonsDatagen"
@@ -46,7 +49,6 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.sources": "https://github.com/SwenefelixMC/Not-enough-Dragons",
         "modmenu.discord": "https://discord.gg/GTnRYQadFf"
       },
       "update_checker": true

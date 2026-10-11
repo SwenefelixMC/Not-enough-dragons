@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.PatrollingMonster;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
-import net.sweningteam.not_enough_dragons.common.config.ModMainConfig;
+import net.sweningteam.not_enough_dragons.common.config.ModGamePlayConfig;
 import net.sweningteam.not_enough_dragons.common.entity.dragons.strike_class.night_furry.NightFury;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,11 +24,11 @@ public abstract class RaiderMixins extends PatrollingMonster {
 
     @Inject(method = "registerGoals", at = @At("TAIL"))
     public void targetSelectorMixins(CallbackInfo ci){
-        targetSelector.addGoal(2,new NearestAttackableTargetGoal((Mob) (Object)this, NightFury.class,true, this::canAttackPillager));
+        targetSelector.addGoal(2,new NearestAttackableTargetGoal((Mob) (Object)this, NightFury.class,true, this::canAttackDragon));
     }
 
     @Unique
-    public boolean canAttackPillager(LivingEntity entity, ServerLevel level){
-        return ModMainConfig.DragonsFightRaiders;
+    public boolean canAttackDragon(LivingEntity entity, ServerLevel level){
+        return ModGamePlayConfig.dragonsFightRaiders;
     }
 }

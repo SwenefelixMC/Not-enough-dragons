@@ -1,5 +1,7 @@
 package net.sweningteam.not_enough_dragons.platform;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,5 +35,10 @@ public interface RegisterHelper {
                             tickets, range);
                 });
     };
+
+    default KeyMapping registerKeyMapping(String name, InputConstants.Type type, int key, KeyMapping.Category category){
+        KeyMapping mapping = new KeyMapping(name, type, key, category);
+        return mapping;
+    }
 
 }

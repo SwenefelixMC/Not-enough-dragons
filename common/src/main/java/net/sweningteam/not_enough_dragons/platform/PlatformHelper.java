@@ -1,5 +1,7 @@
 package net.sweningteam.not_enough_dragons.platform;
 
+import java.nio.file.Path;
+
 public interface PlatformHelper {
     RegisterHelper getRegisterHelper();
 

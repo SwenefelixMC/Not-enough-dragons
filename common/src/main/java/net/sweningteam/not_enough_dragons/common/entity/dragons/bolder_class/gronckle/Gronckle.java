@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.entity.ai.ShootProjectileGoal;
 import net.sweningteam.not_enough_dragons.common.entity.dragons.base.Dragon;
 import net.sweningteam.not_enough_dragons.common.entity.dragons.base.interfaces.DragonWithScales;
 import net.sweningteam.not_enough_dragons.common.entity.egg.GronckleEgg;
@@ -73,7 +74,6 @@ public class Gronckle extends Dragon implements DragonWithScales {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-
 
         this.goalSelector.addGoal(3,new AvoidEntityGoal<>(this, Ravager.class,15F,1F,2F));
         this.goalSelector.addGoal(4,new MeleeAttackGoal(this,1D,false));
@@ -227,6 +227,8 @@ public class Gronckle extends Dragon implements DragonWithScales {
                     coolDownTimer = 5;
                     return InteractionResult.CONSUME;
                 }
+            }else if(stack.isEmpty() && this.getPassengers().isEmpty()){
+                player.startRiding(this,true,true);
             }
         }
         return super.mobInteract(player, hand);
@@ -260,7 +262,7 @@ public class Gronckle extends Dragon implements DragonWithScales {
     }
 
     @Override
-    protected void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump) {
+    public void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump, boolean charging) {
 
     }
 

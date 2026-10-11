@@ -54,9 +54,6 @@ public class EnUsLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.NIGHT_FURY_SCALES.get().asItem(), "Night Fury scales");
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_BLOCK.get().asItem(), "Block of Gronckle Iron");
 
-        translationBuilder.add(ModBlocks.GRONCKLE_LAVA.get().asItem(), "Gronckle Lava");
-        translationBuilder.add(ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get().asItem(), "Block of Gronckle Lava");
-
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_STAIRS.get().asItem(), "Gronckle Iron Stairs");
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_SLAB.get().asItem(), "Gronckle Iron Slab");
         translationBuilder.add(ModBlocks.GRONCKLE_IRON_BARS.get().asItem(), "Gronckle Iron Bars");
@@ -97,5 +94,8 @@ public class EnUsLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("text.not_enough_dragons.dragon.dragon.not_tame_no_name", "You can't tame this Dragon because it is already tamed!");
 
         translationBuilder.add("config.not_enough_dragons.titel", "Not enough Dragons Config");
+
+        //Keymappings
+        translationBuilder.add("key.not_enough_dragons.ability.dragon_main_attack", "Dragon Main Attack");
     }
 }

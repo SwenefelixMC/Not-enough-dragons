@@ -48,8 +48,6 @@ public class ModCreativeTabs {
 
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent = new ArrayList<>();
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get().asItem());
 
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get().asItem());

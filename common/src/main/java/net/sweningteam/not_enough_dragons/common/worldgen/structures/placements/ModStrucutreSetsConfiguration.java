@@ -1,4 +1,4 @@
-package net.sweningteam.not_enough_dragons.common.structure.placements;
+package net.sweningteam.not_enough_dragons.common.worldgen.structures.placements;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.HolderGetter;
@@ -21,7 +21,7 @@ public class ModStrucutreSetsConfiguration {
         context.register(
                 ModStrucutreSets.VIKING_TRADER_SHIP_SET,
                 new StructureSet(structures.getOrThrow(ModStructurs.VIKING_TRADER_SHIP), new RandomSpreadStructurePlacement(
-                        40, 15, RandomSpreadType.LINEAR, 34222645
+                        40, 15, RandomSpreadType.LINEAR, 255233456
                         )
                 )
         );

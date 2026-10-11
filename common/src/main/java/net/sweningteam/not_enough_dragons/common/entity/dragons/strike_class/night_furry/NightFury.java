@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -45,6 +46,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.client.registry.ModKeyMappings;
+import net.sweningteam.not_enough_dragons.common.config.ModGamePlayConfig;
 import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponentType;
 import net.sweningteam.not_enough_dragons.common.dragon.trust.TrustContainer;
 import net.sweningteam.not_enough_dragons.common.entity.ai.DragonFolowOwnerGoal;
@@ -66,7 +69,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
-public class NightFury extends TamableDragon implements NeutralMob, EatingDragon, PlayerRideableJumping , DragonWithScales, FlyingDragon, ShootingDragon, SaddleAbblDragon, GenderedDragon {
+public class NightFury extends TamableDragon implements NeutralMob, EatingDragon, PlayerRideableJumping , DragonWithScales, FlyingDragon, ShootingDragon, SaddleAbblDragon{
     TrustContainer Trust = new TrustContainer();
     Random random = new Random();
 
@@ -76,20 +79,21 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     private static final EntityDataAccessor<Boolean> BITING;
     private static final EntityDataAccessor<Boolean> BLINKING;
     private static final EntityDataAccessor<Boolean> IS_FLYING;
-    private static final EntityDataAccessor<Boolean> CHARCHING_SHOT;
-    private static final EntityDataAccessor<Boolean> SADDEL;
+    private static final EntityDataAccessor<Boolean> CHARGING_SHOT;
+    private static final EntityDataAccessor<Boolean> SADDLE;
     private static final TargetingConditions.Selector TRUST_FILTER;
 
     private static final EntityDataAccessor<Boolean> MOVE_FORWARD_PRESSED;
     private static final EntityDataAccessor<Boolean> SPRINT_PRESSED;
     private static final EntityDataAccessor<Boolean> MOVE_BACKWARD_PRESSED;
     private static final EntityDataAccessor<Boolean> JUMP_PRESSED;
+    private static final EntityDataAccessor<Boolean> IS_CHARGING;
 
     static final TargetingConditions FIND_ENTITY_PREDICATE;
 
-    boolean inputForward(){return this.entityData.get(MOVE_FORWARD_PRESSED);};
-    boolean inputSlow(){return this.entityData.get(MOVE_BACKWARD_PRESSED);};
-    boolean inputSprint(){return this.entityData.get(SPRINT_PRESSED);};
+    boolean inputForward(){return this.entityData.get(MOVE_FORWARD_PRESSED);}
+    boolean inputSlow(){return this.entityData.get(MOVE_BACKWARD_PRESSED);}
+    boolean inputSprint(){return this.entityData.get(SPRINT_PRESSED);}
 
     private int lastPassiveTrustIncrease = 0;
 
@@ -190,7 +194,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     int blinkProgress = 0;
 
     protected float playerJumpPendingScale;
-    protected boolean allowStandSliding;
 
     int attackChargeTimer = 0;
 
@@ -212,27 +215,11 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
     @Override
     public boolean hasSaddle(){
-        return entityData.get(SADDEL);
+        return entityData.get(SADDLE);
     }
     @Override
     public void setSaddel(boolean bl){
-        this.entityData.set(SADDEL, bl);
-    }
-
-    genders Gender;
-    @Override
-    public boolean isMale() {
-        return Gender.equals(genders.MALE);
-    }
-
-    @Override
-    public void SetGender(genders gender) {
-        Gender = gender;
-    }
-
-    @Override
-    public genders getGender() {
-        return Gender;
+        this.entityData.set(SADDLE, bl);
     }
 
     @Override
@@ -247,11 +234,52 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         builder.define(SPRINT_PRESSED, false);
         builder.define(MOVE_BACKWARD_PRESSED, false);
         builder.define(JUMP_PRESSED,false);
+        builder.define(IS_CHARGING,false);
 
         builder.define(IS_FLYING,false);
-        builder.define(CHARCHING_SHOT, false);
-        builder.define(SADDEL, false);
+        builder.define(CHARGING_SHOT, false);
+        builder.define(SADDLE, false);
         super.defineSynchedData(builder);
+    }
+
+    private <A extends GeoAnimatable> PlayState eyeController(AnimationTest<A> event){
+        event.controller().setTransitionTicks(5);
+        if(entityData.get(AGGRO)){
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eyes.aggro"));
+        }else if(this.isTamed()){
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eyes.tamed"));
+        }else{
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eyes.Idel"));
+        }
+        return PlayState.CONTINUE;
+    }
+
+    private <A extends GeoAnimatable> PlayState eyeLidControler(AnimationTest<A> event){
+        event.controller().setTransitionTicks(1);
+        if(isFlying()){
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eye_lids.Fly"));
+        }else if(entityData.get(AGGRO)){
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eye_lids.Aggro"));
+        }else if(entityData.get(BLINKING)){
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eye_lids.Blink"));
+        }else{
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.eye_lids.Idel"));
+        }
+        return PlayState.CONTINUE;
+    }
+
+    private <A extends GeoAnimatable> PlayState headControler(AnimationTest<A> event){
+        event.controller().setTransitionTicks(5);
+        if(entityData.get(AGGRO)){
+            event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.head.Aggro"));
+        }else{
+            if(this.isTamed() && !isEating() && !entityData.get(BITING)){
+                event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.head.Tame"));
+            }else{
+                event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.head.Idel"));
+            }
+        }
+        return PlayState.CONTINUE;
     }
 
     private <A extends GeoAnimatable> PlayState faceController(AnimationTest<A> event){
@@ -265,15 +293,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 if(isEating()){
                     event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.face.eat"));
                 } else {
-                    if(this.entityData.get(BLINKING)){
-                        event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.face.blink"));
-                    }else {
-                        if (isTamed()) {
-                        event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.face.tamed"));
-                        } else{
-                        event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.face.idle"));
-                        }
-                    }
+                    event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.face.idle"));
                 }
             }
         }
@@ -289,6 +309,8 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 }else{
                     event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.Fly"));
                 }
+            }else if(this.entityData.get(JUMP_PRESSED)) {
+                event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.Fly"));
             }else{
                 event.setAndContinue(RawAnimation.begin().thenPlay("animation.nightfury.Glide"));
             }
@@ -319,7 +341,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(
                 new AnimationController<>("main",0,this::mainController),
-                new AnimationController<>("eye",0,this::faceController)
+                new AnimationController<>("eye",0,this::eyeController),
+                new AnimationController<>("eye_lids",0,this::eyeLidControler),
+                new AnimationController<>("head", 0, this::headControler),
+                new AnimationController<>("face",0,this::faceController)
         );
     }
 
@@ -367,26 +392,17 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     }
 
     @Override
-    public boolean canMate(@NonNull Animal otherAnimal) {
-        if(otherAnimal instanceof Dragon dragon){
-            if(dragon instanceof GenderedDragon genderedDragon){
-                if(!this.getGender().equals(genderedDragon.getGender())){
-                    return super.canMate(otherAnimal);
-                }else {
-                    return false;
-                }
-            }
-        }
-        return super.canMate(otherAnimal);
-    }
-
-    @Override
     public BlastProjectile createBlast(LivingEntity target, float velocity) {
         double x = target.getX() - this.getX();
         double y = target.getY() - this.getEyeY();
         double z = target.getZ() - this.getZ();
         Vec3 vec32 = new Vec3(x*velocity, y*velocity, z*velocity);
         return new PlasmaBlast(ModEntityTypes.PLASMA_BLAST.get(),this,vec32.normalize(),this.level());
+    }
+
+    @Override
+    public BlastProjectile createBlast() {
+        return new PlasmaBlast(ModEntityTypes.PLASMA_BLAST.get(),level());
     }
 
     @Override
@@ -405,15 +421,15 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
     @Override
     public boolean chargingShot() {
-        return entityData.get(CHARCHING_SHOT);
+        return entityData.get(CHARGING_SHOT);
     }
 
     @Override
     public void setChargingShot(boolean bl) {
-        entityData.set(CHARCHING_SHOT,bl);
+        entityData.set(CHARGING_SHOT,bl);
     }
 
-    int BlastRestorTimer;
+    int BlastRestoreTimer;
 
     @Override
     public int BlastsLeft() {
@@ -427,12 +443,12 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
     @Override
     public int getBlastRestorTimer() {
-        return BlastRestorTimer;
+        return BlastRestoreTimer;
     }
 
     @Override
-    public void setBlastRestorTimer(int blastRestorTimer) {
-        BlastRestorTimer = blastRestorTimer;
+    public void setBlastRestorTimer(int blastRestoreTimer) {
+        BlastRestoreTimer = blastRestoreTimer;
     }
 
     @Override
@@ -451,9 +467,8 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         addFlyingData(output,this);
         output.putInt("DangerTimer", dangerTimer);
         writeSaddleData(output);
-        output.putBoolean("IsMale",isMale());
         output.putInt("BlastsLeft", BlastsLeft());
-        output.putInt("BlastRestoreTimer",BlastRestorTimer);
+        output.putInt("BlastRestoreTimer", BlastRestoreTimer);
         super.addAdditionalSaveData(output);
     }
 
@@ -469,11 +484,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         readFlyingData(input,this);
         dangerTimer = input.getIntOr("DangerTimer",0);
         readSaddleData(input);
-        if(input.getBooleanOr("IsMale",(this.random.nextInt(100)<55))){
-            SetGender(genders.MALE);
-        }else{
-            SetGender(genders.FEMALE);
-        }
         SetBlastsLeft(input.getIntOr("BlastsLeft", (int) this.getAttributeValue(ModAttributes.DRAGON_SHOT_LIMIT)));
         setBlastRestorTimer(input.getIntOr("BlastRestoreTimer",1000));
         super.readAdditionalSaveData(input);
@@ -491,7 +501,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
     @Override
     public boolean canJump() {
-        return !isFlying() && !isInLiquid();
+        return !isFlying();
     }
 
     @Override
@@ -516,11 +526,11 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         }
     }
 
-    protected void executeRidersJump(float playerJumpPendingScale, Vec3 travelVector, boolean onGround) {
+    protected void executeRidersJump(float playerJumpPendingScale, boolean onGround) {
         if(onGround){
             double jumpingPower = this.getJumpPower(playerJumpPendingScale);
             Vec3 deltaMovement = this.getDeltaMovement();
-            this.addDeltaMovement(this.getLookAngle().multiply(1.0D, 0.0D, 1.0D).normalize().scale((16 * playerJumpPendingScale * deltaMovement.horizontalDistance()) * this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (double)this.getBlockSpeedFactor()).add((double)0.0F, (double)(0.1 + 1.1 * playerJumpPendingScale)*1.1 * jumpingPower, (double)0.0F));
+            this.addDeltaMovement(this.getLookAngle().multiply(1.0D, 0.0D, 1.0D).normalize().scale((16 * playerJumpPendingScale * deltaMovement.horizontalDistance()) * this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (double)this.getBlockSpeedFactor()).add(0.0D, (0.1 + 1.1 * playerJumpPendingScale)*1.1 * jumpingPower, 0.0F));
             this.playerJumpPendingScale = 0.0F;
         }
         if(playerJumpPendingScale >= 0.8 && !isFlying()){
@@ -721,7 +731,14 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
             if(this.getPassengers().isEmpty()){
                 setSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED));
             }
-
+            if(entityData.get(IS_CHARGING)){
+                if(this.getControllingPassenger() instanceof Player player){
+                    this.setChargeTimer(this.chargeTimer()+1);
+                    if(this.chargeTimer() > this.maxChargeTimer()) {
+                        this.performRangedAttackFromRider((float) this.getDeltaMovement().distanceTo(new Vec3(0, 0, 0)), this);
+                    }
+                }
+            }
             scalesTick(this);
             updateBlastRestoreTimer(this);
             this.setDeltaMovement(this.getDeltaMovement().x,this.getDeltaMovement().y-0.01,this.getDeltaMovement().z);
@@ -754,9 +771,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
             }
             setSpeed((float) getMovementSpeed());
             if (lastPassiveTrustIncrease == 0){
-                List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(4), (livingEntity)->{
-                        return FIND_ENTITY_PREDICATE.test((ServerLevel) this.level(), this, livingEntity);
-                });
+                List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class,this.getHitbox().inflate(4), (livingEntity)-> FIND_ENTITY_PREDICATE.test((ServerLevel) this.level(), this, livingEntity));
                 if(!list.isEmpty()){
                     for (LivingEntity livingEntity : list) {
                         if (Trust.hasTrust(livingEntity.getUUID())) {
@@ -814,17 +829,25 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
             boolean isSprintPressed = localPlayer.input.keyPresses.sprint();
             boolean isBackwardPressed = localPlayer.input.keyPresses.backward();
             boolean isJumpPressed = localPlayer.input.keyPresses.jump();
+            boolean isCharging = ModKeyMappings.DRAGON_CHARGE_MAIN_ATTACK_KEY.isDown();
             this.setYHeadRot(player.getYHeadRot());
-            if(isForwardPressed){
-                this.setYRot(player.getYHeadRot());
+            if(Math.abs(getYHeadRot() - getYRot())/180 > 0.4 || isForwardPressed){
+                if(Math.abs(getYHeadRot() - getYRot()) > 8/getSpeed()){
+                    if(getYHeadRot() > getYRot()){
+                        this.setYRot(getYRot()+8/getSpeed());
+                    }else{
+                        this.setYRot(getYRot()-8/getSpeed());
+                    }
+                }else{
+                    this.setYRot(getYHeadRot());
+                }
             }
-
 
             if(this.playerJumpPendingScale > 0.0F && !this.isJumping()){
-                executeRidersJump(playerJumpPendingScale, travelVector, this.onGround() || isInLiquid());
+                executeRidersJump(playerJumpPendingScale, this.onGround() || isInLiquid());
             }
 
-            ModNetworkHandler.sendC2SPacket(new DragonRiderInputPackage(isForwardPressed,isBackwardPressed,isSprintPressed,isJumpPressed));
+            ModNetworkHandler.sendC2SPacket(new DragonRiderInputPackage(isForwardPressed,isBackwardPressed,isSprintPressed,isJumpPressed, isCharging));
         }
     }
 
@@ -883,19 +906,24 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     public @NotNull InteractionResult mobInteract(Player player, @NonNull InteractionHand hand) {
         ItemStack stack = player.getMainHandItem();
         Item item = stack.getItem();
-        if(!this.level().isClientSide()){
+        if(this.level() instanceof ServerLevel serverLevel){
             if (canEat(item)){
-                if(canIncreseSaturation(this.getHealth() < this.getMaxHealth())){
+                if(canIncreseSaturation(this.getHealth() < this.getMaxHealth()) || NotEnoughDragons.shouldUseCreativeBackdoor(player)){
                     if( handleFood(player, item,false)) {
+                        this.playSound(SoundEvents.GENERIC_EAT.value());
                         stack.consume(1, player);
                         return InteractionResult.SUCCESS;
                     }
                 }else {
+                    if(ModGamePlayConfig.dragonDamageWhenFeed){
+                        this.playSound(SoundEvents.LLAMA_SPIT);
+                        player.hurtServer(serverLevel, damageSources().spit(player,this), 1f);
+                    }
                     player.sendOverlayMessage(Component.translatable("text.not_enough_dragons.dragon.dragon.not_eat"));
                     return InteractionResult.PASS;
                 }
             }
-            if(player.isShiftKeyDown() &&  stack.isEmpty() && (Trust.getTrust(player.getUUID()) >= getAttributeValue(ModAttributes.DRAGON_TAMING_TRUST)||player.isCreative())){
+            if(player.isShiftKeyDown() &&  stack.isEmpty() && (Trust.getTrust(player.getUUID()) >= getAttributeValue(ModAttributes.DRAGON_TAMING_TRUST)|| NotEnoughDragons.shouldUseCreativeBackdoor(player))){
                 if(!this.isTamed()){
                     this.Tame(player);
                     return InteractionResult.SUCCESS;
@@ -911,6 +939,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 player.sendOverlayMessage((Component.translatable("text.not_enough_dragons.dragon.get_trust").append(Component.literal(String.valueOf(Trust.getTrust(player.getUUID()))))));
                 return InteractionResult.SUCCESS;
             } else if (stack.is(Items.SADDLE) && !this.hasSaddle()) {
+                this.playSound(SoundEvents.HORSE_SADDLE.value());
                 setSaddel(true);
                 stack.consume(1,player);
                 return InteractionResult.SUCCESS;
@@ -953,11 +982,12 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     }
 
     @Override
-    public void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump){
+    public void setInputs(boolean forward, boolean backward, boolean sprint, boolean jump, boolean charge){
         this.entityData.set(MOVE_FORWARD_PRESSED, forward);
         this.entityData.set(MOVE_BACKWARD_PRESSED, backward);
         this.entityData.set(SPRINT_PRESSED, sprint);
         this.entityData.set(JUMP_PRESSED, jump);
+        this.entityData.set(IS_CHARGING, charge);
     }
 
     public double getMovementSpeed(){
@@ -990,7 +1020,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                 }
                 if(isShiftKeyDown()){
                     setSpeed((float) getAttributeValue(ModAttributes.DRAGON_FLYING_SLOWDOWN_SPEED));
-                    flyUpSpeed = -0.4;
+                    flyUpSpeed = -0.5;
                 }
                 if (rider.isJumping()){
                     flyUpSpeed = 1;
@@ -1013,9 +1043,6 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
                 if (rider.isJumping()) {
                     h += 0.5F;
-                }
-                if(inputForward()){
-                    this.yRotO = this.yBodyRot = this.yHeadRot = this.getYRot();
                 }
 
                 return (new Vec3(0, (double)h* getSpeed()/2+flyUpSpeed, (double)g* getSpeed()*5));
@@ -1118,18 +1145,12 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
     @Override
     public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData spawnGroupData) {
-        if(this.random.nextInt(100)<55){
-            SetGender(genders.MALE);
-        }else {
-            SetGender(genders.FEMALE);
-        }
         if(spawnReason == EntitySpawnReason.STRUCTURE){
             List<NightFuryEgg> eggs = this.level().getEntitiesOfClass(NightFuryEgg.class,this.getHitbox().inflate(2));
 
             for (NightFuryEgg egg : eggs){
                 if(egg.getParentF().isEmpty()){
                     egg.setParentF(EntityReference.of(this));
-                    SetGender(genders.FEMALE);
                 }
             }
         }
@@ -1155,9 +1176,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
         SPRINT_PRESSED = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
         MOVE_BACKWARD_PRESSED = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
         JUMP_PRESSED = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
+        IS_CHARGING = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
 
         IS_FLYING = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
-        CHARCHING_SHOT = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
-        SADDEL = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
+        CHARGING_SHOT = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
+        SADDLE = SynchedEntityData.defineId(NightFury.class, EntityDataSerializers.BOOLEAN);
     }
 }

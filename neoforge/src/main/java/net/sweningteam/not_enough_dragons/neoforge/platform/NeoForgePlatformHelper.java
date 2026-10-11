@@ -6,6 +6,8 @@ import net.sweningteam.not_enough_dragons.platform.NetworkHelper;
 import net.sweningteam.not_enough_dragons.platform.PlatformHelper;
 import net.sweningteam.not_enough_dragons.platform.RegisterHelper;
 
+import java.nio.file.Path;
+
 public class NeoForgePlatformHelper implements PlatformHelper {
     NeoForgeRegistryHelper registryHelper;
 

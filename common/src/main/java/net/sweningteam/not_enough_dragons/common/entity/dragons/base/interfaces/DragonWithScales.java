@@ -22,7 +22,7 @@ public interface DragonWithScales extends Brushable {
             boolean bl = false;
             for(int i = 0; i < 100; i++){
                 BlockPos pos1 = pos.offset(0,i*-1,0);
-                if(level.getBlockState(pos).isAir() && !level.getBlockState(pos1).isFaceSturdy(level,pos1, Direction.UP)){
+                if(level.getBlockState(pos).isAir() && !level.getBlockState(pos1).isFaceSturdy(level,pos1, Direction.UP) && !level.getBlockState(pos1).isAir()){
 
                     if(Scales() instanceof VegetationBlock vegetationBlock){
                         //bl = vegetationBlock.canSurvive(level.getBlockState(pos),level,pos);

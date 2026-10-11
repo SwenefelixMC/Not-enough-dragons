@@ -3,12 +3,14 @@ package net.sweningteam.not_enough_dragons.fabric;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.config.ModServerConfig;
 import net.sweningteam.not_enough_dragons.common.registry.ModEntityTypes;
 import net.sweningteam.not_enough_dragons.fabric.common.FabricFeatureSpawns;
 import net.sweningteam.not_enough_dragons.fabric.common.FabricSpawns;
 
-public final class NotEnoughDragonsFabric implements ModInitializer {
+public final class NotEnoughDragonsFabric implements ModInitializer, PreLaunchEntrypoint {
     @Override
     public void onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -20,5 +22,10 @@ public final class NotEnoughDragonsFabric implements ModInitializer {
         ModEntityTypes.registerEntityAtributes(FabricDefaultAttributeRegistry::register);
         FabricSpawns.register();
         FabricFeatureSpawns.register();
+    }
+
+    @Override
+    public void onPreLaunch() {
+        NotEnoughDragons.initPreLaunch();
     }
 }
