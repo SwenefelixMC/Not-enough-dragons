@@ -26,7 +26,8 @@ public class ModCreativeTabs {
     }
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsMiscItemsContent = new ArrayList<>();
-        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.BOOK_OF_DRAGONS.get().asItem());
+        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.VIKING_TRADER_TABLE.get().asItem());
+        NotEnoughDragonsMiscItemsContent.add(()->ModBlocks.DRAGON_MANUAL.get().asItem());
         NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_NIP);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GOLD_COIN);
         NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_GROCKLE_IRON);
@@ -34,9 +35,9 @@ public class ModCreativeTabs {
         NotEnoughDragonsMiscItemsContent.add(ModItems.RAW_GROCKLE_IRON);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GRONCKLE_IRON_INGOT);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GRONCKLE_IRON_NUGGET);
-        NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_DRAGON_PROVED_STEAL);
-        NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_PROVED_STEAL_SCRAPS);
-        NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_PROVED_STEAL_INGOT);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.MOLTEN_DRAGON_PROVED_STEEL);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_PROVED_STEEL_SCRAPS);
+        NotEnoughDragonsMiscItemsContent.add(ModItems.DRAGON_PROVED_STEEL_INGOT);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GRONCKLE_IRON_SWORD);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GRONCKLE_IRON_SHOVEL);
         NotEnoughDragonsMiscItemsContent.add(ModItems.GRONCKLE_IRON_PICKAXE);
@@ -47,8 +48,6 @@ public class ModCreativeTabs {
 
     private static ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent(){
         ArrayList<Supplier<? extends Item>> NotEnoughDragonsBlocksContent = new ArrayList<>();
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.GRONCKLE_LAVA_BLOCK_LAVA.get().asItem());
 
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_LAVA.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.MOLTEN_GRONCKLE_IRON_BLOCK.get().asItem());
@@ -65,9 +64,9 @@ public class ModCreativeTabs {
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.RAW_GRONCKLE_IRON_STAIRS.get().asItem());
         NotEnoughDragonsBlocksContent.add(()->ModBlocks.RAW_GRONCKLE_IRON_SLAB.get().asItem());
 
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get().asItem());
-        NotEnoughDragonsBlocksContent.add(()->ModBlocks.DRAGON_PROVED_STEAL_SLAB.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.DRAGON_PROVED_STEEL_STAIRS.get().asItem());
+        NotEnoughDragonsBlocksContent.add(()->ModBlocks.DRAGON_PROVED_STEEL_SLAB.get().asItem());
         return NotEnoughDragonsBlocksContent;
     }
 

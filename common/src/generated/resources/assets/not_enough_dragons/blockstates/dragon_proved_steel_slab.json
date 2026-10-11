@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "not_enough_dragons:block/dragon_proved_steel_slab"
+    },
+    "type=double": {
+      "model": "not_enough_dragons:block/dragon_proved_steel_block"
+    },
+    "type=top": {
+      "model": "not_enough_dragons:block/dragon_proved_steel_slab_top"
+    }
+  }
+}

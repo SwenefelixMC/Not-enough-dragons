@@ -1,0 +1,11 @@
+{
+  "gives": {
+    "id": "not_enough_dragons:gold_coin"
+  },
+  "max_uses": 6,
+  "reputation_discount": 0.2,
+  "wants": {
+    "id": "minecraft:iron_ingot"
+  },
+  "xp": 3
+}

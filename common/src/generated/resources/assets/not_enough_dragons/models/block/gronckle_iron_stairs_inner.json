@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "not_enough_dragons:block/gronckle_iron_block",
+    "side": "not_enough_dragons:block/gronckle_iron_block",
+    "top": "not_enough_dragons:block/gronckle_iron_block"
+  }
+}

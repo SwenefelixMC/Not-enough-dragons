@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "not_enough_dragons:block/viking_trader_table_side",
+    "top": "not_enough_dragons:block/viking_trader_table_top"
+  }
+}

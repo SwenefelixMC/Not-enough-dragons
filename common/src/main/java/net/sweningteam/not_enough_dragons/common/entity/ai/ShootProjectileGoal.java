@@ -14,7 +14,7 @@ public class ShootProjectileGoal extends Goal {
     public ShootProjectileGoal(Dragon dragon) {
         this.dragon = dragon;
         if (!(dragon instanceof ShootingDragon)){
-            NotEnoughDragons.LOGGER.error("Dragon must implement ShootingDragon, Please notify the mod Authors About this");
+            NotEnoughDragons.LOGGER.error("Dragons using this Goal must implement ShootingDragon, But {} doesn't, Please notify the mod Authors About this", dragon.getType());
             shootingDragon = null;
         }else {
             shootingDragon = (ShootingDragon) dragon;
@@ -52,7 +52,6 @@ public class ShootProjectileGoal extends Goal {
                 if (shootingDragon.chargeTimer() >= shootingDragon.maxChargeTimer()){
                     if (target.distanceToSqr(this.dragon) > 8D && shootingDragon.canShoot()){
                         shootingDragon.performRangedAttack(target,(float) dragon.getDeltaMovement().distanceTo(new Vec3(0,0,0)),dragon);
-                        shootingDragon.setChargeTimer(0);
                     }
                 }
             } else if (shootingDragon.chargeTimer()> 0) {

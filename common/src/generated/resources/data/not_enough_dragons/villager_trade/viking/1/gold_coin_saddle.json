@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "minecraft:saddle"
+  },
+  "max_uses": 2,
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 3,
+    "id": "not_enough_dragons:gold_coin"
+  },
+  "xp": 5
+}

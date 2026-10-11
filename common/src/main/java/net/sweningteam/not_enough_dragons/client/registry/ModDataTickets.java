@@ -8,6 +8,6 @@ public class ModDataTickets {
     public static final DataTicket<Boolean> HAS_SADDLE = DataTicket.create("has_saddl", Boolean.class);
 
     public static void init(){
-        NotEnoughDragons.LOGGER.info("Registering DataTickets for "+ NotEnoughDragons.MOD_ID);
+        NotEnoughDragons.LOGGER.info(" [Client] Registering DataTickets for {}!", NotEnoughDragons.MOD_NAME);
     }
 }

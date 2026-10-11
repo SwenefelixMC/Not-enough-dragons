@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "not_enough_dragons:item/gronckle_iron_shovel"
+  }
+}

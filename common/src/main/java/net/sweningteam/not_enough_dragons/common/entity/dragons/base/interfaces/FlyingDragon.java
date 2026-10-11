@@ -26,11 +26,9 @@ public interface FlyingDragon {
 
     default void updtateFlying(Dragon dragon){
         if(dragon.isInLiquid() && !dragon.hasControllingPassenger()){
-            NotEnoughDragons.LOGGER.info("Stoped Flying");
             setFlying(false);
         }
         if(dragon.onGround() && isFlying()){
-            NotEnoughDragons.LOGGER.info("Stoped Flying");
             setFlying(false);
         }
     }

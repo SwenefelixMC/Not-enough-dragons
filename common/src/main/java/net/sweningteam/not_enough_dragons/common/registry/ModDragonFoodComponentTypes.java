@@ -1,6 +1,7 @@
 package net.sweningteam.not_enough_dragons.common.registry;
 
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent;
 import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponentType;
 import net.sweningteam.not_enough_dragons.common.dragon.food.custom.PoisonousFoodComponent;
@@ -13,4 +14,7 @@ public class ModDragonFoodComponentTypes {
             .add(Items.PUFFERFISH, new PoisonousFoodComponent(1,-5D))
             .add(Items.COOKED_COD, new DragonFoodComponent(10,4D))
             .add(Items.COOKED_SALMON, new DragonFoodComponent(14,6D));
+
+    public static DragonFoodComponentType GRONCKLE = new DragonFoodComponentType()
+            .add(Blocks.STONE.asItem(), new DragonFoodComponent(5, 2D));
 }

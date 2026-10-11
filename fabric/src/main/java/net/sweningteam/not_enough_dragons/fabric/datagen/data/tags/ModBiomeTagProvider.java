@@ -40,5 +40,16 @@ public class ModBiomeTagProvider extends FabricTagsProvider<Biome> {
                 .addElement(Biomes.SUNFLOWER_PLAINS.identifier())
                 .addElement(Biomes.STONY_SHORE.identifier())
                 .addElement(Biomes.CHERRY_GROVE.identifier());
+
+        getOrCreateRawBuilder(ModTags.Biomes.DRAGON_NIP_SPANS_IN)
+                .addElement(Biomes.SAVANNA.identifier())
+                .addElement(Biomes.SAVANNA_PLATEAU.identifier())
+                .addElement(Biomes.PLAINS.identifier())
+                .addElement(Biomes.GROVE.identifier())
+                .addElement(Biomes.SUNFLOWER_PLAINS.identifier())
+                .addElement(Biomes.MEADOW.identifier())
+                .addElement(Biomes.OLD_GROWTH_BIRCH_FOREST.identifier())
+                .addElement(Biomes.FLOWER_FOREST.identifier())
+                .addElement(Biomes.WINDSWEPT_HILLS.identifier());
     }
 }

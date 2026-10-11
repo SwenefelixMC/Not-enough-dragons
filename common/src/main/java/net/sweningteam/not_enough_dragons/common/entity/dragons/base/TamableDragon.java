@@ -88,6 +88,7 @@ public abstract class TamableDragon extends Dragon implements OwnableEntity {
     protected void addAdditionalSaveData(ValueOutput output) {
         EntityReference<LivingEntity> entityReference = this.getOwnerReference();
         EntityReference.store(entityReference, output, "Owner");
+        output.putBoolean("Tamed", this.isTamed());
         super.addAdditionalSaveData(output);
     }
 
@@ -106,6 +107,7 @@ public abstract class TamableDragon extends Dragon implements OwnableEntity {
             this.entityData.set(DATA_OWNERUUID_ID, Optional.empty());
             this.setTame(false, true);
         }
+        this.setTamed(input.getBooleanOr("Tamed",false));
     }
 
     @Nullable
@@ -126,6 +128,11 @@ public abstract class TamableDragon extends Dragon implements OwnableEntity {
     }
 
     protected void applyTamingSideEffects() {
+    }
+
+    @Override
+    public boolean canGetAngryAt(LivingEntity entity) {
+        return super.canGetAngryAt(entity) && !this.isTamed();
     }
 
     static {

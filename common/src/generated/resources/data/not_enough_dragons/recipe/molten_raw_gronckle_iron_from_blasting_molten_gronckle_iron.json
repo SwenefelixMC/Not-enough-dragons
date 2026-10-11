@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 400,
+  "experience": 1.0,
+  "group": "gronckle_iron",
+  "ingredient": "not_enough_dragons:molten_gronckle_iron",
+  "result": {
+    "id": "not_enough_dragons:molten_raw_gronckle_iron"
+  }
+}

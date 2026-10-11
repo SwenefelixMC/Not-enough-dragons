@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "not_enough_dragons:block/dragon_proved_steel_block",
+    "side": "not_enough_dragons:block/dragon_proved_steel_block",
+    "top": "not_enough_dragons:block/dragon_proved_steel_block"
+  }
+}

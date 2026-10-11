@@ -18,10 +18,6 @@ import java.util.*;
 import java.util.function.Supplier;
 
 public class NeoForgeRegistryHelper implements RegisterHelper {
-
-
-
-
     @SafeVarargs
     @Override
     public final Supplier<CreativeModeTab> createCreativeTab(String name, Supplier<ItemStack> icon, ArrayList<Supplier<? extends Item>>... items) {
@@ -35,9 +31,7 @@ public class NeoForgeRegistryHelper implements RegisterHelper {
                 .build());
     }
 
-    private static final List<DeferredRegister> defaultedRegistries = new ArrayList<>();
-    private static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(BuiltInRegistries.POINT_OF_INTEREST_TYPE, NotEnoughDragons.MOD_ID);
-    private static final DeferredRegister<VillagerProfession> VILLAGER_PROFFESIONS = DeferredRegister.create(BuiltInRegistries.VILLAGER_PROFESSION, NotEnoughDragons.MOD_ID);
+    public static final List<DeferredRegister> defaultedRegistries = new ArrayList<>();
 
     @Override
     @SuppressWarnings("unchecked")

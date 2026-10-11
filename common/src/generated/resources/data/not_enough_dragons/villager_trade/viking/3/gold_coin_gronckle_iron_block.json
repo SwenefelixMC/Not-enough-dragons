@@ -1,0 +1,11 @@
+{
+  "gives": {
+    "id": "not_enough_dragons:gronckle_iron_block"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 15,
+    "id": "not_enough_dragons:gold_coin"
+  },
+  "xp": 20
+}

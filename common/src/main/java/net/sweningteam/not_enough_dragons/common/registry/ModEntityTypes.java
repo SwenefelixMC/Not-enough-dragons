@@ -22,7 +22,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class ModEntityTypes {
-    public static final Supplier<EntityType<NightFury>> NIGHT_FURY = registerEntity("night_fury", NightFury::new , MobCategory.CREATURE, 1.5F, 1.6F,0.7F);
+    public static final Supplier<EntityType<NightFury>> NIGHT_FURY = registerEntity("night_fury", NightFury::new , MobCategory.CREATURE, 1.5F, 1.6F,1.5F);
     public static final Supplier<EntityType<PlasmaBlast>> PLASMA_BLAST = registerEntity("plasma_blast",PlasmaBlast::new,MobCategory.MISC,0.25F,0.25F,0);
 
     public static final Supplier<EntityType<NightFuryEgg>> NIGHT_FURY_EGG = registerEntity("night_fury_egg", NightFuryEgg::new, MobCategory.CREATURE, 0.5F,0.55F,0.1F);
