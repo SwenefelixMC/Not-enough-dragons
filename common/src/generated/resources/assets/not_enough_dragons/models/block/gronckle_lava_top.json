@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "not_enough_dragons:block/gronckle_lava_block_lava",
-    "side": "not_enough_dragons:block/gronckle_lava_block_lava",
-    "top": "not_enough_dragons:block/gronckle_lava_block_lava"
-  }
-}

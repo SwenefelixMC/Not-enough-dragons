@@ -24,21 +24,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
-import net.sweningteam.not_enough_dragons.common.entity.ai.ShootProjectileGoal;
 import net.sweningteam.not_enough_dragons.common.entity.dragons.base.Dragon;
 import net.sweningteam.not_enough_dragons.common.entity.dragons.base.interfaces.DragonWithScales;
 import net.sweningteam.not_enough_dragons.common.entity.egg.GronckleEgg;
-import net.sweningteam.not_enough_dragons.common.recipie.GronckleRecipies;
-import net.sweningteam.not_enough_dragons.common.registry.ModAttributes;
-import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
-import net.sweningteam.not_enough_dragons.common.registry.ModEntityTypes;
-import net.sweningteam.not_enough_dragons.common.registry.ModTags;
+import net.sweningteam.not_enough_dragons.common.recipie.Gronckle.GroncklRecipie;
+import net.sweningteam.not_enough_dragons.common.recipie.Gronckle.GronckleRecipieInput;
+import net.sweningteam.not_enough_dragons.common.registry.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -140,53 +138,21 @@ public class Gronckle extends Dragon implements DragonWithScales {
             return;
         }
 
-        List<ItemStack> normalizedInput = normalizeAndSort(this.recipie);
-
-        for (Map.Entry<List<ItemStack>, ItemStack> entry: GronckleRecipies.ALL_RECIPIES.entrySet()){
-            List<ItemStack> recipeKey = normalizeAndSort(entry.getKey());
-            if(listMatches(normalizedInput,recipeKey)){
-                ItemEntity output = new ItemEntity(this.level(),this.getX(),this.getY(),this.getZ(),entry.getValue().copy());
-                output.setThrower(this);
-                this.level().addFreshEntity(output);
-                recipie.clear();
-                break;
-            }
+        Optional<RecipeHolder<GroncklRecipie>> recipe = getCurrenRecipie();
+        if(recipe.isEmpty()){
+            return;
         }
+
+        ItemStack outputStack = recipe.get().value().assemble(new GronckleRecipieInput(this.recipie));
+
+        ItemEntity output = new ItemEntity(this.level(),this.getX(),this.getY(),this.getZ(),outputStack);
+        output.setThrower(this);
+        this.level().addFreshEntity(output);
+        recipie.clear();
     }
 
-    private List<ItemStack> normalizeAndSort(List<ItemStack>inputList){
-        List<ItemStack> combined = new ArrayList<>();
-        for(ItemStack stack : inputList){
-            if(stack.isEmpty()) continue;
-            boolean matches = false;
-            for(ItemStack exsisting : combined){
-                if(ItemStack.isSameItemSameComponents(exsisting,stack)){
-                    exsisting.grow(stack.getCount());
-                    matches = true;
-                    break;
-                }
-            }
-            if(!matches){
-                combined.add(stack.copy());
-            }
-        }
-        combined.sort(Comparator.comparing(a -> a.getItem().getDescriptionId()));
-        return combined;
-    }
-
-    private boolean listMatches(List<ItemStack> list1, List<ItemStack> list2){
-        if(list1.size()!=list2.size()){
-            return false;
-        }
-        for(int i = 0; i < list1.size();i++){
-            ItemStack stack1 = list1.get(i);
-            ItemStack stack2 = list2.get(i);
-
-            if(!ItemStack.isSameItemSameComponents(stack1,stack2) || stack1.getCount() != stack2.getCount()){
-                return false;
-            }
-        }
-        return true;
+    private Optional<RecipeHolder<GroncklRecipie>> getCurrenRecipie() {
+        return ((ServerLevel) level()).recipeAccess().getRecipeFor(ModRecipieTypes.GRONCKLE_SMELTING.get(), new GronckleRecipieInput(this.recipie),level());
     }
 
     @Override
@@ -212,7 +178,7 @@ public class Gronckle extends Dragon implements DragonWithScales {
                         serverLevel.setBlockAndUpdate(this.blockPosition(),Blocks.LAVA.defaultBlockState());
                         return InteractionResult.SUCCESS;
                     }
-                }else if(coolDownTimer <= 0){
+                }else if(coolDownTimer <= 0 ){
                     ItemStack toAdd = stack.copyWithCount(1);
                     boolean combine = false;
                     for(ItemStack existing : this.recipie){

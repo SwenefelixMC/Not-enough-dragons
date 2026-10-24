@@ -1,5 +1,6 @@
 package net.sweningteam.not_enough_dragons.fabric.datagen.data;
 
+import com.google.common.collect.ImmutableList;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancements.Advancement;
@@ -7,10 +8,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.Blocks;
+import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.datagen.recipies.GronckleRecipieBuilder;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
 import net.sweningteam.not_enough_dragons.common.registry.ModItems;
 
@@ -134,6 +140,25 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
                         .save(output);
+
+                GronckleRecipieBuilder.gronckleRecipie(RecipeCategory.MISC, ImmutableList.of(
+                        Ingredient.of(Blocks.STONE),
+                        Ingredient.of(Blocks.SANDSTONE),
+                        Ingredient.of(Blocks.IRON_ORE),
+                        Ingredient.of(Blocks.COBBLESTONE)
+                ),ModItems.MOLTEN_GROCKLE_IRON.get(),6).group("gronckle_iron_ingot")
+                        .unlockedBy(getHasName(ModBlocks.DRAGON_MANUAL.get()), has(ModBlocks.DRAGON_MANUAL.get()))
+                        .save(output, String.valueOf(Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"gronckle/gronckle_iron_ingot")));
+
+                GronckleRecipieBuilder.gronckleRecipie(
+                        RecipeCategory.MISC, ImmutableList.of(
+                        Ingredient.of(Blocks.COPPER_BLOCK.weathering().oxidized()),
+                        Ingredient.of(ModItems.GRONCKLE_IRON_INGOT.get()),
+                        Ingredient.of(Blocks.IRON_BLOCK),
+                        Ingredient.of(Blocks.ANCIENT_DEBRIS)
+                ),ModItems.MOLTEN_DRAGON_PROVED_STEEL.get(),6).group("dragon_proved_steal_ingot")
+                        .unlockedBy(getHasName(ModBlocks.DRAGON_MANUAL.get()), has(ModBlocks.DRAGON_MANUAL.get()))
+                        .save(output, String.valueOf(Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"gronckle/dragon_proved_steal_ingot")));;
             }
         };
     }

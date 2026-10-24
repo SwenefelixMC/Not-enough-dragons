@@ -1,0 +1,13 @@
+{
+  "type": "not_enough_dragons:gronckle_smelting",
+  "input": [
+    "minecraft:stone",
+    "minecraft:sandstone",
+    "minecraft:iron_ore",
+    "minecraft:cobblestone"
+  ],
+  "output": {
+    "count": 6,
+    "id": "not_enough_dragons:molten_gronckle_iron"
+  }
+}

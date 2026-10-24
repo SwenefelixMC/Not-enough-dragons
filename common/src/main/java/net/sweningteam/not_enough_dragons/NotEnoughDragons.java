@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.sweningteam.not_enough_dragons.common.config.ModGamePlayConfig;
 import net.sweningteam.not_enough_dragons.common.config.ModMainConfig;
-import net.sweningteam.not_enough_dragons.common.config.ModServerConfig;
 import net.sweningteam.not_enough_dragons.common.network.NetworkHandler;
 import net.sweningteam.not_enough_dragons.common.registry.*;
 import net.sweningteam.not_enough_dragons.platform.Services;
@@ -39,6 +38,8 @@ public final class NotEnoughDragons {
         ModStructureTypes.init();
         ModStructurPieceTypes.init();
 
+        ModRecipieSerializers.init();
+        ModRecipieTypes.init();
         NetworkHandler.init();
     }
 

@@ -55,11 +55,14 @@ public interface ShootingDragon {
         BlastProjectile Blast = createBlast(target,velocity);
         Blast.setPos(new Vec3(dragon.getX(),dragon.getEyeY(),dragon.getZ()));
         Blast.setYRot(dragon.getYHeadRot());
-        SetBlastsLeft(BlastsLeft()-1);
-        setBlastRestorTimer(1000);
-        onSooth(dragon);
+        this.SetBlastsLeft(this.BlastsLeft()-1);
+        this.setBlastRestorTimer(10000);
+        if(this.BlastsLeft() <= 0){
+            this.setChargeTimer(-20000);
+        }
+        this.setChargeTimer(0);
         if (level instanceof ServerLevel serverLevel) {
-            dragon.level().addFreshEntity(Blast);
+            serverLevel.addFreshEntity(Blast);
         }
 
         dragon.playSound(SoundEvents.BLAZE_SHOOT, 1.0F, 1.0F / (dragon.getRandom().nextFloat() * 0.4F + 0.8F));
@@ -77,7 +80,9 @@ public interface ShootingDragon {
             this.setChargeTimer(-20000);
         }
         this.setChargeTimer(0);
-
+        if(level instanceof ServerLevel serverLevel) {
+            serverLevel.addFreshEntity(Blast);
+        }
         dragon.playSound(SoundEvents.BLAZE_SHOOT, 1.0F, 1.0F / (dragon.getRandom().nextFloat() * 0.4F + 0.8F));
     }
 }
