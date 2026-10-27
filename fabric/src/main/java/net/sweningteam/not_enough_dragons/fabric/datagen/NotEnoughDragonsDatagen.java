@@ -5,8 +5,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.datagen.ModDragonFoodComponentConfiguration;
 import net.sweningteam.not_enough_dragons.common.entity.villager.ModTradeSets;
 import net.sweningteam.not_enough_dragons.common.entity.villager.ModTrades;
+import net.sweningteam.not_enough_dragons.common.registry.ModRegistries;
 import net.sweningteam.not_enough_dragons.common.worldgen.structures.placements.ModStrucutreSetsConfiguration;
 import net.sweningteam.not_enough_dragons.common.worldgen.features.ModFeatureConfiguration;
 import net.sweningteam.not_enough_dragons.common.worldgen.features.ModPlacedFeatureConfiguration;
@@ -43,6 +45,8 @@ public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(ModRegistryDataProvider::new);
 
         pack.addProvider(ModVillagerTradeTagProvider::new);
+
+        pack.addProvider(ModDragonFoodComponentTagProvider::new);
     }
 
     @Override
@@ -54,5 +58,6 @@ public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
         registryBuilder.add(Registries.STRUCTURE, ModStructuresConfiguration::boostrap);
         registryBuilder.add(Registries.TEMPLATE_POOL, ModTemplatePoolsConfiguration::bootstrap);
         registryBuilder.add(Registries.STRUCTURE_SET, ModStrucutreSetsConfiguration::bootstrap);
+        registryBuilder.add(ModRegistries.DRAGON_FOOD_COMPONENT, ModDragonFoodComponentConfiguration::bootstrap);
     }
 }

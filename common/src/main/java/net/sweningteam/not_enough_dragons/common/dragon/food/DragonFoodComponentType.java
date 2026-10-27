@@ -1,29 +1,15 @@
 package net.sweningteam.not_enough_dragons.common.dragon.food;
 
-import net.minecraft.world.item.Item;
+import com.mojang.serialization.MapCodec;
 
-import java.util.HashMap;
-import java.util.Map;
+public class DragonFoodComponentType<F extends DragonFoodComponent> {
+    private final MapCodec<F> codec;
 
-public class DragonFoodComponentType {
-    Map<Item,DragonFoodComponent> dragonFoodComponentMap = new HashMap<>();
-
-    public DragonFoodComponentType add(Item key,DragonFoodComponent value){
-        if(!this.dragonFoodComponentMap.containsKey(key)){
-            this.dragonFoodComponentMap.put(key,value);
-        }
-        return this;
+    public DragonFoodComponentType(MapCodec<F> codec) {
+        this.codec = codec;
     }
 
-    public boolean contains(Item item){
-        boolean bl = false;
-        if(dragonFoodComponentMap.containsKey(item)){
-            bl = true;
-        }
-        return bl;
-    }
-
-    public DragonFoodComponent get(Item item){
-        return dragonFoodComponentMap.get(item);
+    public MapCodec<F> codec() {
+        return codec;
     }
 }

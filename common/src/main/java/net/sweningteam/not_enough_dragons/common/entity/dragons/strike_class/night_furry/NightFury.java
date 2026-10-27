@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -35,7 +36,6 @@ import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.world.entity.raid.Raider;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -48,7 +48,7 @@ import net.minecraft.world.phys.Vec3;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.client.registry.ModKeyMappings;
 import net.sweningteam.not_enough_dragons.common.config.ModGamePlayConfig;
-import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponentType;
+import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent;
 import net.sweningteam.not_enough_dragons.common.dragon.trust.TrustContainer;
 import net.sweningteam.not_enough_dragons.common.entity.ai.DragonFolowOwnerGoal;
 import net.sweningteam.not_enough_dragons.common.entity.ai.ShootProjectileGoal;
@@ -71,7 +71,8 @@ import java.util.*;
 
 public class NightFury extends TamableDragon implements NeutralMob, EatingDragon, PlayerRideableJumping , DragonWithScales, FlyingDragon, ShootingDragon, SaddleAbblDragon{
     TrustContainer Trust = new TrustContainer();
-    Random random = new Random();
+
+    public List<DragonFoodComponent> foodList = new ArrayList<>();
 
     private static final EntityDataAccessor<Boolean> AGGRO;
     private static final EntityDataAccessor<Boolean> SNEAKING;
@@ -108,6 +109,11 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     public void setFlying(Boolean bl) {
         entityData.set(IS_FLYING,bl);
         setNoGravity(bl);
+    }
+
+    @Override
+    public List<DragonFoodComponent> foodComponentList() {
+        return foodList;
     }
 
     @Override
@@ -171,8 +177,8 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     }
 
     @Override
-    public DragonFoodComponentType dragonFoodComponentType() {
-        return ModDragonFoodComponentTypes.Night_fury;
+    public TagKey<DragonFoodComponent> FOOD_TAG() {
+        return ModTags.DragonFoodComponents.NIGHT_FURY;
     }
 
     @Override
@@ -389,6 +395,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
 
     public NightFury(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+        getFoodComponent(level);
     }
 
     @Override
@@ -540,15 +547,17 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     }
 
     @Override
-    public boolean handleFood(Player player, Item item, Boolean onGround) {
-        if(dragonFoodComponentType().contains(item)){
+    public boolean handleFood(Player player, ItemStack item, Boolean onGround) {
+        DragonFoodComponent component = getComponent(item);
+        if(canEat(item)){
             if (onGround){
-                Trust.increaseTrust(player.getUUID(),dragonFoodComponentType().get(item).getTrust_gained()/2);
+                Trust.increaseTrust(player.getUUID(), (double) (component.getTrustGained().sample(this.random)/2));
             }else {
-                Trust.increaseTrust(player.getUUID(),dragonFoodComponentType().get(item).getTrust_gained());
+                Trust.increaseTrust(player.getUUID(),(double) (component.getTrustGained().sample(this.random)));
             }
-            dragonFoodComponentType().get(item).onEat(this);
-            startHungerUpdate(this.dragonFoodComponentType().get(item).getFood_gained());
+            component.onEat(this);
+
+            startHungerUpdate(component.getFoodGained().sample(this.random));
             SetEatingProgress(35);
             return true;
         }
@@ -676,7 +685,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     public boolean entityDoesNotHaveFoodItem(LivingEntity entity){
         ItemStack MainStack = entity.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack OffStack = entity.getItemInHand(InteractionHand.OFF_HAND);
-        return !canEat(MainStack.getItem()) || !canEat(OffStack.getItem());
+        return !canEat(MainStack) || !canEat(OffStack);
     }
 
     public void AngerManager(){
@@ -795,12 +804,11 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
                     if (this.distanceTo(itemEntity) <= 3){
                         if (canPickupItem(itemEntity)){
                             ItemStack stack = itemEntity.getItem();
-                            Item item = stack.getItem();
-                            if(canEat(item)){
+                            if(canEat(stack)){
                                 if (canIncreseSaturation(this.getHealth() < this.getMaxHealth())){
                                     if(itemEntity.getOwner() != null){
                                         if(itemEntity.getOwner() instanceof Player player){
-                                            if(handleFood(player,item,true)){
+                                            if(handleFood(player,stack,true)){
                                                 stack.consume(1,this);
                                                 ItemEntity itemEntity1 = new ItemEntity(this.level(),itemEntity.getX(),itemEntity.getY(),itemEntity.getZ(),stack);
                                                 itemEntity1.setThrower(itemEntity.getOwner());
@@ -905,11 +913,10 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     @Override
     public @NotNull InteractionResult mobInteract(Player player, @NonNull InteractionHand hand) {
         ItemStack stack = player.getMainHandItem();
-        Item item = stack.getItem();
         if(this.level() instanceof ServerLevel serverLevel){
-            if (canEat(item)){
+            if (canEat(stack)){
                 if(canIncreseSaturation(this.getHealth() < this.getMaxHealth()) || NotEnoughDragons.shouldUseCreativeBackdoor(player)){
-                    if( handleFood(player, item,false)) {
+                    if( handleFood(player, stack,false)) {
                         this.playSound(SoundEvents.GENERIC_EAT.value());
                         stack.consume(1, player);
                         return InteractionResult.SUCCESS;
@@ -1107,8 +1114,7 @@ public class NightFury extends TamableDragon implements NeutralMob, EatingDragon
     @Override
     public boolean canPickupItem(ItemEntity itemEntity) {
         ItemStack itemStack = itemEntity.getItem();
-        Item item = itemStack.getItem();
-        if(canEat(item)){
+        if(canEat(itemStack)){
             return true;
         }
         return super.canPickupItem(itemEntity);

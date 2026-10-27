@@ -1,12 +1,21 @@
 package net.sweningteam.not_enough_dragons.common.entity.dragons.base.interfaces;
 
+import net.minecraft.core.HolderSet;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponentType;
+import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent;
+import net.sweningteam.not_enough_dragons.common.registry.ModRegistries;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface EatingDragon {
+
+    List<DragonFoodComponent> foodComponentList();
 
     int getHunger();
 
@@ -27,9 +36,9 @@ public interface EatingDragon {
 
     void updateSaturation();
 
-    DragonFoodComponentType dragonFoodComponentType();
+    TagKey<DragonFoodComponent> FOOD_TAG();
 
-    boolean handleFood(Player player, Item item,Boolean onGround);
+    boolean handleFood(Player player, ItemStack item,Boolean onGround);
 
     default void addHungerSaveData(ValueOutput output){
         output.putInt("Hunger",getHunger());
@@ -64,10 +73,27 @@ public interface EatingDragon {
         }
     }
 
-    default boolean canEat(Item item){
-        return dragonFoodComponentType().contains(item);
+    default DragonFoodComponent getComponent(ItemStack item){
+        DragonFoodComponent component = null;
+        for(DragonFoodComponent foodComponent : foodComponentList()){
+            if(foodComponent.getIngredient().test(item)){
+                component =foodComponent;
+            }
+        }
+        return component;
+    }
+
+    default boolean canEat(ItemStack item){
+        return getComponent(item) != null;
     }
     default boolean canIncreseSaturation(boolean other){
         return getRemainingHungerUpdateTime() <= 0 && (getHunger() < MaxHunger() || other);
+    }
+
+    default void getFoodComponent(Level level){
+        Optional<HolderSet.Named<DragonFoodComponent>> testTag = level.registryAccess().lookupOrThrow(ModRegistries.DRAGON_FOOD_COMPONENT).get(FOOD_TAG());
+        testTag.ifPresent(holders -> holders.forEach(foodComponent -> {
+            foodComponentList().add(foodComponent.value());
+        }));
     }
 }

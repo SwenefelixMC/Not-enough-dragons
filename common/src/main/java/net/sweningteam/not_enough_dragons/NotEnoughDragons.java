@@ -25,6 +25,10 @@ public final class NotEnoughDragons {
         ModDataComponentTypes.init();
         ModItems.init();
         ModBlocks.init();
+        ModRegistries.init();
+        ModBuildInRegistries.init();
+        ModDragonFoodComponentTypes.init();
+        ModDragonFoodComponents.init();
         ModCreativeTabs.init();
         ModAttributes.init();
         ModEntityTypes.init();
@@ -41,6 +45,7 @@ public final class NotEnoughDragons {
         ModRecipieSerializers.init();
         ModRecipieTypes.init();
         NetworkHandler.init();
+
     }
 
     public static boolean shouldUseCreativeBackdoor(Player player) {

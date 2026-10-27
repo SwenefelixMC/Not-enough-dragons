@@ -1,8 +1,12 @@
 package net.sweningteam.not_enough_dragons.fabric.platform;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PoiHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.Holder;
@@ -10,6 +14,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -52,6 +57,16 @@ public class FabricRegistryHelper implements RegisterHelper {
                 Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,name),
                 value);
         return registeredObject;
+    }
+
+    @Override
+    public <T> Registry<T> registerRegistry(ResourceKey<Registry<T>> name) {
+        return FabricRegistryBuilder.create(name).attribute(RegistryAttribute.SYNCED).buildAndRegister();
+    }
+
+    @Override
+    public <T> void syncRegistryToCodec(ResourceKey<Registry<T>> name, Codec<T> codec) {
+        DynamicRegistries.registerSynced(name,codec);
     }
 
     @Override

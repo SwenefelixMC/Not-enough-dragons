@@ -9,6 +9,7 @@ import net.minecraft.world.item.trading.VillagerTrade;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent;
 
 public class ModTags {
     public class Items {
@@ -64,6 +65,13 @@ public class ModTags {
         public static final TagKey<VillagerTrade> VIKING_TRADER_LEVEL_5 = TagKey.create(
                 Registries.VILLAGER_TRADE,
                 Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID, "viking_trader_level_5")
+        );
+    }
+
+    public class DragonFoodComponents {
+        public static final TagKey<DragonFoodComponent> NIGHT_FURY = TagKey.create(
+                ModRegistries.DRAGON_FOOD_COMPONENT,
+                Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"night_fury")
         );
     }
 }

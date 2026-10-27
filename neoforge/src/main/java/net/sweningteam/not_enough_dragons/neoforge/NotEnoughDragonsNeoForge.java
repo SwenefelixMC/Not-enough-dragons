@@ -57,6 +57,9 @@ public final class NotEnoughDragonsNeoForge {
         eventBus.addListener((EntityAttributeCreationEvent event)-> ModEntityTypes.registerEntityAtributes(event::put));
         eventBus.addListener(NeoForgeNetworkHelper::onRegisterPayloads);
         BIOME_MODIFIER_SERIALIZERS.register(eventBus);
+
+        eventBus.addListener(NeoForgeRegistryHelper::onNewRegistries);
+        eventBus.addListener(NeoForgeRegistryHelper::onNewDatapackRegistries);
         //EVENT_BUS.addListener((EntityAttributeCreationEvent event) -> ModEntityTypes.registerEntityAtributes(event::put));
     }
 
