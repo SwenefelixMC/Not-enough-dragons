@@ -13,11 +13,13 @@ import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent
 import net.sweningteam.not_enough_dragons.common.entity.dragons.base.Dragon;
 import net.sweningteam.not_enough_dragons.common.registry.ModDragonFoodComponentTypes;
 
+import java.util.List;
+
 public class EffectDragonFoodComponent extends DragonFoodComponent {
-    public final MobEffectInstance effect;
-    public EffectDragonFoodComponent(IntProvider foodGained, FloatProvider trustGained, Ingredient ingredient, MobEffectInstance effect) {
+    public final List<MobEffectInstance> effects;
+    public EffectDragonFoodComponent(IntProvider foodGained, FloatProvider trustGained, Ingredient ingredient, List<MobEffectInstance> effect) {
         super(foodGained, trustGained, ingredient);
-        this.effect = effect;
+        this.effects = effect;
     }
 
     public static MapCodec<EffectDragonFoodComponent> codec() {
@@ -25,12 +27,12 @@ public class EffectDragonFoodComponent extends DragonFoodComponent {
                 IntProviders.CODEC.fieldOf("food_gained").forGetter(DragonFoodComponent::getFoodGained),
                 FloatProviders.CODEC.fieldOf("trust_gained").forGetter(DragonFoodComponent::getTrustGained),
                 Ingredient.CODEC.fieldOf("ingredient").forGetter(DragonFoodComponent::getIngredient),
-                MobEffectInstance.CODEC.fieldOf("effect").forGetter(EffectDragonFoodComponent::getEffect)
+                MobEffectInstance.CODEC.listOf().fieldOf("effects").forGetter(EffectDragonFoodComponent::getEffects)
         ).apply(instance, EffectDragonFoodComponent::new));
     }
 
-    public MobEffectInstance getEffect() {
-        return effect;
+    public List<MobEffectInstance> getEffects() {
+        return effects;
     }
 
     @Override
@@ -41,6 +43,8 @@ public class EffectDragonFoodComponent extends DragonFoodComponent {
     @Override
     public void onEat(Dragon dragon) {
         super.onEat(dragon);
-        dragon.addEffect(effect);
+        for (MobEffectInstance effect : effects) {
+            dragon.addEffect(effect);
+        }
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.sweningteam.not_enough_dragons.NotEnoughDragons;
 import net.sweningteam.not_enough_dragons.common.dragon.food.DragonFoodComponent;
 import net.sweningteam.not_enough_dragons.common.registry.ModRegistries;
 
@@ -91,9 +92,14 @@ public interface EatingDragon {
     }
 
     default void getFoodComponent(Level level){
-        Optional<HolderSet.Named<DragonFoodComponent>> testTag = level.registryAccess().lookupOrThrow(ModRegistries.DRAGON_FOOD_COMPONENT).get(FOOD_TAG());
-        testTag.ifPresent(holders -> holders.forEach(foodComponent -> {
-            foodComponentList().add(foodComponent.value());
-        }));
+        try {
+            Optional<HolderSet.Named<DragonFoodComponent>> testTag = level.registryAccess().lookupOrThrow(ModRegistries.DRAGON_FOOD_COMPONENT).get(FOOD_TAG());
+            testTag.ifPresent(holders -> holders.forEach(foodComponent -> {
+                foodComponentList().add(foodComponent.value());
+            }));
+        } catch (IllegalStateException e) {
+            NotEnoughDragons.LOGGER.error(e.getMessage());
+        }
+
     }
 }

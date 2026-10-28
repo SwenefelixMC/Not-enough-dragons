@@ -1,5 +1,6 @@
 package net.sweningteam.not_enough_dragons.common.datagen;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -30,7 +31,7 @@ public class ModDragonFoodComponentConfiguration {
         );
         context.register(
                 ModDragonFoodComponents.NIGHT_FURY_PUFFER_FISH,
-                new EffectDragonFoodComponent(new ConstantInt(1), new ConstantFloat(-5F),Ingredient.of(Items.PUFFERFISH),new MobEffectInstance(MobEffects.POISON,400))
+                new EffectDragonFoodComponent(new ConstantInt(1), new ConstantFloat(-5F),Ingredient.of(Items.PUFFERFISH), ImmutableList.of(new MobEffectInstance(MobEffects.POISON,400)))
         );
         context.register(
                 ModDragonFoodComponents.NIGHT_FURY_COOKED_COD,
