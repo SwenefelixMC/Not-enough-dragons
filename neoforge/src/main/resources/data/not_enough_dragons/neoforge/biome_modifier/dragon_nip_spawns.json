@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#not_enough_dragons:dragon_nip_spawns_in",
+  "features": "not_enough_dragons:patch_dragon_nip",
+  "step": "vegetal_decoration"
+}

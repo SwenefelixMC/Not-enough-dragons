@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "not_enough_dragons:block/molten_gronckle_iron_block"
+  }
+}

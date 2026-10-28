@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "count": 2,
+    "id": "minecraft:salmon"
+  },
+  "max_uses": 10,
+  "reputation_discount": 0.2,
+  "wants": {
+    "id": "not_enough_dragons:gold_coin"
+  },
+  "xp": 30
+}

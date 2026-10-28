@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "not_enough_dragons:block/dragon_nip_block"
+  }
+}

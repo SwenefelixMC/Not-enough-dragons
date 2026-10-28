@@ -1,0 +1,14 @@
+{
+  "type": "not_enough_dragons:base_component",
+  "food_gained": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 6,
+    "min_inclusive": 4
+  },
+  "ingredient": "minecraft:cod",
+  "trust_gained": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 2.5,
+    "min_inclusive": 1.5
+  }
+}

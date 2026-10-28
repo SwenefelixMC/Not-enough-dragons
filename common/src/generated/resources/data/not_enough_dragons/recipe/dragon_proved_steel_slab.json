@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "not_enough_dragons:dragon_proved_steel_block"
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "not_enough_dragons:dragon_proved_steel_slab"
+  }
+}

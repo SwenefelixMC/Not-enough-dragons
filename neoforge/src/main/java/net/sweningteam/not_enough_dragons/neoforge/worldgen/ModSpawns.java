@@ -2,11 +2,12 @@ package net.sweningteam.not_enough_dragons.neoforge.worldgen;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
-import net.sweningteam.not_enough_dragons.common.worldgen.ModEntitySpawns;
+import net.sweningteam.not_enough_dragons.common.worldgen.entity.ModEntitySpawns;
 
 public class ModSpawns {
 
@@ -20,13 +21,12 @@ public class ModSpawns {
                 for (ModEntitySpawns.DragonSpawnEntry spawnEntry: ModEntitySpawns.spawnEntries()){
                     if(arg.is(spawnEntry.biomeTag())){
                         builder.getMobSpawnSettings().addSpawn(
+                            spawnEntry.entityType().get(),
                             spawnEntry.category(),
                             spawnEntry.weight(),
-                            new MobSpawnSettings.SpawnerData(
-                                spawnEntry.entityType().get(),
-                                spawnEntry.minGroupSize(),
-                                spawnEntry.maxGroupSize()
-                            )
+                            new UniformInt(
+                                    spawnEntry.minGroupSize(),
+                                    spawnEntry.maxGroupSize())
                         );
                     }
                 }
@@ -35,7 +35,7 @@ public class ModSpawns {
 
         @Override
         public MapCodec<? extends BiomeModifier> codec() {
-            return null;
+            return CODEC;
         }
     }
 }

@@ -1,0 +1,10 @@
+{
+  "type": "not_enough_dragons:base_component",
+  "food_gained": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 4,
+    "min_inclusive": 2
+  },
+  "ingredient": "minecraft:tropical_fish",
+  "trust_gained": 1.0
+}

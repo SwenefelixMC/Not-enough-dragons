@@ -5,47 +5,69 @@ import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import net.minecraft.network.chat.Component;
 
 public class ModMainConfig {
-    public static Boolean DragonsFightRaiders = true;
     public YetAnotherConfigLib CONFIG = YetAnotherConfigLib.createBuilder()
+            .save(this::saveConfigs)
         .title(Component.literal("Not Enough Dragons"))
             .category(ConfigCategory.createBuilder()
-                .name(Component.literal("Gameplay"))
-                .tooltip(Component.literal("These are the Options for Gameplay \n These Options Also participate in the Main Story"))
+                .name(Component.literal("Server"))
+                .tooltip(Component.literal("These Options Control The Behavior of The Server"))
                  .group(OptionGroup.createBuilder()
-                         .name(Component.literal("Entity"))
-                         .description(OptionDescription.of(Component.literal("Settings for Entities")))
+                         .name(Component.literal("Messages"))
+                         .description(OptionDescription.of(Component.literal("Settings for Messages")))
                          .option(Option.<Boolean>createBuilder()
-                                .name(Component.literal("Boolean Option"))
-                                 .description(OptionDescription.of(Component.literal("This allows Dragons to fight Pillagers")))
-                                 .binding(true, () -> DragonsFightRaiders, newVal -> DragonsFightRaiders = newVal)
+                                .name(Component.literal("Alpha Warning Message"))
+                                 .description(OptionDescription.of(Component.literal("This Controls a Message Warning the Player about the Alpha State of this mod")))
+                                 .binding(true, () -> ModServerConfig.enableAlphaWarning, newVal -> ModServerConfig.enableAlphaWarning = newVal)
                                  .controller(TickBoxControllerBuilder::create)
                                 .build())
+                         .option(Option.<Boolean>createBuilder()
+                                 .name(Component.literal("Thanks for Download Message"))
+                                 .description(OptionDescription.of(Component.literal("This Controls a Message thanking the Player for Downloading the mod")))
+                                 .binding(true, ()->ModServerConfig.enableThanksForDownload, newVal -> ModServerConfig.enableThanksForDownload = newVal)
+                                 .controller(TickBoxControllerBuilder::create)
+                                 .build())
                          .build())
+                    .build())
+            .category(ConfigCategory.createBuilder()
+                    .name(Component.literal("Game Play"))
+                    .tooltip(Component.literal("These Options Control the Gameplay and Story of the Mod"))
                     .group(OptionGroup.createBuilder()
-                            .name(Component.literal("Name of the group1"))
-                            .description(OptionDescription.of(Component.literal("This text will appear when you hover over the name or focus on the collapse button with Tab.")))
+                            .name(Component.literal("EntityBehavior"))
+                            .description(OptionDescription.of(Component.literal("This Controles The Behavior of Entities")))
                             .option(Option.<Boolean>createBuilder()
-                                    .name(Component.literal("Boolean Option"))
-                                    .description(OptionDescription.of(Component.literal("This text will appear as a tooltip when you hover over the option.")))
-                                    .binding(true, () -> DragonsFightRaiders, newVal -> DragonsFightRaiders = newVal)
+                                    .name(Component.literal("Dragons and Pillager Fight"))
+                                    .description(OptionDescription.of(Component.literal("This Controles if Dragons and Pillager fight")))
+                                    .binding(true, ()-> ModGamePlayConfig.dragonsFightRaiders, newVal -> ModGamePlayConfig.dragonsFightRaiders = newVal)
+                                    .controller(TickBoxControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Component.literal("Dragon Damage on Feed"))
+                                    .description(OptionDescription.of(Component.literal("This Controles if a Dragon will damage you when you feed them")))
+                                    .binding(true, ()->ModGamePlayConfig.dragonDamageWhenFeed, newVal -> ModGamePlayConfig.dragonDamageWhenFeed = newVal)
                                     .controller(TickBoxControllerBuilder::create)
                                     .build())
                             .build())
-                    .build())
-            .category(ConfigCategory.createBuilder()
-                    .name(Component.literal("Client"))
-                    .tooltip(Component.literal("Test test"))
                     .group(OptionGroup.createBuilder()
-                            .name(Component.literal("Group1"))
-                            .description(OptionDescription.of(Component.literal("This text will appear when you hover over the name or focus on the collapse button with Tab.")))
+                            .name(Component.literal("Creative Mode"))
+                            .description(OptionDescription.of(Component.literal("This Controles Mod Behavior in Creative mode")))
                             .option(Option.<Boolean>createBuilder()
-                                    .name(Component.literal("Boolean Option"))
-                                    .description(OptionDescription.of(Component.literal("This text will appear as a tooltip when you hover over the option.")))
-                                    .binding(true, () -> DragonsFightRaiders, newVal -> DragonsFightRaiders = newVal)
+                                    .name(Component.literal("Enable Creative Mode Backdoor"))
+                                    .description(OptionDescription.of(Component.literal("This setting allows you: \nto Tame Dragons Instant, \nto forse feed Dragons")))
+                                    .binding(false, ()->ModGamePlayConfig.enableCreativeBackdoors, newVal -> ModGamePlayConfig.enableCreativeBackdoors = newVal)
                                     .controller(TickBoxControllerBuilder::create)
                                     .build())
                             .build())
                     .build())
             .build();
+
+    public void saveConfigs(){
+        ModServerConfig.CONFIG.save();
+        ModGamePlayConfig.CONFIG.save();
+    }
+
+    public static void  loadConfigs(){
+        ModServerConfig.CONFIG.load();
+        ModGamePlayConfig.CONFIG.load();
+    }
 
 }

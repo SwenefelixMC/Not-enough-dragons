@@ -1,0 +1,13 @@
+{
+  "type": "not_enough_dragons:gronckle_smelting",
+  "input": [
+    "minecraft:oxidized_copper",
+    "not_enough_dragons:gronckle_iron_ingot",
+    "minecraft:iron_block",
+    "minecraft:ancient_debris"
+  ],
+  "output": {
+    "count": 6,
+    "id": "not_enough_dragons:molten_dragon_proved_steel"
+  }
+}

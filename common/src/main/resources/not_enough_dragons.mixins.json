@@ -7,8 +7,8 @@
   ],
   "mixins": [
     "RaiderMixins",
-    "client.CameraMixins"
-
+    "client.CameraMixins",
+    "PlayerListMixins"
   ],
   "injectors": {
     "defaultRequire": 1

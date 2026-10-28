@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "gronckle_iron_from_gronckle_iron_block",
+  "ingredients": [
+    "not_enough_dragons:gronckle_iron_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "not_enough_dragons:gronckle_iron_ingot"
+  }
+}

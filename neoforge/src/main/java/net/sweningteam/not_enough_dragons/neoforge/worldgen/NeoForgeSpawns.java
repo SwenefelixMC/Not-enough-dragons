@@ -4,7 +4,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.sweningteam.not_enough_dragons.common.worldgen.ModEntitySpawns;
+import net.sweningteam.not_enough_dragons.common.worldgen.entity.ModEntitySpawns;
 
 public class NeoForgeSpawns {
 

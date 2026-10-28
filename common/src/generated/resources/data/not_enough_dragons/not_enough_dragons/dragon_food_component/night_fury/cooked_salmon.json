@@ -1,0 +1,14 @@
+{
+  "type": "not_enough_dragons:base_component",
+  "food_gained": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 15,
+    "min_inclusive": 13
+  },
+  "ingredient": "minecraft:cooked_salmon",
+  "trust_gained": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 6.5,
+    "min_inclusive": 5.5
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "not_enough_dragons:gronckle_egg"
+  },
+  "max_uses": 1,
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 20,
+    "id": "not_enough_dragons:gold_coin"
+  },
+  "xp": 40
+}

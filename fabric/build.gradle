@@ -73,3 +73,15 @@ configurations {
         outgoing.artifact(shadowJar)
     }
 }
+
+def commonProject = project(":common")
+fabricApi {
+    configureDataGeneration() {
+        modId = "not_enough_dragons"
+        outputDirectory = commonProject.file("src/generated/resources")
+        client = true
+        addToResources = false
+        createSourceSet = false
+        strictValidation = false
+    }
+}

@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.sweningteam.not_enough_dragons.common.worldgen.ModEntitySpawns;
+import net.sweningteam.not_enough_dragons.common.worldgen.entity.ModEntitySpawns;
 
 public class FabricSpawns {
     public static void register(){

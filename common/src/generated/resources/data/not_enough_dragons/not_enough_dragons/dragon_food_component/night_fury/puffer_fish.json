@@ -1,0 +1,13 @@
+{
+  "type": "not_enough_dragons:effect_component",
+  "effects": [
+    {
+      "duration": 400,
+      "id": "minecraft:poison",
+      "show_icon": true
+    }
+  ],
+  "food_gained": 1,
+  "ingredient": "minecraft:pufferfish",
+  "trust_gained": -5.0
+}

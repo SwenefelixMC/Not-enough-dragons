@@ -9,20 +9,23 @@ public record DragonRiderInputPackage(
         boolean forward,
         boolean backward,
         boolean sprint,
-        boolean jump
+        boolean jump,
+        boolean charge
 ) {
     public static void encode(DragonRiderInputPackage pack, FriendlyByteBuf buf){
         buf.writeBoolean(pack.forward());
         buf.writeBoolean(pack.backward());
         buf.writeBoolean(pack.sprint());
         buf.writeBoolean(pack.jump());
+        buf.writeBoolean(pack.charge());
     }
     public static DragonRiderInputPackage decode(FriendlyByteBuf buf){
         boolean forward = buf.readBoolean();
         boolean backward = buf.readBoolean();
         boolean sprint = buf.readBoolean();
         boolean jump = buf.readBoolean();
-        return new DragonRiderInputPackage(forward,backward,sprint,jump);
+        boolean charge = buf.readBoolean();
+        return new DragonRiderInputPackage(forward,backward,sprint,jump,charge);
     }
 
     public static void handle(DragonRiderInputPackage pack, ServerPlayer player){

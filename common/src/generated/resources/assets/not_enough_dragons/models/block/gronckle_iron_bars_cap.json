@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_bars_cap",
+  "textures": {
+    "bars": "not_enough_dragons:block/gronckle_iron_bars",
+    "edge": "not_enough_dragons:block/gronckle_iron_bars"
+  }
+}

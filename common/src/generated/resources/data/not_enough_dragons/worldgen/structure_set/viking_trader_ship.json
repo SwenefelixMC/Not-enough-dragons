@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 255233456,
+    "separation": 15,
+    "spacing": 40
+  },
+  "structures": [
+    {
+      "structure": "not_enough_dragons:viking_trader_ship",
+      "weight": 1
+    }
+  ]
+}

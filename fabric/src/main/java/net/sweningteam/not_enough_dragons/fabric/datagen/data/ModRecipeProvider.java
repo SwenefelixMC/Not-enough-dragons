@@ -1,17 +1,24 @@
 package net.sweningteam.not_enough_dragons.fabric.datagen.data;
 
+import com.google.common.collect.ImmutableList;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.Blocks;
+import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.datagen.recipies.GronckleRecipieBuilder;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
 import net.sweningteam.not_enough_dragons.common.registry.ModItems;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -22,8 +29,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
-        return new RecipeProvider(registryLookup,exporter) {
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, BootstrapContext<Recipe<?>> bootstrapContext, BootstrapContext<Advancement> bootstrapContext1) {
+        return new RecipeProvider(bootstrapContext,bootstrapContext1) {
             @Override
             public void buildRecipes() {
                 oreBlasting(
@@ -39,7 +46,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(ModItems.MOLTEN_RAW_GROCKLE_IRON.get())
                         .requires(Items.WATER_BUCKET)
                         .unlockedBy(getHasName(ModItems.MOLTEN_RAW_GROCKLE_IRON.get()), has(ModItems.MOLTEN_RAW_GROCKLE_IRON.get()))
-                        .save(exporter);
+                        .save(output);
                 oreBlasting(
                         List.of(ModItems.RAW_GROCKLE_IRON.get()),
                         RecipeCategory.MISC,
@@ -52,11 +59,11 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 nineBlockStorageRecipes(RecipeCategory.MISC,ModItems.GRONCKLE_IRON_NUGGET.get(),RecipeCategory.MISC,ModItems.GRONCKLE_IRON_INGOT.get());
                 nineBlockStorageRecipes(RecipeCategory.MISC,ModItems.GRONCKLE_IRON_INGOT.get(),RecipeCategory.BUILDING_BLOCKS,ModBlocks.GRONCKLE_IRON_BLOCK.get(),"gronckle_iron_block_from_gronckle_iron","gronckle_iron","gronckle_iron","gronckle_iron_from_gronckle_iron_block");
                 oreBlasting(
-                        List.of(ModItems.MOLTEN_DRAGON_PROVED_STEAL.get()),
+                        List.of(ModItems.MOLTEN_DRAGON_PROVED_STEEL.get()),
                         RecipeCategory.MISC,
                         CookingBookCategory.MISC,
 
-                        ModItems.DRAGON_PROVED_STEAL_SCRAPS.get(),
+                        ModItems.DRAGON_PROVED_STEEL_SCRAPS.get(),
                         1,
                         400,
                         "dragon_proved_steal"
@@ -68,14 +75,14 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 trapdoorBuilder(ModBlocks.GRONCKLE_IRON_BARS.get(),Ingredient.of(ModItems.GRONCKLE_IRON_INGOT.get()));
                 stairBuilder(ModBlocks.GRONCKLE_IRON_STAIRS.get(), Ingredient.of(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
                 stairBuilder(ModBlocks.GRONCKLE_IRON_STAIRS.get(), Ingredient.of(ModBlocks.GRONCKLE_IRON_BLOCK.get()));
-                shaped(RecipeCategory.MISC, ModItems.DRAGON_PROVED_STEAL_INGOT.get())
+                shaped(RecipeCategory.MISC, ModItems.DRAGON_PROVED_STEEL_INGOT.get())
                         .pattern("SSS")
                         .pattern("S I")
                         .pattern("III")
-                        .define('S',ModItems.DRAGON_PROVED_STEAL_SCRAPS.get())
+                        .define('S',ModItems.DRAGON_PROVED_STEEL_SCRAPS.get())
                         .define('I',Items.IRON_INGOT)
-                        .unlockedBy(getHasName(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get()), has(ModItems.DRAGON_PROVED_STEAL_SCRAPS.get()))
-                        .save(exporter);
+                        .unlockedBy(getHasName(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get()), has(ModItems.DRAGON_PROVED_STEEL_SCRAPS.get()))
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.GRONCKLE_IRON_CHAIN.get())
                         .pattern("N")
@@ -84,55 +91,74 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('N',ModItems.GRONCKLE_IRON_NUGGET.get())
                         .define('I',ModItems.GRONCKLE_IRON_INGOT.get())
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
-                stairBuilder(ModBlocks.DRAGON_PROVED_STEAL_STAIRS.get(), Ingredient.of(ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get()));
-                slab(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DRAGON_PROVED_STEAL_SLAB.get(),ModBlocks.DRAGON_PROVED_STEAL_BLOCK.get());
+                stairBuilder(ModBlocks.DRAGON_PROVED_STEEL_STAIRS.get(), Ingredient.of(ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get()));
+                slab(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DRAGON_PROVED_STEEL_SLAB.get(),ModBlocks.DRAGON_PROVED_STEEL_BLOCK.get());
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_SWORD.get())
                         .pattern("G")
                         .pattern("G")
                         .pattern("/")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_SHOVEL.get())
                         .pattern("G")
                         .pattern("/")
                         .pattern("/")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_PICKAXE.get())
                         .pattern("GGG")
                         .pattern(" / ")
                         .pattern(" / ")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_AXE.get())
                         .pattern("GG")
                         .pattern("G/")
                         .pattern(" /")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.GRONCKLE_IRON_HOE.get())
                         .pattern("GG")
                         .pattern(" /")
                         .pattern(" /")
-                        .define('G',ModItems.GRONCKLE_IRON_NUGGET.get())
+                        .define('G',ModItems.GRONCKLE_IRON_INGOT.get())
                         .define('/',Items.STICK)
                         .unlockedBy(getHasName(ModItems.GRONCKLE_IRON_INGOT.get()), has(ModItems.GRONCKLE_IRON_INGOT.get()))
-                        .save(exporter);
+                        .save(output);
+
+                GronckleRecipieBuilder.gronckleRecipie(RecipeCategory.MISC, ImmutableList.of(
+                        Ingredient.of(Blocks.STONE),
+                        Ingredient.of(Blocks.SANDSTONE),
+                        Ingredient.of(Blocks.IRON_ORE),
+                        Ingredient.of(Blocks.COBBLESTONE)
+                ),ModItems.MOLTEN_GROCKLE_IRON.get(),6).group("gronckle_iron_ingot")
+                        .unlockedBy(getHasName(ModBlocks.DRAGON_MANUAL.get()), has(ModBlocks.DRAGON_MANUAL.get()))
+                        .save(output, String.valueOf(Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"gronckle/gronckle_iron_ingot")));
+
+                GronckleRecipieBuilder.gronckleRecipie(
+                        RecipeCategory.MISC, ImmutableList.of(
+                        Ingredient.of(Blocks.COPPER_BLOCK.weathering().oxidized()),
+                        Ingredient.of(ModItems.GRONCKLE_IRON_INGOT.get()),
+                        Ingredient.of(Blocks.IRON_BLOCK),
+                        Ingredient.of(Blocks.ANCIENT_DEBRIS)
+                ),ModItems.MOLTEN_DRAGON_PROVED_STEEL.get(),6).group("dragon_proved_steal_ingot")
+                        .unlockedBy(getHasName(ModBlocks.DRAGON_MANUAL.get()), has(ModBlocks.DRAGON_MANUAL.get()))
+                        .save(output, String.valueOf(Identifier.fromNamespaceAndPath(NotEnoughDragons.MOD_ID,"gronckle/dragon_proved_steal_ingot")));;
             }
         };
     }

@@ -11,6 +11,7 @@ import net.sweningteam.not_enough_dragons.client.entity.renderer.dragon.nightfur
 import net.sweningteam.not_enough_dragons.client.entity.renderer.dragon.nightfury.NightFuryRenderer;
 import net.sweningteam.not_enough_dragons.client.entity.renderer.dragon.nightfury.PlasmaBlastRenderer;
 import net.sweningteam.not_enough_dragons.client.registry.ModDataTickets;
+import net.sweningteam.not_enough_dragons.client.registry.ModKeyMappings;
 import net.sweningteam.not_enough_dragons.common.registry.ModBlocks;
 import net.sweningteam.not_enough_dragons.common.registry.ModEntityTypes;
 
@@ -19,17 +20,11 @@ import java.util.function.BiConsumer;
 public class NotEnoughDragonsClient {
     public static void init(){
         ModDataTickets.init();
+        ModKeyMappings.init();
     }
 
-    public static void registerBlockRenderTypes(BiConsumer<Block, ChunkSectionLayer> consumer){
-        consumer.accept(ModBlocks.NIGHT_FURY_SCALES.get(),ChunkSectionLayer.TRANSLUCENT);
-        consumer.accept(ModBlocks.GRONCKLE_IRON_DOOR.get(),ChunkSectionLayer.TRANSLUCENT);
-        consumer.accept(ModBlocks.GRONCKLE_IRON_TRAPDOOR.get(), ChunkSectionLayer.TRANSLUCENT);
-        consumer.accept(ModBlocks.GRONCKLE_IRON_CHAIN.get(),ChunkSectionLayer.TRANSLUCENT);
-        consumer.accept(ModBlocks.GRONCKLE_IRON_BARS.get(),ChunkSectionLayer.TRANSLUCENT);
-        consumer.accept(ModBlocks.DRAGON_NIP.get(),ChunkSectionLayer.CUTOUT);
-        consumer.accept(ModBlocks.GRONCKLE_SCALES.get(),ChunkSectionLayer.TRANSLUCENT);
-    }
+    public static boolean isCharging = false;
+
     public static void registerEntityRenderers(BiConsumer<EntityType< ?extends Entity>, EntityRendererProvider> consumer){
         consumer.accept(ModEntityTypes.NIGHT_FURY.get() , NightFuryRenderer::new);
         consumer.accept(ModEntityTypes.PLASMA_BLAST.get(), PlasmaBlastRenderer::new);
@@ -37,5 +32,12 @@ public class NotEnoughDragonsClient {
 
         consumer.accept(ModEntityTypes.GRONCKLE.get() , GronckleRenderer::new);
         consumer.accept(ModEntityTypes.GRONCKLE_EGG.get(), GronckleEggRenderer::new);
+    }
+
+    public static void onClientTick(){
+        isCharging = false;
+        while (ModKeyMappings.DRAGON_CHARGE_MAIN_ATTACK_KEY.consumeClick()){
+            isCharging = true;
+        }
     }
 }

@@ -2,7 +2,18 @@ package net.sweningteam.not_enough_dragons.fabric.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.sweningteam.not_enough_dragons.NotEnoughDragons;
+import net.sweningteam.not_enough_dragons.common.datagen.ModDragonFoodComponentConfiguration;
+import net.sweningteam.not_enough_dragons.common.entity.villager.ModTradeSets;
+import net.sweningteam.not_enough_dragons.common.entity.villager.ModTrades;
+import net.sweningteam.not_enough_dragons.common.registry.ModRegistries;
+import net.sweningteam.not_enough_dragons.common.worldgen.structures.placements.ModStrucutreSetsConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.features.ModFeatureConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.features.ModPlacedFeatureConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.structures.ModStructuresConfiguration;
+import net.sweningteam.not_enough_dragons.common.worldgen.structures.ModTemplatePoolsConfiguration;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.ModModelProvider;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang.DeDeLanguageProvider;
 import net.sweningteam.not_enough_dragons.fabric.datagen.assets.lang.EnUsLanguageProvider;
@@ -31,5 +42,22 @@ public class NotEnoughDragonsDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(ModPoiTypeTags::new);
 
         pack.addProvider(ModRecipeProvider::new);
+        pack.addProvider(ModRegistryDataProvider::new);
+
+        pack.addProvider(ModVillagerTradeTagProvider::new);
+
+        pack.addProvider(ModDragonFoodComponentTagProvider::new);
+    }
+
+    @Override
+    public void buildRegistry(RegistrySetBuilder registryBuilder) {
+        registryBuilder.add(Registries.VILLAGER_TRADE, ModTrades::bootstrap);
+        registryBuilder.add(Registries.TRADE_SET, ModTradeSets::bootstrap);
+        registryBuilder.add(Registries.FEATURE, ModFeatureConfiguration::boostrap);
+        registryBuilder.add(Registries.PLACED_FEATURE, ModPlacedFeatureConfiguration::boostrap);
+        registryBuilder.add(Registries.STRUCTURE, ModStructuresConfiguration::boostrap);
+        registryBuilder.add(Registries.TEMPLATE_POOL, ModTemplatePoolsConfiguration::bootstrap);
+        registryBuilder.add(Registries.STRUCTURE_SET, ModStrucutreSetsConfiguration::bootstrap);
+        registryBuilder.add(ModRegistries.DRAGON_FOOD_COMPONENT, ModDragonFoodComponentConfiguration::bootstrap);
     }
 }
